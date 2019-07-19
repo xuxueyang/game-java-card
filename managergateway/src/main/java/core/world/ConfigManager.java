@@ -24,7 +24,7 @@ public  class ConfigManager {
             props.load(new InputStreamReader(ConfigManager.class.getClassLoader().getResourceAsStream("game-config.properties"),
                     CHARSET));
             //初始化消息队列
-            String property = props.getProperty("sage.queue.type");
+            String property = props.getProperty("message.queue.type");
             if("spring".equals(property)){
                 MQType = "spring";
                 MQManager mqManager = MQManager.getMQManager();

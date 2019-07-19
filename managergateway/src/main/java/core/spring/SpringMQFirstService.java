@@ -14,11 +14,14 @@ public  class SpringMQFirstService implements MQFirstInterface {
 
     @Override
     public RequestDTO pollObjectByKey(Byte firstType) {
-        return null;
+        RequestDTO dto = this.dto;
+        this.dto = null;
+        return dto;
     }
 
     @Override
     public List<RequestDTO> peekObjectsByKey(Byte firstType) {
+
         return null;
     }
 

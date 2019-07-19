@@ -7,9 +7,10 @@ import core.core.ReturnCode;
 import core.core.ReturnResultDTO;
 import core.inter.MQFirstInterface;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
@@ -23,7 +24,7 @@ public class MQResource extends BaseResource{
     }
 
     @Timed
-    @PostMapping({"/post"})
+    @RequestMapping( {"/post"})
     @ApiOperation(value = "传输消息", httpMethod = "POST", response = ReturnResultDTO.class)
     @ApiResponses({@io.swagger.annotations.ApiResponse(code = 200, message = "成功")})
     public ResponseEntity<?> post(@RequestBody RequestDTO json) throws Exception {
@@ -31,7 +32,7 @@ public class MQResource extends BaseResource{
         return prepareReturnResult(ReturnCode.CREATE_SUCCESS, null);
     }
     @Timed
-    @GetMapping({"/get"})
+    @RequestMapping({"/get"})
     @ApiOperation(value = "查询调戏", httpMethod = "POST", response = ReturnResultDTO.class)
     @ApiResponses({@io.swagger.annotations.ApiResponse(code = 200, message = "成功")})
     public ResponseEntity<?> get() throws Exception {

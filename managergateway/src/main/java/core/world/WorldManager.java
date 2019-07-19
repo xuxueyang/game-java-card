@@ -41,7 +41,7 @@ public  class WorldManager
         public void run() {
 //            System.out.println("世界开始运行");
             //先监听端口
-            Object test1 = MQManager.getMQManager().queue.getObjectByKey(new Byte("1"));
+            Object test1 = MQManager.getMQManager().queue.pollObjectByKey(new Byte("1"));
             if(test1!=null)
                 System.out.println(test1);
         }
