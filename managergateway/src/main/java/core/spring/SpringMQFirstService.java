@@ -5,7 +5,7 @@ import core.inter.MQFirstInterface;
 
 import java.util.List;
 
-public  class SpringMQFirstResource implements MQFirstInterface<Byte,RequestDTO> {
+public  class SpringMQFirstService implements MQFirstInterface {
     public RequestDTO dto = null;
     @Override
     public RequestDTO getObjectByKey(Byte firstType) {
@@ -27,6 +27,7 @@ public  class SpringMQFirstResource implements MQFirstInterface<Byte,RequestDTO>
         return null;
     }
 
+
     @Override
     public void putObjectByType(Byte firstType,RequestDTO dto) {
         this.dto = dto;
@@ -38,7 +39,7 @@ public  class SpringMQFirstResource implements MQFirstInterface<Byte,RequestDTO>
     }
 
     @Override
-    public List<RequestDTO> deleteAll(Byte type) {
+    public List<RequestDTO> deleteAll(RequestDTO type) {
         return null;
     }
 
@@ -46,4 +47,6 @@ public  class SpringMQFirstResource implements MQFirstInterface<Byte,RequestDTO>
     public List<Byte> getKeys() {
         return null;
     }
+
+
 }

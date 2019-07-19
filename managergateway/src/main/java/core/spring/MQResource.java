@@ -7,7 +7,6 @@ import core.core.ReturnCode;
 import core.core.ReturnResultDTO;
 import core.inter.MQFirstInterface;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 
-
+@RestController
 public class MQResource extends BaseResource{
 //    public static Concurrent
-    private static SpringMQFirstResource queue = new SpringMQFirstResource();
+    private static SpringMQFirstService queue = new SpringMQFirstService();
     public static MQFirstInterface getQueue(){
         return queue;
     }

@@ -1,19 +1,21 @@
 package core.inter;
 
+import core.core.RequestDTO;
+
 import java.util.List;
 
-public interface MQFirstInterface<Key,Value> {
-    Value getObjectByKey(Key firstType);
-    Value pollObjectByKey(Key firstType);
+public interface MQFirstInterface {
+    RequestDTO getObjectByKey(Byte firstType);
+    RequestDTO pollObjectByKey(Byte firstType);
 
-    List<Value> peekObjectsByKey(Key firstType);
-    List<Value> peekObjectsByKeyLimit(Key firstType,int num);
+    List<RequestDTO> peekObjectsByKey(Byte firstType);
+    List<RequestDTO> peekObjectsByKeyLimit(Byte firstType,int num);
 
-    void putObjectByType(Key firstType,Value object);
+    void putObjectByType(Byte firstType,RequestDTO object);
 
-    Value deleteByKey(Key type);
-    List<Value> deleteAll(Key type);
+    RequestDTO deleteByKey(Byte type);
+    List<RequestDTO> deleteAll(RequestDTO type);
 
-    List<Key> getKeys();
+    List<Byte> getKeys();
 
 }
