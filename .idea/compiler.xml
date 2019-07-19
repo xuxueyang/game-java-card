@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="base-core" />
+        <module name="base-util" />
+        <module name="manageacct" />
+        <module name="manageitem" />
+        <module name="managergateway" />
+        <module name="managerregistry" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="base-core" target="1.5" />
+      <module name="base-registry" target="1.5" />
+      <module name="base-util" target="1.8" />
+      <module name="gamejavacard" target="1.5" />
+      <module name="manageacct" target="1.5" />
+      <module name="manageitem" target="1.5" />
+      <module name="managergateway" target="1.6" />
+      <module name="managerregistry" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
