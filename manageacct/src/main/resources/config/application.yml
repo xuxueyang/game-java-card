@@ -1,4 +1,6 @@
 spring:
+    application:
+      name: acct
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/gameacct?useUnicode=true&characterEncoding=utf8&useSSL=false
@@ -24,5 +26,22 @@ spring:
                 physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
 server:
-    port: 20000
+    port: 20007
+eureka:
+  enabled: true
+  instance:
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10
+    #在eureka中显示ip地址
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    appname: acct
+#    prefer-ip-address: true
+    instance-id: ${spring.application.name}
+#    hostname: ${spring.application.name}
+  client:
+#    healthcheck:
+#      enabled: true
+    service-url:
+      defaultZone: http://localhost:20000/eureka/
 

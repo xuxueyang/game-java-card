@@ -10,6 +10,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>manage.item</artifactId>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-netflix</artifactId>
+                <version>1.0.7.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -48,6 +59,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>1.5.4.RELEASE</version>
 
+        </dependency>
+        <dependency>
+            <groupId>com.xxy.www</groupId>
+            <artifactId>base.core</artifactId>
+            <version>0.1</version>
         </dependency>
     </dependencies>
 </project>

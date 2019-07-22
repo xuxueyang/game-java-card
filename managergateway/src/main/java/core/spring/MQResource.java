@@ -1,6 +1,7 @@
 package core.spring;
 
 import core.core.RequestDTO;
+import core.spring.aop.NeedLoginAspect;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponses;
 import core.core.ReturnCode;
@@ -16,6 +17,7 @@ import com.codahale.metrics.annotation.Timed;
 
 
 @RestController
+@NeedLoginAspect
 public class MQResource extends BaseResource{
 //    public static Concurrent
     private static SpringMQFirstService queue = new SpringMQFirstService();

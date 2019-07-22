@@ -1,6 +1,16 @@
 
 
 spring:
+#  redis:
+#      database: 0
+#      host: 172.18.61.70
+#      password: fengyun123456
+#      port: 9701
+#      pool:
+#          max-idle: 8
+#          min-idle: 0
+#          max-active: 8
+#          max-wait: -1
   cloud:
     gateway:
       discovery:
@@ -27,11 +37,14 @@ server:
 #        io.github.jhipster: DEBUG
 
 eureka:
+  enabled: true
   instance:
-    appname: gateway.01
+    appname: gateway
 #    prefer-ip-address: true
     instance-id: ${spring.application.name}
 #    hostname: ${spring.application.name}
   client:
+#    healthcheck:
+#      enabled: true
     service-url:
       defaultZone: http://localhost:20000/eureka/
