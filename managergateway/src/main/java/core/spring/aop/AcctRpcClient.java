@@ -1,11 +1,15 @@
 package core.spring.aop;
 
 
+import core.core.RequestDTO;
+import core.core.ReturnResultDTO;
 import core.rpc.AcctRPCConstant;
 import core.spring.aop.hystrix.AcctServiceHystrix;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,18 +24,18 @@ import java.util.Map;
 //        ,url = CubeuaaUrl.SERVICE_URL //rpc服务所在的绝对路径，该参数会使'value'失效，
 //        ,url = "${user-server-api.url}",
 //        fallback = AcctServiceHystrix.class
-//        url = "http://localhost:20007"
+        ,url = "http://localhost:20007"
 )
 @EnableFeignClients
 public interface AcctRpcClient {
-    @RequestMapping(method = RequestMethod.GET,value = AcctRPCConstant.GET_TOKEN_ID)
-    Map<String,String> getTokenById(@RequestParam("id") String id);
+    @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.GET_TOKEN_ID)
+    ResponseEntity<ReturnResultDTO> getTokenById(@RequestBody  RequestDTO dto);
 
-    @RequestMapping(method = RequestMethod.GET,value = AcctRPCConstant.CHECK_LOGIN)
-    boolean checkToken(@RequestParam("token") String token);
+    @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.CHECK_LOGIN)
+    ResponseEntity<ReturnResultDTO> checkToken(@RequestBody  RequestDTO dto);
 
     @RequestMapping(method = RequestMethod.GET,value = AcctRPCConstant.TEST)
-    boolean test();
+    ResponseEntity<ReturnResultDTO> test();
 //        @RequestMapping(method = RequestMethod.POST, value = CubeuaaUrl.FIND_SUBSPACE_NAMES)
 //        Map<String, String> findSubspaceNames(@RequestParam("filed") List<String> filed, @RequestParam(required = false, name = "searchFiledName") String searchFiled);
 

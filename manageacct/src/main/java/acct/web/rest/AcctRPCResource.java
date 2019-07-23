@@ -3,6 +3,7 @@ package acct.web.rest;
 import com.googlecode.jsonrpc4j.JsonRpcService;
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
 import core.core.BaseResource;
+import core.core.RequestDTO;
 import core.core.ReturnCode;
 import io.swagger.annotations.Api;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
@@ -21,19 +22,19 @@ import java.util.Map;
 public class AcctRPCResource extends BaseResource {
 
 
-    @RequestMapping(value = "/GET_TOKEN_ID", method = RequestMethod.GET)
-    public Map<String,String> getTokenById(@RequestParam(value = "id",required = true)String id){
+    @RequestMapping(value = "/GET_TOKEN_ID", method = RequestMethod.POST)
+    public ResponseEntity getTokenById(@RequestBody RequestDTO dto){
         HashMap<String, String> stringStringHashMap = new HashMap<String, String>();
         stringStringHashMap.put("1","1");
-        return stringStringHashMap;
+        return prepareReturnResult(ReturnCode.GET_SUCCESS,stringStringHashMap);
     }
 
-    @RequestMapping(value = "/CHECK_LOGIN", method = RequestMethod.GET)
-    public ResponseEntity checkToken(@RequestParam(value = "token",required = true) String token){
+    @RequestMapping(value = "/CHECK_LOGIN", method = RequestMethod.POST)
+    public ResponseEntity checkToken(@RequestBody  RequestDTO dto){
         return prepareReturnResult(ReturnCode.GET_SUCCESS,true);
     }
     @RequestMapping(value = "/TEST", method = RequestMethod.GET)
-    public boolean test(){
-        return true;
+    public ResponseEntity test(){
+        return prepareReturnResult(ReturnCode.GET_SUCCESS,null);
     }
 }

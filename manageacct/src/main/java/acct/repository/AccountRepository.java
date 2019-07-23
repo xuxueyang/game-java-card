@@ -9,4 +9,5 @@ import core.core.BaseRepository;
  */
 public interface AccountRepository extends BaseRepository<Account,Long> {
 
+    Account findOneByLoginName(String loginName);
 }

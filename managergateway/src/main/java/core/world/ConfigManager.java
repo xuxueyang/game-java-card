@@ -42,6 +42,7 @@ public  class ConfigManager {
                 }
 
             }
+            //还有从redis获取，还有从其他的
         } catch (IOException e) {
             e.printStackTrace();
         }
