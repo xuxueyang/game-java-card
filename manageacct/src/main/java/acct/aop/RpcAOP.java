@@ -27,10 +27,13 @@ public class RpcAOP {
     @Before("test()")
     public void needLoginCheck(JoinPoint joinPoint) throws Throwable{
         System.out.println("开始校验111");
+//        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        attributes.getRequest().se
+//        Content-Type: application/json;charset=UTF-8
     }
     @After("test()")
     public void test2(JoinPoint joinPoint) throws Throwable{
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+
 //        HttpServletResponse response = attributes.getResponse();
 //        PrintWriter writer = response.getWriter();
 //        writer.append("aaa");

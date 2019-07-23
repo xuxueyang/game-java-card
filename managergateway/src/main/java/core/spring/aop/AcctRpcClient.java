@@ -1,15 +1,18 @@
 package core.spring.aop;
 
 
+import core.core.RequestDTO;
 import core.rpc.AcctRPCConstant;
 import core.spring.aop.hystrix.AcctServiceHystrix;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.jws.WebService;
 import javax.websocket.server.PathParam;
 import java.util.Map;
 
@@ -22,13 +25,14 @@ import java.util.Map;
 //        fallback = AcctServiceHystrix.class
 //        url = "http://localhost:20007"
 )
-@EnableFeignClients
+//@EnableFeignClients
+@WebService
 public interface AcctRpcClient {
-    @RequestMapping(method = RequestMethod.GET,value = AcctRPCConstant.GET_TOKEN_ID)
-    Map<String,String> getTokenById(@RequestParam("id") String id);
+    @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.GET_TOKEN_ID)
+    Map<String,String> getTokenById(@RequestBody RequestDTO requestDTO);
 
-    @RequestMapping(method = RequestMethod.GET,value = AcctRPCConstant.CHECK_LOGIN)
-    boolean checkToken(@RequestParam("token") String token);
+    @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.CHECK_LOGIN)
+    boolean checkToken(@RequestBody RequestDTO requestDTO);
 
     @RequestMapping(method = RequestMethod.GET,value = AcctRPCConstant.TEST)
     boolean test();

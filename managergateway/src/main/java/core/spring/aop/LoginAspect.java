@@ -1,5 +1,6 @@
 package core.spring.aop;
 
+import core.core.RequestDTO;
 import core.core.ReturnCode;
 import core.exception.AccessDeniedException;
 import core.protocol.Protocol;
@@ -38,14 +39,16 @@ public class LoginAspect {
         System.out.println("开始校验");
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         javax.servlet.http.HttpServletRequest request = attributes.getRequest();
-        boolean ad =  acctRpcClient.checkToken("a");
+//        boolean ad =  acctRpcClient.checkToken(new RequestDTO<Object>());
+        boolean test = acctRpcClient.test();
         String header = attributes.getRequest().getHeader(Protocol.TOKEN);
         if(StringUtils.isBlank(header)){
             //return new ResponseEntity<ReturnResultDTO<?>>(new ReturnResultDTO(ReturnCode.ERROR_USER_HAS_LOGOUT, null), HttpStatus.OK);
             throw new AccessDeniedException(ReturnCode.ERROR_FIELD_EMPTY,"未携带token");
         }
         //如果不为null，需要rpc校验
-        boolean loginhas =  acctRpcClient.checkToken(header);
+//        boolean loginhas =  acctRpcClient.checkToken(header);
+        boolean loginhas = true;
         System.out.println("开始校验：" + loginhas);
         if(!loginhas){
             throw new AccessDeniedException(ReturnCode.ERROR_USER_HAS_LOGOUT,"已登出");
