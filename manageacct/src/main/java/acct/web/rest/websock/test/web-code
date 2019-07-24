@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script src="http://121.43.38.142/webSocket/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="//cdn.bootcss.com/sockjs-client/1.1.1/sockjs.min.js"></script>
+    <script src="//cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+
+    <script type="text/javascript">
+        function connect() {
+            var socket = new SockJS('http://localhost:8090/test');
+            var userid = document.getElementById('userId').value;
+            stompClient = Stomp.over(socket);
+            stompClient.connect('', '', function (frame) {
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('/topicTest/sayHello', function(message) {
+                    console.log('message ==  ' + message.body);
+                    //alert(message.body);
+                });
+                stompClient.subscribe('/userTest/'+userid + '/otherMessage', function(message) {
+                    console.log('sayHello2 message  ==  ' + message.body);
+                });
+                stompClient.subscribe('/user/userTest/sayHello3', function(message) {
+                    console.log('sayHello3 message  ==  ' + message.body);
+                });
+            });
+        }
+
+        function disconnect() {
+            if (stompClient != null) {
+                stompClient.disconnect();
+            }
+            setConnected(false);
+            console.log("Disconnected");
+        }
+
+        function sendName() {
+            console.log("sendName");
+            var name = document.getElementById('message').value;
+            stompClient.send("/app/hello", {}, "sendName");
+            console.log("sendName2");
+        }
+
+        function sendName2() {
+            console.log("sendName");
+            var userid = document.getElementById('userId').value;
+            var name = document.getElementById('message').value;
+            stompClient.send("/app/hello2", {}, userid);
+            console.log("sendName2");
+        }
+        function sendName3() {
+            console.log("sendName");
+            var userid = document.getElementById('userId').value;
+            var name = document.getElementById('message').value;
+            stompClient.send("/app/hello3", {}, userid);
+            console.log("sendName3");
+        }
+
+    </script>
+</head>
+<body>
+<div>
+    <button id="connect" onclick="connect()">连接</button>
+    <button id="disconnect" onclick="disconnect()">断开连接</button>
+    <button id="send" onclick="sendName()">发送消息</button>
+    <button id="send2" onclick="sendName2()">发送消息2</button>
+    <button id="send3" onclick="sendName3()">发送消息3</button>
+    <button id="reconnect" onclick="reconnect()">重新连接</button>
+</div>
+<div>
+    <textarea id="message" style="width: 350px">Here is a message!</textarea>
+</div>
+<div>
+    <textarea id="userId" style="width: 350px">123456789</textarea>
+</div>
+<div>日志信息：</div>
+<p id="console" width="600px"></p>
+</body>
+</html>

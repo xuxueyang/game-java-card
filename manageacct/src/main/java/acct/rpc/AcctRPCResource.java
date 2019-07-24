@@ -1,4 +1,4 @@
-package acct.web.rest;
+package acct.rpc;
 
 import com.googlecode.jsonrpc4j.JsonRpcService;
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
