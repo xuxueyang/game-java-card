@@ -1,19 +1,18 @@
-package acct.web.rest.websock;
+package acct.websock;
 
 
 import acct.domain.Token;
 import acct.service.AcctLoginService;
-import acct.web.rest.websock.base.DataProtocol;
-import acct.web.rest.websock.base.GetHttpSessionConfigurator;
-import acct.web.rest.websock.base.Protocol;
-import acct.web.rest.websock.base.ProtocolHandleInterface;
-import acct.web.rest.websock.handler.ChatProtocolHandle;
+import acct.websock.base.GetHttpSessionConfigurator;
+import acct.websock.base.Protocol;
+import acct.websock.base.ProtocolHandleInterface;
+import acct.websock.factory.WsResponseFactory;
+import acct.websock.handler.ChatProtocolHandle;
 import com.alibaba.fastjson.JSON;
+import core.core.RequestDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -27,11 +26,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static acct.web.rest.websock.base.DataProtocol.getDataByLast;
-import static acct.web.rest.websock.base.DataProtocol.getErrorDataProtocol;
+import static acct.websock.base.DataProtocol.getDataByLast;
+import static acct.websock.base.DataProtocol.getErrorDataProtocol;
 
 
-@ServerEndpoint(value = "/websocket",configurator = GetHttpSessionConfigurator.class)
+@ServerEndpoint(value = "/ws",configurator = GetHttpSessionConfigurator.class)
 //@ServerEndpoint(value = "/websocket/{token}")
 @Component
 public class WebSocketService {
@@ -49,6 +48,9 @@ public class WebSocketService {
     private static Map<String, Session> sessionMap = new ConcurrentHashMap<String, Session>();
     private static Map<Long,String> userIdSessionIdMap = new ConcurrentHashMap<>();
     private static Map<String,Long> sessionIdUserIdMap = new ConcurrentHashMap<>();
+    private static Map<String,String> sessionIdTokendMap = new ConcurrentHashMap<>();
+    private static Map<Long,String> userIdTokenMap = new ConcurrentHashMap<>();
+
 
 
     // 一级协议和下属的处理消息
@@ -87,7 +89,7 @@ public class WebSocketService {
         Map<String, List<String>> requestParameterMap = session.getRequestParameterMap();
         if(!requestParameterMap.containsKey("token")||!requestParameterMap.containsKey("userId")){
             // 参数不够
-            _sendMsg(session, DataProtocol.getCheckData("参数错误",Protocol.CloseSession));
+            _sendMsg(session, WsResponseFactory.getClose(sessionIdTokendMap.get(session.getId())));
             return;
         }
         sessions.set(session);
@@ -99,20 +101,22 @@ public class WebSocketService {
             token = acctLoginService.getUserByToken(requestParameterMap.get("token").toArray()[0].toString());
             if(token==null||!token.getCreatedBy().equals(requestParameterMap.get("userId").toArray()[0].toString())){
                 // 参数不够
-                _sendMsg(session,DataProtocol.getCheckData("参数错误",Protocol.CloseSession));
+                _sendMsg(session, WsResponseFactory.getClose(sessionIdTokendMap.get(session.getId())));
                 return;
             }
         }catch (Exception e){
-            _sendMsg(session,DataProtocol.getCheckData("参数错误",Protocol.CloseSession));
+            _sendMsg(session, WsResponseFactory.getClose(sessionIdTokendMap.get(session.getId())));
             return;
         }
         sessionIdUserIdMap.put(session.getId(),token.getCreatedBy());
         userIdSessionIdMap.put(token.getCreatedBy(),session.getId());
+        userIdTokenMap.put(token.getCreatedBy(),token.getAccesstoken());
+        sessionIdTokendMap.put(session.getId(),token.getAccesstoken());
 //        logger.debug("[" + session.getId() + "】连接上服务器======当前在线人数[" + getOnlineCount() + "]");
         System.out.println("[" + session.getId() + "】连接上服务器======当前在线人数[" + getOnlineCount() + "]");
         //连接上后给客户端一个消息
 //        sendMsg(session, "连接服务器成功！");
-        _sendMsg(session,DataProtocol.getCheckData("",Protocol.OnCreatedSys));
+        _sendMsg(session,WsResponseFactory.getOnOpen(sessionIdTokendMap.get(session.getId())));
     }
 
     //关闭
@@ -135,10 +139,9 @@ public class WebSocketService {
     //接收消息   客户端发送过来的消息
     @OnMessage
     public void onMessage(String message, Session session) {
-        DataProtocol dataProtocol = JSON.parseObject(message, DataProtocol.class);
-        if(org.apache.commons.lang.StringUtils.isBlank(dataProtocol.getId())
-            && StringUtils.isNotBlank(dataProtocol.getProtocol())){
-            // 存储消息
+        RequestDTO dataProtocol = JSON.parseObject(message, RequestDTO.class);
+        if(!dataProtocol.verify()){
+            // 缺乏字段
 
         }
         try {
@@ -158,8 +161,9 @@ public class WebSocketService {
             //TODO 接受消息的时候，从队列中查找判断是否存在和登录
             String userId = null;//userByToken.getCreatedid();
             //这边塞入值
-            dataProtocol.setSessionId(session.getId());
-            dataProtocol.setUserId(userId);
+            long timestamp = System.currentTimeMillis();
+            dataProtocol.setTimestamp(timestamp);
+            dataProtocol.setMd5(userId + timestamp);
 
             // 分发任务
             if(dataProtocol.getProtocol()!=null&&!"".equals(dataProtocol.getProtocol())){
@@ -186,7 +190,7 @@ public class WebSocketService {
 
     }
     //统一的发送消息方法
-    public synchronized void sendMsg(DataProtocol dataProtocol) {
+    public synchronized void sendMsg(RequestDTO dataProtocol) {
         String messageType = dataProtocol.getMessageType();
         if(Protocol.messageType.All.name().equals(messageType)){
            // 群发
@@ -205,22 +209,20 @@ public class WebSocketService {
             }
         }else if(Protocol.messageType.One.name().equals(messageType)){
             //单发
-            DataProtocol dataByLast = getDataByLast(dataProtocol);
+            RequestDTO dataByLast = getDataByLast(dataProtocol);
             dataByLast.setProtocol(Protocol.sendChatMessage);
             dataByLast.setMessageType(Protocol.messageType.One.name());
-            dataByLast.setMessage("格调回复道:");
+            dataByLast.setData("格调回复道:");
             if(StringUtils.isNotBlank(dataProtocol.getToUserId())
                 &&userIdSessionIdMap.containsKey(dataProtocol.getToUserId())){
-                dataByLast.setUserId("0");//系统发送
-                dataByLast.setToUserId(dataProtocol.getToUserId());
                 _sendMsg(sessionMap.get(userIdSessionIdMap.get(dataProtocol.getToUserId())),dataByLast);
             }
         }
     }
-    private synchronized void _sendMsg(Session session, DataProtocol dataProtocol){
+    private synchronized void _sendMsg(Session session, RequestDTO dataProtocol){
         try {
-
-            session.getBasicRemote().sendText(JSON.toJSONString(dataProtocol));
+            if(dataProtocol!=null)
+                session.getBasicRemote().sendText(JSON.toJSONString(dataProtocol));
         }catch (IOException e){
             e.printStackTrace();
         }

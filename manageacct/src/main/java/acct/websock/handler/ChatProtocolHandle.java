@@ -1,16 +1,14 @@
-package acct.web.rest.websock.handler;
+package acct.websock.handler;
 
-import acct.web.rest.websock.base.DataProtocol;
-import acct.web.rest.websock.base.Protocol;
-import acct.web.rest.websock.base.ProtocolHandleInterface;
+import acct.websock.base.Protocol;
+import acct.websock.base.ProtocolHandleInterface;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static acct.web.rest.websock.base.DataProtocol.getDataByLast;
+import static acct.websock.base.DataProtocol.getDataByLast;
 
 
 // 全部单例

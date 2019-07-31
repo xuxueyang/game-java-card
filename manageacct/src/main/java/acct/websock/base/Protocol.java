@@ -1,4 +1,4 @@
-package acct.web.rest.websock.base;
+package acct.websock.base;
 
 import java.util.ArrayList;
 import java.util.List;

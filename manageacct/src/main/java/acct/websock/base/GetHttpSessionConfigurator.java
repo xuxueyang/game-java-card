@@ -1,4 +1,4 @@
-package acct.web.rest.websock.base;
+package acct.websock.base;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.HandshakeResponse;
