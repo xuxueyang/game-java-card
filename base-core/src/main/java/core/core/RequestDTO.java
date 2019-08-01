@@ -25,7 +25,7 @@ public class RequestDTO<Data> implements Serializable {
     private String md5;
     private Byte messageType;
 
-    private Byte object;
+    private Byte arr;
 
     public static byte[] toByteArray(RequestDTO dto){
         //序列化自己
@@ -98,11 +98,12 @@ public class RequestDTO<Data> implements Serializable {
         this.data = data;
     }
 
-    public Byte getObject() {
-        return object;
+
+    public Byte getArr() {
+        return arr;
     }
 
-    public void setObject(Byte object) {
-        this.object = object;
+    public void setArr(Byte arr) {
+        this.arr = arr;
     }
 }
