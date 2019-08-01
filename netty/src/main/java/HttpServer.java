@@ -1,5 +1,8 @@
 
 import code.PackageDecoder;
+import code.PackageSpliter_1;
+import code.ProtobufDecoder_1;
+import code.ProtobufEncoder_1;
 import handler.EchoServerHandler;
 import handler.ServerHandler;
 import io.netty.channel.*;
@@ -31,7 +34,7 @@ public class HttpServer {
     public static void main(String[] args) throws Exception {
         HttpServer server = new HttpServer();
         log.info("服务已启动...");
-        server.start1(7397);
+        server.start0(7397);
     }
 
     public void start0(int port) throws Exception {
@@ -51,7 +54,13 @@ public class HttpServer {
                 protected void initChannel(SocketChannel ch) throws Exception {
                     // pipeline管理channel中的Handler
                     // 在channel队列中添加一个handler来处理业务
-                    ch.pipeline().addLast("echoServerHandler",  new EchoServerHandler());
+//                    /应用自定义拆包器
+                    ch.pipeline().addLast(new PackageSpliter_1());
+                    ch.pipeline().addLast(new ProtobufDecoder_1());
+                    // pipeline管理channel中的Handler
+                    // 在channel队列中添加一个handler来处理业务
+                    ch.pipeline().addLast("echoServerHandler",  new ServerHandler());
+                    ch.pipeline().addLast(new ProtobufEncoder_1());
                 }
             });
             // 配置完成，开始绑定server

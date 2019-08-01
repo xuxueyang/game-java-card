@@ -15,10 +15,12 @@
     <file url="file://$PROJECT_DIR$/base-util/src/main/java/util/check/UUIDGenerator.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/base-util/src/main/java/util/logger/LogUtil.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/manageacct" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/manageacct/src/main/java/acct/web/rest/websock" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/manageacct/src/main/java/acct/websock" charset="GBK" />
     <file url="file://$PROJECT_DIR$/manageitem" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/managergateway" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/managerregistry" charset="UTF-8" />
-    <file url="PROJECT" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/netty" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/netty/src/main/java/HttpServer.java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

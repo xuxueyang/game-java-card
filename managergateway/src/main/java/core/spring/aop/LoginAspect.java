@@ -51,8 +51,7 @@ public class LoginAspect {
 //        System.out.println("开始校验：" + loginhas);
         RequestDTO dto = new RequestDTO();
         dto.setData(header);
-        ResponseEntity responseEntity = acctRpcClient.checkToken(dto);
-        ReturnResultDTO body = (ReturnResultDTO) responseEntity.getBody();
+        ReturnResultDTO body = acctRpcClient.checkToken(dto);
         if(body.getData()!=null&& body.getData() instanceof Boolean && (Boolean)body.getData()){
             System.out.println("校验成功");
         }else{

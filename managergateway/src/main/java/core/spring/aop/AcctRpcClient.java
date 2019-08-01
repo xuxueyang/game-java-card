@@ -29,13 +29,13 @@ import java.util.Map;
 @EnableFeignClients
 public interface AcctRpcClient {
     @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.GET_TOKEN_ID)
-    ResponseEntity<ReturnResultDTO> getTokenById(@RequestBody  RequestDTO dto);
+    ReturnResultDTO getTokenById(@RequestBody  RequestDTO dto);
 
     @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.CHECK_LOGIN)
-    ResponseEntity<ReturnResultDTO> checkToken(@RequestBody  RequestDTO dto);
+    ReturnResultDTO checkToken(@RequestBody  RequestDTO dto);
 
     @RequestMapping(method = RequestMethod.GET,value = AcctRPCConstant.TEST)
-    ResponseEntity<ReturnResultDTO> test();
+    ReturnResultDTO test();
 //        @RequestMapping(method = RequestMethod.POST, value = CubeuaaUrl.FIND_SUBSPACE_NAMES)
 //        Map<String, String> findSubspaceNames(@RequestParam("filed") List<String> filed, @RequestParam(required = false, name = "searchFiledName") String searchFiled);
 

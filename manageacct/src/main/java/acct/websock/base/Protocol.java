@@ -7,7 +7,7 @@ public class Protocol {
     public final static String SPLIT = "_";
     // 一级协议就单例，具体剩下的以2级方式处理，这样架构会简单点吧
     //3开头的是群发消息
-    public enum messageType{
+    public  enum messageType{
         All,//群发
         One //单发
     }

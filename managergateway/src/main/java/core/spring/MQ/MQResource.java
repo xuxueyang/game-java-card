@@ -1,5 +1,6 @@
-package core.spring;
+package core.spring.MQ;
 
+import core.core.BaseResource;
 import core.core.RequestDTO;
 import core.spring.aop.NeedLoginAspect;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +19,7 @@ import com.codahale.metrics.annotation.Timed;
 
 @RestController
 @NeedLoginAspect
-public class MQResource extends BaseResource{
+public class MQResource extends BaseResource {
 //    public static Concurrent
     private static SpringMQFirstService queue = new SpringMQFirstService();
     public static MQFirstInterface getQueue(){
@@ -29,18 +30,18 @@ public class MQResource extends BaseResource{
     @RequestMapping( {"/post"})
     @ApiOperation(value = "传输消息", httpMethod = "POST", response = ReturnResultDTO.class)
     @ApiResponses({@io.swagger.annotations.ApiResponse(code = 200, message = "成功")})
-    public ResponseEntity<?> post(@RequestBody RequestDTO json) throws Exception {
+    public ReturnResultDTO<?> post(@RequestBody RequestDTO json) throws Exception {
 
-        return prepareReturnResult(ReturnCode.CREATE_SUCCESS, null);
+        return prepareReturnResultDTO(ReturnCode.CREATE_SUCCESS, null);
     }
     @Timed
     @RequestMapping({"/get"})
     @ApiOperation(value = "查询调戏", httpMethod = "POST", response = ReturnResultDTO.class)
     @ApiResponses({@io.swagger.annotations.ApiResponse(code = 200, message = "成功")})
-    public ResponseEntity<?> get() throws Exception {
+    public ReturnResultDTO<?> get() throws Exception {
         RequestDTO dto = new RequestDTO();
         dto.setData(System.currentTimeMillis());
         queue.putObjectByType(new Byte("1"), dto);
-        return prepareReturnResult(ReturnCode.GET_SUCCESS, null);
+        return prepareReturnResultDTO(ReturnCode.GET_SUCCESS, null);
     }
 }

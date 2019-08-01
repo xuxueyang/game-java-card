@@ -1,4 +1,4 @@
-package core.spring;
+package core.spring.MQ;
 
 import core.core.RequestDTO;
 import core.inter.MQFirstInterface;

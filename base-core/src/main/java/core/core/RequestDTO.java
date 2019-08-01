@@ -1,5 +1,9 @@
 package core.core;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
@@ -21,8 +25,20 @@ public class RequestDTO<Data> implements Serializable {
     private String md5;
     private Byte messageType;
 
-    public boolean verify(){
-        if(type==null||area==null||timestamp==null||md5==null)
+    private Byte object;
+
+    public static byte[] toByteArray(RequestDTO dto){
+        //序列化自己
+        byte[] bytes = JSON.toJSONBytes(dto);
+        return bytes;
+    }
+    public static RequestDTO toObject(byte[] bytes){
+        Object object = JSONObject.parse(bytes, Feature.IgnoreNotMatch );
+        return (RequestDTO)object;
+    }
+
+    public static boolean verify(RequestDTO dto){
+        if(dto==null||dto.type==null||dto.area==null||dto.timestamp==null||dto.md5==null)
             return false;
         return true;
     }
@@ -80,5 +96,13 @@ public class RequestDTO<Data> implements Serializable {
 
     public void setData(Data data) {
         this.data = data;
+    }
+
+    public Byte getObject() {
+        return object;
+    }
+
+    public void setObject(Byte object) {
+        this.object = object;
     }
 }

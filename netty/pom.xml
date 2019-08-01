@@ -54,5 +54,10 @@
             <artifactId>netty-codec</artifactId>
             <version>4.1.9.Final</version>
         </dependency>
+        <dependency>
+            <groupId>com.xxy.www</groupId>
+            <artifactId>base.core</artifactId>
+            <version>0.1</version>
+        </dependency>
     </dependencies>
 </project>
