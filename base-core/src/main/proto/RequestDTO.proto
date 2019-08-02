@@ -1,0 +1,14 @@
+syntax = "proto3";
+option java_package = "core.core";
+option java_outer_classname = "RequestDTOModel";
+
+message RequestDTO {
+    string type = 1;
+    string area = 2;
+    int32 protocol = 3;
+    int64 timestamp = 4;
+    string md5 = 5;
+    string messageType = 6;
+    string arr = 7;
+    string data  = 8;
+}

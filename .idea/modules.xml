@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/manageitem/manageitem.iml" filepath="$PROJECT_DIR$/manageitem/manageitem.iml" />
       <module fileurl="file://$PROJECT_DIR$/managergateway/managergateway.iml" filepath="$PROJECT_DIR$/managergateway/managergateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/managerregistry/managerregistry.iml" filepath="$PROJECT_DIR$/managerregistry/managerregistry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/managerroom/managerroom.iml" filepath="$PROJECT_DIR$/managerroom/managerroom.iml" />
       <module fileurl="file://$PROJECT_DIR$/netty/netty.iml" filepath="$PROJECT_DIR$/netty/netty.iml" />
     </modules>
   </component>

@@ -21,6 +21,7 @@
         <module>manageacct</module>
         <module>manageitem</module>
         <module>netty</module>
+        <module>managerroom</module>
 
     </modules>
     <dependencies>

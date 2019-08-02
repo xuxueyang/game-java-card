@@ -28,7 +28,7 @@ public class Account extends BaseEntity {
     @Column(name = "from_type",length = 5)
     private String fromType;
     @Column(name = "object")
-    private String object;
+    private String arr;
 
     public String getTel() {
         return tel;
@@ -71,13 +71,7 @@ public class Account extends BaseEntity {
         this.fromType = fromType;
     }
 
-    public String getObject() {
-        return object;
-    }
 
-    public void setObject(String object) {
-        this.object = object;
-    }
 
     public String getEmail() {
         return email;
@@ -85,5 +79,13 @@ public class Account extends BaseEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getArr() {
+        return arr;
+    }
+
+    public void setArr(String arr) {
+        this.arr = arr;
     }
 }

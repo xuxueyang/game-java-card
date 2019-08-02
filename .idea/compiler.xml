@@ -13,6 +13,7 @@
         <module name="manageitem" />
         <module name="managergateway" />
         <module name="managerregistry" />
+        <module name="managerroom" />
         <module name="netty" />
       </profile>
     </annotationProcessing>
@@ -26,6 +27,7 @@
       <module name="manageitem" target="1.5" />
       <module name="managergateway" target="1.7" />
       <module name="managerregistry" target="1.5" />
+      <module name="managerroom" target="1.5" />
       <module name="netty" target="1.8" />
     </bytecodeTargetLevel>
   </component>
