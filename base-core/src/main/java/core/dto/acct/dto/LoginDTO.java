@@ -19,7 +19,7 @@ public class LoginDTO {
     private Long graphCaptchaCodeId;
 
     @ApiModelProperty(name = "登陆的空间")
-    private String tenantCode;
+    private Long area;
 
     public String getName() {
         return name;
@@ -46,13 +46,6 @@ public class LoginDTO {
     }
 
 
-    public String getTenantCode() {
-        return tenantCode;
-    }
-
-    public void setTenantCode(String tenantCode) {
-        this.tenantCode = tenantCode;
-    }
 
     public Long getGraphCaptchaCodeId() {
         return graphCaptchaCodeId;
@@ -60,5 +53,13 @@ public class LoginDTO {
 
     public void setGraphCaptchaCodeId(Long graphCaptchaCodeId) {
         this.graphCaptchaCodeId = graphCaptchaCodeId;
+    }
+
+    public Long getArea() {
+        return area;
+    }
+
+    public void setArea(Long area) {
+        this.area = area;
     }
 }

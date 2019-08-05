@@ -51,6 +51,7 @@ public class AcctLoginResource extends BaseResource{
         try {
             //判断字段
             if(Validators.fieldBlank(loginDTO.getName())||
+                    Validators.fieldBlank(loginDTO.getArea())||
                     Validators.fieldBlank(loginDTO.getPassword())){
                 return prepareReturnResultDTO(ReturnCode.ERROR_FIELD_EMPTY,null);
             }
@@ -61,6 +62,10 @@ public class AcctLoginResource extends BaseResource{
                     return prepareReturnResultDTO(ReturnCode.ERROR_GRAPH_CODE,null);
                 }
             }
+            boolean b = acctService.checkHasArea(loginDTO.getArea());
+            if(!b)
+                return prepareReturnResultDTO(ReturnCode.ERROR_FIELD_RANGE,null);
+
             //判断有没有空间，且看见下有没有这个用户
             Account account = acctService.findUserByLoginName(loginDTO.getName());
             if(account==null){
@@ -78,7 +83,7 @@ public class AcctLoginResource extends BaseResource{
             if(!account.getPassword().equals(loginDTO.getPassword())){
                 return prepareReturnResultDTO(ReturnCode.ERROR_PASSWORD_NOT_CORRECT_CODE,null);
             }
-            Map<String,Object> map = acctLoginService.login(account);
+            Map<String,Object> map = acctLoginService.login(account,loginDTO.getArea());
             return prepareReturnResultDTO(ReturnCode.CREATE_SUCCESS,map);
         }catch (Exception e){
             return prepareReturnResultDTO(ReturnCode.ERROR_LOGIN,null);

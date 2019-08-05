@@ -20,6 +20,8 @@ public class UserInfo {
     @ApiModelProperty(name = "邮件")
     private String email;
 
+    private Long accountId;
+
     public String getEmail() {
         return email;
     }
@@ -67,5 +69,13 @@ public class UserInfo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 }

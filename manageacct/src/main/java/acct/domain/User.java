@@ -17,7 +17,8 @@ public class User extends BaseEntity {
     private Long accountId;
     @Column(name = "nick_name",length = 20)
     private String nickName;
-
+    @Column(name = "area",length = 20)
+    private Long area;
 
     public String getNickName() {
         return nickName;
@@ -33,5 +34,13 @@ public class User extends BaseEntity {
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
+    }
+
+    public Long getArea() {
+        return area;
+    }
+
+    public void setArea(Long area) {
+        this.area = area;
     }
 }

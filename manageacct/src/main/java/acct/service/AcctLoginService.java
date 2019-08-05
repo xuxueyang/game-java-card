@@ -4,6 +4,8 @@ package acct.service;
 import acct.domain.Account;
 import acct.domain.Graph;
 import acct.domain.Token;
+import acct.domain.User;
+import acct.repository.UserRepository;
 import core.dto.acct.dto.UserInfo;
 import acct.repository.GraphRepository;
 import acct.repository.TokenRepository;
@@ -34,6 +36,8 @@ public class AcctLoginService {
 
     @Autowired
     private TokenRepository tokenRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 
 
@@ -45,6 +49,10 @@ public class AcctLoginService {
     private final String GRAPH_TYPE_CODE = "code";
     private final String GRAPH_TYPE_NUM  = "num";
 
+
+    public Long getAccountIdByToken(String header) {
+        return new Long(1);// TODO
+    }
 
     //生成graph
     public Map<String,Object> createGraph() throws Exception{
@@ -82,7 +90,7 @@ public class AcctLoginService {
             return true;
         }
     }
-    public Map login(Account account) {
+    public Map login(Account account,Long area) {
         //删除token
         List<Token> allByCreatedid = tokenRepository.findAllByCreatedBy(account.getId());
         if(allByCreatedid!=null||allByCreatedid.size()>0){
@@ -94,35 +102,35 @@ public class AcctLoginService {
         Map map = new HashMap<String,Object>();
         //生成token
 //        OAuth2AccessToken token = createToken(APPLICATION_PROPERTIES.getClient(),uaaUser.getId(), uaaUser.getTenantCode());
-        String token = createToken(account.getId());
+        String token = UUIDGenerator.getUUID();
         //技术原因，先只用token就好了
         map.put(Protocol.ACCESS_TOKEN,token);
 //        map.put(Constants.REFRESH_TOKEN,token.getRefreshToken().getValue());
-        //存userInfo
-        map.put(Protocol.USERINFO,prepareForUserInfo(account));
+
         //存到数据库里，token
         Token uaaToken = new Token();
         uaaToken.setAccesstoken(token);
-//        uaaToken.setRefreshtoken(token.getRefreshToken().getValue());
         uaaToken.setCreatedBy(account.getId());
         uaaToken.setValidtime(Protocol.TOKEN_VALID_TIME);
         tokenRepository.save(uaaToken);
-
+        //存userInfo
+        map.put(Protocol.USERINFO,prepareForUserInfo(account,area));
+        //TODO 存到緩存中
         return map;
     }
 
-    private String createToken( Long id) {
-        return UUIDGenerator.getUUID();
-    }
 
-    public UserInfo prepareForUserInfo(Account account){
-//        if(uaaUser==null)
-        if(Protocol.Status.YES == account.getIsDeleted())
+    public UserInfo prepareForUserInfo(Account account, Long area){
+        //判斷有沒有創建用戶
+        User user = userRepository.findOneByAccountIdAndArea(account.getId(), area);
+        if(user==null){
             return null;
+        }
         UserInfo userInfo = new UserInfo();
         userInfo.setEmail(account.getEmail());
-        userInfo.setName(account.getLoginName());
-        userInfo.setId(account.getId());
+        userInfo.setName(user.getNickName());
+        userInfo.setAccountId(account.getId());
+        userInfo.setId(user.getId());
         return userInfo;
     }
     public Token getUserByToken(String token){
@@ -152,66 +160,6 @@ public class AcctLoginService {
         }
         return ip;
     }
-//    public OAuth2AccessToken getToken(String userId){
-//        String clientId = uaaProperties.getWebClientConfiguration().getClientId();
-//        Map<String, String> parameters = new HashMap<>();
-//        parameters.put(AUTHORIZED_GRANT_TYPES, AUTHORIZED_GRANT_TYPES_PASSWORD);
-//        parameters.put(AUTHORIZED_GRANT_TYPES_USERNAME, userId);
-//
-//        ClientDetails authenticatedClient = clientDetailsService.loadClientByClientId(clientId);
-//        TokenRequest tokenRequest = oAuth2RequestFactory.createTokenRequest(parameters, authenticatedClient);
-//
-//        if (clientId != null && !clientId.equals("")) {
-//            if (!clientId.equals(tokenRequest.getClientId())) {
-//                throw new InvalidClientException("Given client ID does not match authenticated client");
-//            }
-//        }
-//
-//        if (authenticatedClient != null) {
-//            OAuth2RequestValidator oAuth2RequestValidator = new DefaultOAuth2RequestValidator();
-//            oAuth2RequestValidator.validateScope(tokenRequest, authenticatedClient);
-//        }
-//        if (!StringUtils.hasText(tokenRequest.getGrantType())) {
-//            throw new InvalidRequestException("Missing grant type");
-//        }
-//        if (tokenRequest.getGrantType().equals("implicit")) {
-//            throw new InvalidGrantException("Implicit grant type not supported from token endpoint");
-//        }
-//
-//        if (isAuthCodeRequest(parameters)) {
-//            // The scope was requested or determined during the authorization step
-//            if (!tokenRequest.getScope().isEmpty()) {
-//                tokenRequest.setScope(Collections.<String>emptySet());
-//            }
-//        }
-//
-//        if (isRefreshTokenRequest(parameters)) {
-//            // A refresh token has its own default scopes, so we should ignore any added by the factory here.
-//            tokenRequest.setScope(OAuth2Utils.parseParameterList(parameters.get(OAuth2Utils.SCOPE)));
-//        }
-//
-//        //OAuth2AccessToken token = tokenGranter.grant(tokenRequest.getGrantType(), tokenRequest);
-//        OAuth2Request storedOAuth2Request = oAuth2RequestFactory.createOAuth2Request(authenticatedClient, tokenRequest);
-//
-//        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-//
-//        grantedAuthorities.add((new SimpleGrantedAuthority("anonymoususer")));
-//
-//        Authentication userAuth = new UsernamePasswordAuthenticationToken(userId, "", grantedAuthorities);
-//        OAuth2AccessToken token = tokenServices.createAccessToken(new OAuth2Authentication(storedOAuth2Request, userAuth));
-//        if (token == null) {
-//            throw new UnsupportedGrantTypeException("Unsupported grant type: " + tokenRequest.getGrantType());
-//        }
-//
-//        return token;
-//    }
-//    private boolean isAuthCodeRequest(Map<String, String> parameters) {
-//        return "authorization_code".equals(parameters.get("grant_type")) && parameters.get("code") != null;
-//    }
-//
-//    private boolean isRefreshTokenRequest(Map<String, String> parameters) {
-//        return "refresh_token".equals(parameters.get("grant_type")) && parameters.get("refresh_token") != null;
-//    }
 
 
 }

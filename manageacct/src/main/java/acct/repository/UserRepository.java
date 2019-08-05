@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long > {
 
-    User findOneByNickName(String name);
+    User findOneByNickNameAndArea(String name,Long area);
+    User findOneByAccountIdAndArea(Long accountId,Long area);
 }
