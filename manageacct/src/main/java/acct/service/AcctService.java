@@ -1,15 +1,12 @@
 package acct.service;
 
 import acct.domain.Account;
-import acct.dto.UserInfo;
+import core.dto.acct.dto.UserInfo;
 import acct.repository.AccountRepository;
 import core.protocol.Protocol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Transactional

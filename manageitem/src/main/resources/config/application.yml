@@ -1,7 +1,9 @@
 spring:
+    application:
+        name: item
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/cardgame?useUnicode=true&characterEncoding=utf8&useSSL=false
+        url: jdbc:mysql://localhost:3306/gameacct?useUnicode=true&characterEncoding=utf8&useSSL=false
         username: root
         password: 123456
     jpa:
@@ -25,4 +27,22 @@ spring:
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
 server:
     port: 20006
+
+eureka:
+  enabled: true
+  instance:
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10
+    #在eureka中显示ip地址
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    appname: item
+#    prefer-ip-address: true
+    instance-id: ${spring.application.name}
+#    hostname: ${spring.application.name}
+  client:
+#    healthcheck:
+#      enabled: true
+    service-url:
+      defaultZone: http://localhost:20000/eureka/
 

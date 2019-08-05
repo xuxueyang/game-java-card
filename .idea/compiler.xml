@@ -24,7 +24,7 @@
       <module name="gamejavacard" target="1.5" />
       <module name="manage.acct" target="1.8" />
       <module name="manageacct" target="1.6" />
-      <module name="manageitem" target="1.5" />
+      <module name="manageitem" target="1.8" />
       <module name="managergateway" target="1.7" />
       <module name="managerregistry" target="1.5" />
       <module name="managerroom" target="1.5" />

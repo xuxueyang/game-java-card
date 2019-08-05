@@ -1,4 +1,4 @@
-package acct.dto;
+package core.dto.acct.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 
