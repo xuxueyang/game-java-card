@@ -2,6 +2,7 @@ package itemmanager.service;
 
 
 import core.util.UUIDGenerator;
+import dist.ItemConstants;
 import itemmanager.domain.battle.Deck;
 import itemmanager.dto.SaveDeckDTO;
 import itemmanager.respository.DeckRepository;
@@ -100,10 +101,10 @@ public class DeckService {
     private SaveDeckDTO transferTo(Deck deck){
         if(deck==null)
             return null;
-        if(Deck.Type.CARD.equals(deck.getType())&&Deck.Type.ENVOY.equals(deck.getType())){
-            if(Deck.likeType.ATTACK.equals(deck.getLikeType())
-                    &&Deck.likeType.Defense.equals(deck.getLikeType())
-                    &&Deck.likeType.Blood.equals(deck.getLikeType())){
+        if(ItemConstants.Type.CARD.equals(deck.getType())&&ItemConstants.Type.ENVOY.equals(deck.getType())){
+            if(ItemConstants.likeType.ATTACK.equals(deck.getLikeType())
+                    &&ItemConstants.likeType.Defense.equals(deck.getLikeType())
+                    &&ItemConstants.likeType.Blood.equals(deck.getLikeType())){
                 SaveDeckDTO deckDTO = new SaveDeckDTO();
                 deckDTO.setLikeType(deck.getLikeType());
                 deckDTO.setType(deck.getType());

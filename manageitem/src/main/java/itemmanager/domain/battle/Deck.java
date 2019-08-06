@@ -13,15 +13,6 @@ public class Deck extends BaseEntity {
 
 
 
-    public static enum Type{
-        ENVOY,
-        CARD
-    }
-    public static enum likeType{
-        ATTACK,
-        Defense,
-        Blood
-    }
     @Column(nullable = false,name = "type",length = 10)
     private String type;//區別棋子還是卡牌,ENVOY是棋子，CARD是卡牌
     @Column(nullable = false,name = "relatedId",length = 30)

@@ -1,9 +1,12 @@
 package itemmanager.service;
 
+import dist.ItemConstants;
 import itemmanager.domain.battle.Card;
 import itemmanager.domain.battle.Envoy;
 import itemmanager.domain.battle.RelatedCard;
 import itemmanager.domain.battle.RelatedEnvoy;
+import itemmanager.dto.AdminUpdateCardDTO;
+import itemmanager.dto.AdminUpdateEnvoyDTO;
 import itemmanager.respository.CardRepository;
 import itemmanager.respository.EnvoyRepository;
 import itemmanager.respository.RelatedCardRepository;
@@ -11,7 +14,9 @@ import itemmanager.respository.RelatedEnvoyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AdminService  {
@@ -55,5 +60,24 @@ public class AdminService  {
 
 
 
+    }
+
+    public void adminChangeCard(AdminUpdateCardDTO adminUpdateCard) {
+        //修改棋子属性（仅测试）
+
+    }
+    public void adminChangeEnvoy(AdminUpdateEnvoyDTO adminUpdateEnvoy) {
+        //修改棋子属性（仅测试）
+
+    }
+
+
+    public Map<String,Object> getAllConfig() {
+        Map<String,Object> map = new HashMap<>();
+        map.put("CardType",ItemConstants.CardType.values());
+        map.put("Grade",ItemConstants.Grade.values());
+        map.put("Attribute",ItemConstants.Attribute.values());
+        map.put("Race",ItemConstants.Race.values());
+        return map;
     }
 }

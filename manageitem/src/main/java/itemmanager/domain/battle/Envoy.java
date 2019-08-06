@@ -16,12 +16,12 @@ public class Envoy extends BaseEntity {
     private Integer attribute;//属性(code)
 
     @Transient
-    private Integer attributeName;//属性(code)
+    private String attributeName;//属性(code)
 
     @Column(nullable = false,name = "race",length = 5)
     private Integer race;//种族(code)
     @Transient
-    private Integer raceName;//属性(code)
+    private String raceName;//种族名字(code)
 
     @Column(nullable = false,name = "name",length = 5)
     private String name;//名字
@@ -29,31 +29,38 @@ public class Envoy extends BaseEntity {
     @Column(nullable = false,name = "icon",length = 255)
     private String icon;//头像
 
-    @Column(nullable = false,name = "pinJi",length = 5)
-    private Integer pinJi;//品级
+    @Column(nullable = false,name = "grade",length = 5)
+    private Integer grade;//品级
 
     @Transient
-    private String pinJiName;//品级
+    private String gradeName;//品级
 
-    @Column(nullable = false,name = "xingChenZhi",length = 5)
-    private Integer xingChenZhi;//星辰值
+    @Column(nullable = false,name = "starForce",length = 5)
+    private Integer starForce;//星辰值
 
-    @Column(nullable = false,name = "plusXingChenZhi",length = 5)
-    private Integer plusXingChenZhi=20;//最大的星辰值
+    @Column(nullable = false,name = "maxPlusStarForce",length = 5)
+    private Integer maxPlusStarForce=20;//最大的星辰值
 
     @Column(nullable = false,name = "attack",length = 10)
-    private Integer attack;
-    @Column(nullable = false,name = "defense",length = 10)
-    private Integer defense;
-    @Column(nullable = false,name = "blood",length = 10)
-    private Integer blood;
-    @Column(nullable = false,name = "move",length = 10)
-    private Integer move;
-    @Column(nullable = false,name = "attackDistance",length = 10)
-    private Integer attackDistance;
+    private Integer attack;//攻击力
+    @Column(nullable = false,name = "incrAttack",length = 10)
+    private Integer incrAttack;//成长攻击力
 
-    @Column(nullable = false,name = "ct",length = 10)
-    private Integer ct = 10;//暴击率
+    @Column(nullable = false,name = "defense",length = 10)
+    private Integer defense;//防御
+    @Column(nullable = false,name = "incrDefense",length = 10)
+    private Integer incrDefense;//成长防御
+    @Column(nullable = false,name = "hp",length = 10)
+    private Integer hp;//血量
+    @Column(nullable = false,name = "incrHp",length = 10)
+    private Integer incrHp;//成长血量
+    @Column(nullable = false,name = "move",length = 10)
+    private Integer move;//移动力
+    @Column(nullable = false,name = "attackDistance",length = 10)
+    private Integer attackDistance;//攻击距离
+
+    @Column(nullable = false,name = "criticalRate",length = 10)
+    private Integer criticalRate = 10;//暴击率
 
     @Column(nullable = false,name = "description",length = 255)
     private String description;
@@ -68,6 +75,7 @@ public class Envoy extends BaseEntity {
 //    private Integer plusDefense;
 //    private Integer plusBlood;
 
+
     public Integer getAttribute() {
         return attribute;
     }
@@ -76,11 +84,11 @@ public class Envoy extends BaseEntity {
         this.attribute = attribute;
     }
 
-    public Integer getAttributeName() {
+    public String getAttributeName() {
         return attributeName;
     }
 
-    public void setAttributeName(Integer attributeName) {
+    public void setAttributeName(String attributeName) {
         this.attributeName = attributeName;
     }
 
@@ -92,11 +100,11 @@ public class Envoy extends BaseEntity {
         this.race = race;
     }
 
-    public Integer getRaceName() {
+    public String getRaceName() {
         return raceName;
     }
 
-    public void setRaceName(Integer raceName) {
+    public void setRaceName(String raceName) {
         this.raceName = raceName;
     }
 
@@ -116,36 +124,36 @@ public class Envoy extends BaseEntity {
         this.icon = icon;
     }
 
-    public Integer getPinJi() {
-        return pinJi;
+    public Integer getGrade() {
+        return grade;
     }
 
-    public void setPinJi(Integer pinJi) {
-        this.pinJi = pinJi;
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 
-    public String getPinJiName() {
-        return pinJiName;
+    public String getGradeName() {
+        return gradeName;
     }
 
-    public void setPinJiName(String pinJiName) {
-        this.pinJiName = pinJiName;
+    public void setGradeName(String gradeName) {
+        this.gradeName = gradeName;
     }
 
-    public Integer getXingChenZhi() {
-        return xingChenZhi;
+    public Integer getStarForce() {
+        return starForce;
     }
 
-    public void setXingChenZhi(Integer xingChenZhi) {
-        this.xingChenZhi = xingChenZhi;
+    public void setStarForce(Integer starForce) {
+        this.starForce = starForce;
     }
 
-    public Integer getPlusXingChenZhi() {
-        return plusXingChenZhi;
+    public Integer getMaxPlusStarForce() {
+        return maxPlusStarForce;
     }
 
-    public void setPlusXingChenZhi(Integer plusXingChenZhi) {
-        this.plusXingChenZhi = plusXingChenZhi;
+    public void setMaxPlusStarForce(Integer maxPlusStarForce) {
+        this.maxPlusStarForce = maxPlusStarForce;
     }
 
     public Integer getAttack() {
@@ -156,6 +164,14 @@ public class Envoy extends BaseEntity {
         this.attack = attack;
     }
 
+    public Integer getIncrAttack() {
+        return incrAttack;
+    }
+
+    public void setIncrAttack(Integer incrAttack) {
+        this.incrAttack = incrAttack;
+    }
+
     public Integer getDefense() {
         return defense;
     }
@@ -164,12 +180,28 @@ public class Envoy extends BaseEntity {
         this.defense = defense;
     }
 
-    public Integer getBlood() {
-        return blood;
+    public Integer getIncrDefense() {
+        return incrDefense;
     }
 
-    public void setBlood(Integer blood) {
-        this.blood = blood;
+    public void setIncrDefense(Integer incrDefense) {
+        this.incrDefense = incrDefense;
+    }
+
+    public Integer getHp() {
+        return hp;
+    }
+
+    public void setHp(Integer hp) {
+        this.hp = hp;
+    }
+
+    public Integer getIncrHp() {
+        return incrHp;
+    }
+
+    public void setIncrHp(Integer incrHp) {
+        this.incrHp = incrHp;
     }
 
     public Integer getMove() {
@@ -188,12 +220,12 @@ public class Envoy extends BaseEntity {
         this.attackDistance = attackDistance;
     }
 
-    public Integer getCt() {
-        return ct;
+    public Integer getCriticalRate() {
+        return criticalRate;
     }
 
-    public void setCt(Integer ct) {
-        this.ct = ct;
+    public void setCriticalRate(Integer criticalRate) {
+        this.criticalRate = criticalRate;
     }
 
     public String getDescription() {

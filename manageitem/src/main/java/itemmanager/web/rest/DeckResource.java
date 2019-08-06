@@ -32,7 +32,7 @@ import java.util.List;
  * 卡包管理，可以開啓卡包，隨機獲取卡牌。棋子只能通過購買！
  */
 @Api(value = "卡組管理", description = "卡組管理")
-@RestController("/api/admin")
+@RestController("/api/deck")
 @NeedLoginAspect
 public class DeckResource extends ItemBaseResource {
     //解鎖某個用戶所有卡牌和棋子
@@ -55,6 +55,16 @@ public class DeckResource extends ItemBaseResource {
             return prepareReturnResultDTO(ReturnCode.ERROR_QUERY,null);
         }
     }
+    @GetMapping("/card/{id}")
+    @ApiOperation(value = "獲取某个卡牌", httpMethod = "GET", response = ResponseEntity.class, notes = "獲取某个卡牌")
+    public ReturnResultDTO<?> getCard(@PathVariable(name = "id") Long id) {
+        try {
+
+            return prepareReturnResultDTO(ReturnCode.GET_SUCCESS, cardService.findOne(id));
+        }catch (Exception e){
+            return prepareReturnResultDTO(ReturnCode.ERROR_QUERY,null);
+        }
+    }
     @GetMapping("/cards")
     @ApiOperation(value = "獲取所有卡牌", httpMethod = "GET", response = ResponseEntity.class, notes = "獲取所有卡牌")
     public ReturnResultDTO<?> cardlist() {
@@ -72,6 +82,15 @@ public class DeckResource extends ItemBaseResource {
             UserInfo info = getToken();
             List<RelatedEnvoyDTO> allByUserId = envoyService.findAllByUserId(info.getId());
             return prepareReturnResultDTO(ReturnCode.GET_SUCCESS,allByUserId);
+        }catch (Exception e){
+            return prepareReturnResultDTO(ReturnCode.ERROR_QUERY,null);
+        }
+    }
+    @GetMapping("/envoys/{id}")
+    @ApiOperation(value = "獲取某个棋子", httpMethod = "GET", response = ResponseEntity.class, notes = "獲取某个棋子")
+    public ReturnResultDTO<?> getEnvoy(@PathVariable(name = "id") Long id) {
+        try {
+            return prepareReturnResultDTO(ReturnCode.GET_SUCCESS, envoyService.findOne(id));
         }catch (Exception e){
             return prepareReturnResultDTO(ReturnCode.ERROR_QUERY,null);
         }

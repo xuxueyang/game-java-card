@@ -50,4 +50,8 @@ public class CardService {
         BeanUtils.copyProperties(card,dto);
         return dto;
     }
+
+    public CardDTO findOne(Long id) {
+        return transferTo(cardRepository.findOne(id));
+    }
 }

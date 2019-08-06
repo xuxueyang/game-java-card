@@ -2,6 +2,7 @@ package itemmanager.service;
 
 import core.dto.item.dto.EnvoyDTO;
 import core.dto.item.dto.RelatedEnvoyDTO;
+import dist.ItemConstants;
 import itemmanager.domain.battle.Envoy;
 import itemmanager.domain.battle.RelatedEnvoy;
 import itemmanager.respository.EnvoyRepository;
@@ -41,9 +42,18 @@ public class EnvoyService {
         BeanUtils.copyProperties(relatedCard,dto);
         return dto;
     }
-    private EnvoyDTO transferTo(Envoy card){
+    private EnvoyDTO transferTo(Envoy envoy){
         EnvoyDTO dto = new EnvoyDTO();
-        BeanUtils.copyProperties(card,dto);
+        //设置种族、品级、属性、
+        envoy.setGradeName(ItemConstants.getGradeByCode(envoy.getGrade()).getName());
+        envoy.setAttributeName(ItemConstants.getAttributeByCode(envoy.getAttribute()).getName());
+        envoy.setRaceName(ItemConstants.getRaceByCode(envoy.getRace()).getName());
+
+        BeanUtils.copyProperties(envoy,dto);
         return dto;
+    }
+
+    public EnvoyDTO findOne(Long id) {
+        return transferTo(envoyRepository.findOne(id));
     }
 }

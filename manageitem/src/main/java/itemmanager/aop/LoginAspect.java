@@ -30,7 +30,7 @@ public class LoginAspect {
 //        Object proceed = joinPoint.proceed();
 //        return proceed;
 //    }
-    @Pointcut("within(@core.spring.aop.NeedLoginAspect *)")
+    @Pointcut("within(@itemmanager.aop.NeedLoginAspect *)")
     public void needLogin() {
     }
 
