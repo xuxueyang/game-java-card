@@ -39,7 +39,8 @@ public class AcctLoginService {
     @Autowired
     private UserRepository userRepository;
 
-
+    @Autowired
+    private TokenCacheService tokenCacheService;
 
 
     private final String AUTHORIZED_GRANT_TYPES_USERNAME = "username";
@@ -96,6 +97,7 @@ public class AcctLoginService {
         if(allByCreatedid!=null||allByCreatedid.size()>0){
             for(Token token: allByCreatedid){
                 tokenRepository.delete(token);
+                tokenCacheService.deleteToken(token.getAccesstoken());
             }
         }
         //登录，创建token
@@ -116,6 +118,8 @@ public class AcctLoginService {
         //存userInfo
         map.put(Protocol.USERINFO,prepareForUserInfo(account,area));
         //TODO 存到緩存中
+        tokenCacheService.saveLoginCache(account.getId(),area,token);
+
         return map;
     }
 

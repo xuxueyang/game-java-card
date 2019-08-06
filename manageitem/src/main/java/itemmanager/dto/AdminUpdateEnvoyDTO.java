@@ -1,19 +1,15 @@
-package core.dto.item.dto;
+package itemmanager.dto;
 
-public class EnvoyDTO {
+public class AdminUpdateEnvoyDTO {
     private Long id;
-    private Integer attributeName;//属性(code)
-
-    private Integer raceName;//种族名字(code)
+    private Integer attribute;//属性(code)
+    private Integer race;//种族(code)
 
     private String name;//名字
 
     private String icon;//头像
-    private String gradeName;//品级
 
-    private Integer starForce;//星辰值
-
-    private Integer maxPlusStarForce=20;//最大的星辰值
+    private Integer grade;//品级
 
     private Integer attack;//攻击力
     private Integer incrAttack;//成长攻击力
@@ -25,32 +21,22 @@ public class EnvoyDTO {
     private Integer move;//移动力
     private Integer attackDistance;//攻击距离
 
-    private Integer criticalRate = 10;//暴击率
-
     private String description;
 
-    public Long getId() {
-        return id;
+    public Integer getAttribute() {
+        return attribute;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAttribute(Integer attribute) {
+        this.attribute = attribute;
     }
 
-    public Integer getAttributeName() {
-        return attributeName;
+    public Integer getRace() {
+        return race;
     }
 
-    public void setAttributeName(Integer attributeName) {
-        this.attributeName = attributeName;
-    }
-
-    public Integer getRaceName() {
-        return raceName;
-    }
-
-    public void setRaceName(Integer raceName) {
-        this.raceName = raceName;
+    public void setRace(Integer race) {
+        this.race = race;
     }
 
     public String getName() {
@@ -69,28 +55,12 @@ public class EnvoyDTO {
         this.icon = icon;
     }
 
-    public String getGradeName() {
-        return gradeName;
+    public Integer getGrade() {
+        return grade;
     }
 
-    public void setGradeName(String gradeName) {
-        this.gradeName = gradeName;
-    }
-
-    public Integer getStarForce() {
-        return starForce;
-    }
-
-    public void setStarForce(Integer starForce) {
-        this.starForce = starForce;
-    }
-
-    public Integer getMaxPlusStarForce() {
-        return maxPlusStarForce;
-    }
-
-    public void setMaxPlusStarForce(Integer maxPlusStarForce) {
-        this.maxPlusStarForce = maxPlusStarForce;
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 
     public Integer getAttack() {
@@ -157,19 +127,19 @@ public class EnvoyDTO {
         this.attackDistance = attackDistance;
     }
 
-    public Integer getCriticalRate() {
-        return criticalRate;
-    }
-
-    public void setCriticalRate(Integer criticalRate) {
-        this.criticalRate = criticalRate;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

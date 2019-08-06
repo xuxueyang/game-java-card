@@ -8,6 +8,7 @@ import acct.repository.UserRepository;
 import core.dto.acct.dto.UserInfo;
 import acct.repository.AccountRepository;
 import core.protocol.Protocol;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,8 @@ public class AcctService {
     private AccountRepository accountRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TokenCacheService tokenCacheService;
 
     public Account findUserByLoginName(String loginName){
         Account oneByName = accountRepository.findOneByLoginName(loginName);
@@ -40,15 +43,22 @@ public class AcctService {
         accountRepository.save(account);
     }
 
+    @Transactional
     public void createUser(CreateUserDTO createUserDTO, Long accountId) throws Exception {
         User oneByNickNameAndArea = userRepository.findOneByNickNameAndArea(createUserDTO.getNickName(), createUserDTO.getArea());
         if(oneByNickNameAndArea!=null)
             throw  new Exception("角色名已存在");
-        User user = userRepository.findOneByAccountIdAndArea(accountId, createUserDTO.getArea());
-        if(user!=null){
+        User usertmp = userRepository.findOneByAccountIdAndArea(accountId, createUserDTO.getArea());
+        if(usertmp!=null){
             throw  new Exception("角色已存在");
         }
-        //TODO create
+        //create
+        User user = new User();
+        user.setAccountId(accountId);
+        user.setArea(createUserDTO.getArea());
+        user.setNickName(createUserDTO.getNickName());
+        userRepository.save(user);
+        tokenCacheService.createUser(accountId,createUserDTO.getArea(),user.getId());
     }
 
 
@@ -69,4 +79,13 @@ public class AcctService {
     }
 
 
+    public UserInfo getUserInfoByUserId(Long userId) {
+        User one = userRepository.findOne(userId);
+        if(one!=null){
+            UserInfo userInfo = new UserInfo();
+            BeanUtils.copyProperties(one,userId);
+            return userInfo;
+        }
+        return null;
+    }
 }

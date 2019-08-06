@@ -20,16 +20,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 )
 @EnableFeignClients
 public interface AcctRpcClient {
-    @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.GET_TOKEN_ID)
-    ReturnResultDTO getTokenById(@RequestBody RequestDTO dto);
+//    @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.GET_TOKEN_ID)
+//    ReturnResultDTO getTokenById(@RequestBody RequestDTO dto);
 
     @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.CHECK_LOGIN)
     ReturnResultDTO checkToken(@RequestBody RequestDTO dto);
 
     @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.GET_USER_INFO)
     ReturnResultDTO getUserInfoByToken(@RequestBody RequestDTO dto);
-
-    @RequestMapping(method = RequestMethod.GET,value = AcctRPCConstant.TEST)
-    ReturnResultDTO test();
+//
+//    @RequestMapping(method = RequestMethod.GET,value = AcctRPCConstant.TEST)
+//    ReturnResultDTO test();
 }
 
