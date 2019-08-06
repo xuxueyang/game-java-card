@@ -33,7 +33,8 @@ public class EnvoyService {
     public List<EnvoyDTO> findAll() {
         List<EnvoyDTO> dtos = new ArrayList<>();
         envoyRepository.findAll().forEach(envoy -> {
-            dtos.add(transferTo(envoy));
+            if(envoy.getIsDeleted()==0)
+                dtos.add(transferTo(envoy));
         });
         return dtos;
     }

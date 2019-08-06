@@ -13,6 +13,7 @@ import itemmanager.respository.RelatedCardRepository;
 import itemmanager.respository.RelatedEnvoyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import util.MyBeanUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,13 +63,34 @@ public class AdminService  {
 
     }
 
-    public void adminChangeCard(AdminUpdateCardDTO adminUpdateCard) {
+    public void adminChangeCard(AdminUpdateCardDTO adminUpdateCard) throws Exception {
         //修改棋子属性（仅测试）
+        if(adminUpdateCard.getId()!=null){
+            Card one = cardRepository.findOne(adminUpdateCard.getId());
+            if(one!=null)
+                MyBeanUtils.copyPropertiesExcludeNull(adminUpdateCard,one);
+            else
+                throw new Exception("不存在");
+        }else{
+            Card one = new Card();
+            MyBeanUtils.copyPropertiesExcludeNull(adminUpdateCard,one);
+            cardRepository.save(one);
+        }
 
     }
-    public void adminChangeEnvoy(AdminUpdateEnvoyDTO adminUpdateEnvoy) {
+    public void adminChangeEnvoy(AdminUpdateEnvoyDTO adminUpdateEnvoy)  throws Exception {
         //修改棋子属性（仅测试）
-
+        if(adminUpdateEnvoy.getId()!=null){
+            Envoy one = envoyRepository.findOne(adminUpdateEnvoy.getId());
+            if(one!=null)
+                MyBeanUtils.copyPropertiesExcludeNull(adminUpdateEnvoy,one);
+            else
+                throw new Exception("不存在");
+        }else{
+            Envoy one = new Envoy();
+            MyBeanUtils.copyPropertiesExcludeNull(adminUpdateEnvoy,one);
+            envoyRepository.save(one);
+        }
     }
 
 

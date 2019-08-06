@@ -127,5 +127,10 @@
             <artifactId>jsonrpc4j</artifactId>
             <version>1.5.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.xxy.www</groupId>
+            <artifactId>base.util</artifactId>
+            <version>0.1</version>
+        </dependency>
     </dependencies>
 </project>

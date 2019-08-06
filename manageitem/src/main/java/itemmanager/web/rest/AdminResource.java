@@ -46,7 +46,7 @@ public class AdminResource extends ItemBaseResource {
             adminService.adminChangeCard(adminUpdateCard);
             return prepareReturnResultDTO(ReturnCode.UPDATE_SUCCESS,null);
         }catch (Exception e){
-            return prepareReturnResultDTO(ReturnCode.ERROR_UPDATE,null);
+            return prepareReturnResultDTO(ReturnCode.ERROR_UPDATE,e.getMessage());
         }
     }
     @PostMapping("/admin-envoy")
@@ -56,7 +56,7 @@ public class AdminResource extends ItemBaseResource {
             adminService.adminChangeEnvoy(adminUpdateEnvoyDTO);
             return prepareReturnResultDTO(ReturnCode.UPDATE_SUCCESS,null);
         }catch (Exception e){
-            return prepareReturnResultDTO(ReturnCode.ERROR_UPDATE,null);
+            return prepareReturnResultDTO(ReturnCode.ERROR_UPDATE,e.getMessage());
         }
     }
     //获取所有配置信息

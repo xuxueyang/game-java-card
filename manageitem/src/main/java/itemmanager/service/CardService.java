@@ -36,7 +36,8 @@ public class CardService {
     public List<CardDTO> findAll() {
         List<CardDTO> dtos = new ArrayList<>();
         cardRepository.findAll().forEach(card -> {
-            dtos.add(transferTo(card));
+            if(card.getIsDeleted()==0)
+                dtos.add(transferTo(card));
         });
         return dtos;
     }
