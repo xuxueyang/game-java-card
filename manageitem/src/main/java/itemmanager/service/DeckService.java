@@ -1,6 +1,7 @@
 package itemmanager.service;
 
 
+import core.rpc.dto.DeckRpcDTO;
 import core.util.UUIDGenerator;
 import dist.ItemConstants;
 import itemmanager.domain.battle.Deck;
@@ -118,7 +119,12 @@ public class DeckService {
         deckRepository.deckRepository(userId,deckId);
     }
 
-    public Object getDeckConfigById(String deckId) {
-        return null;
+    public DeckRpcDTO getDeckConfigById(String deckId) {
+        DeckRpcDTO deckRpcDTO = new DeckRpcDTO();
+        deckRpcDTO.setDeckId(deckId);
+        List<Deck> allByDeckId = deckRepository.findAllByDeckId(deckId);
+        //todo 轉換卡組為需要的戰鬥數據
+
+        return deckRpcDTO;
     }
 }

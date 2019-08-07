@@ -25,7 +25,7 @@ public class RequestDTO<Data> implements Serializable {
     private String md5;
     private Byte messageType;
     private Integer index;//包序列
-
+    private Long userId = null;
     private String roomId;
 
     public static byte[] toByteArray(RequestDTO dto){
@@ -117,5 +117,13 @@ public class RequestDTO<Data> implements Serializable {
 
     public void setRoomId(String roomId) {
         this.roomId = roomId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

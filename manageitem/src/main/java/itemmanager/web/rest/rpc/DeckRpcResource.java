@@ -22,7 +22,7 @@ public class DeckRpcResource extends BaseResource {
     private DeckService deckService;
 
     @PostMapping("/GET_DECK")
-    @ApiOperation(value = "加入", httpMethod = "POST", response = ResponseEntity.class, notes = "加入")
+    @ApiOperation(value = "得到卡組", httpMethod = "POST", response = ResponseEntity.class, notes = "得到卡組")
     public ReturnResultDTO CREATE_TWO_ROOM(@RequestBody RequestDTO dto) {
         try {
             String deckId = dto.getData().toString();

@@ -24,4 +24,9 @@ public interface DeckRepository extends BaseRepository<Deck,Long> {
             "update t_deck set t_deck.actived = 0 where t_deck.userId = ?1 and t_deck.deck_id != ?2;" +
             "")
     void deckRepository(Long userId, String  deckId);
+
+
+
+    List<Deck> findAllByDeckId(String deckId);
+
 }

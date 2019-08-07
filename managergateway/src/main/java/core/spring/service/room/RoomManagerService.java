@@ -42,7 +42,7 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
         if(!twoDeck.getReturnCode().startsWith(ReturnCode.SUCCESS)){
             throw new Exception("獲取次玩家卡組失敗");
         }
-        PvpTwoRoom pvpTwoRoom = new PvpTwoRoom(area,roomId, (DeckRpcDTO)oneDeck.getData(), (DeckRpcDTO)twoDeck.getData(),this,this);
+        PvpTwoRoom pvpTwoRoom = new PvpTwoRoom(area,roomId, oneUserId,(DeckRpcDTO)oneDeck.getData(),twoUserId, (DeckRpcDTO)twoDeck.getData(),this,this);
         _roomMap.put(roomId,pvpTwoRoom);
 //        executor.execute(pvpTwoRoom);
         startRoom(pvpTwoRoom);
