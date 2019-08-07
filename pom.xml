@@ -22,6 +22,7 @@
         <module>manageitem</module>
         <module>netty</module>
         <module>managerroom</module>
+        <module>baserabbit</module>
 
     </modules>
     <dependencies>

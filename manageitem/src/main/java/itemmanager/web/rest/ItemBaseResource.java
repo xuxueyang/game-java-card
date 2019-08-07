@@ -14,9 +14,11 @@ public class ItemBaseResource extends BaseResource {
     @Autowired
     private AcctRpcClient acctRpcClient;
 
-    protected UserInfo getToken(){
+    protected UserInfo getUserInfo(){
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         String header = attributes.getRequest().getHeader(Protocol.TOKEN);
+        if(header==null)
+            return null;
         RequestDTO dto = new RequestDTO();
         dto.setData(header);
         ReturnResultDTO userInfoByToken = acctRpcClient.getUserInfoByToken(dto);

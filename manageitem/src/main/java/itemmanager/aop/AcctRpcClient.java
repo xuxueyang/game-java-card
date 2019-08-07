@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 //        ,url = CubeuaaUrl.SERVICE_URL //rpc服务所在的绝对路径，该参数会使'value'失效，
 //        ,url = "${user-server-api.url}",
 //        fallback = AcctServiceHystrix.class
-        ,url = "http://localhost:20007"
+        ,url = "http://localhost:" + AcctRPCConstant.port
 )
 @EnableFeignClients
 public interface AcctRpcClient {

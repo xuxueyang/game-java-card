@@ -1,6 +1,7 @@
 package core.rpc;
 
 public interface AcctRPCConstant {
+    String port = "20007";
     String SERVICE_NAME = "acct";
 
     String GET_TOKEN_ID = "/rpc/acct/GET_TOKEN_ID";

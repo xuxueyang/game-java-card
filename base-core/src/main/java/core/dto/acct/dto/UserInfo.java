@@ -22,6 +22,8 @@ public class UserInfo {
 
     private Long accountId;
 
+    private Long area;
+
     public String getEmail() {
         return email;
     }
@@ -77,5 +79,13 @@ public class UserInfo {
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
+    }
+
+    public Long getArea() {
+        return area;
+    }
+
+    public void setArea(Long area) {
+        this.area = area;
     }
 }

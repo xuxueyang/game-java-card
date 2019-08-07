@@ -24,8 +24,9 @@ public class RequestDTO<Data> implements Serializable {
     )
     private String md5;
     private Byte messageType;
+    private Integer index;//包序列
 
-    private Byte arr;
+    private String roomId;
 
     public static byte[] toByteArray(RequestDTO dto){
         //序列化自己
@@ -99,11 +100,22 @@ public class RequestDTO<Data> implements Serializable {
     }
 
 
-    public Byte getArr() {
-        return arr;
+
+
+    public Integer getIndex() {
+        return index;
     }
 
-    public void setArr(Byte arr) {
-        this.arr = arr;
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
     }
 }

@@ -1,0 +1,4 @@
+rabbitmq:
+  RABBIT_HOST: localhost
+  RABBIT_USERNAME: guest
+  RABBIT_PASSWORD: guest

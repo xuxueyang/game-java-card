@@ -23,7 +23,7 @@ public class GatewayApplication {
         ConfigurableApplicationContext run = SpringApplication.run(GatewayApplication.class, args);
 //        WorldManager.getWorld().runWorld();
         WorldManager worldManager = (WorldManager)run.getBean("WorldManager");
-        worldManager.runWorld();
+//        worldManager.runWorld();
 
     }
 }

@@ -4,6 +4,8 @@ package core.core;
 public class ReturnCode {
     public static final String HAS_ERROR = "9999"; //�ɴ��뷵�ش�����Ϣ
     //��������2XXX
+    public static final String SUCCESS = "200"; //�ɹ�
+
     public static final String DEFAULT_SUCCESS = "2000"; //�ɹ�
     public static final String CREATE_SUCCESS = "2001"; //�����ɹ�
     public static final String UPDATE_SUCCESS = "2002"; //�޸ĳɹ�

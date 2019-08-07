@@ -48,7 +48,7 @@ public class DeckResource extends ItemBaseResource {
     @ApiOperation(value = "獲取所有卡牌", httpMethod = "GET", response = ResponseEntity.class, notes = "獲取所有卡牌")
     public ReturnResultDTO<?> myCards() {
         try {
-            UserInfo info = getToken();
+            UserInfo info = getUserInfo();
             List<RelatedCardDTO> allByUserId = cardService.findAllByUserId(info.getId());
             return prepareReturnResultDTO(ReturnCode.GET_SUCCESS,allByUserId);
         }catch (Exception e){
@@ -79,7 +79,7 @@ public class DeckResource extends ItemBaseResource {
     @ApiOperation(value = "獲取所有棋子", httpMethod = "GET", response = ResponseEntity.class, notes = "獲取所有棋子")
     public ReturnResultDTO<?> myEnvoys() {
         try {
-            UserInfo info = getToken();
+            UserInfo info = getUserInfo();
             List<RelatedEnvoyDTO> allByUserId = envoyService.findAllByUserId(info.getId());
             return prepareReturnResultDTO(ReturnCode.GET_SUCCESS,allByUserId);
         }catch (Exception e){
@@ -110,7 +110,7 @@ public class DeckResource extends ItemBaseResource {
     @ApiOperation(value = "查詢", httpMethod = "DELETE", response = ResponseEntity.class, notes = "查詢")
     public ReturnResultDTO<?> getDeck(@RequestParam(name = "deckId",required = false) String deckId) {
         try {
-            UserInfo token = getToken();
+            UserInfo token = getUserInfo();
             return prepareReturnResultDTO(ReturnCode.GET_SUCCESS,deckService.get(token.getId(), deckId));
         } catch (Exception e) {
             return prepareReturnResultDTO(ReturnCode.ERROR_QUERY, null);
@@ -120,7 +120,7 @@ public class DeckResource extends ItemBaseResource {
     @ApiOperation(value = "保存卡組", httpMethod = "POST", response = ResponseEntity.class, notes = "保存卡組")
     public ReturnResultDTO<?> saveDeck(@RequestBody List<SaveDeckDTO> saveDeckDTO){
         try {
-            UserInfo token = getToken();
+            UserInfo token = getUserInfo();
             String deckId = deckService.save(token.getId(), saveDeckDTO);
             if("".equals(deckId))
                 return prepareReturnResultDTO(ReturnCode.ERROR_CREATE,null);
@@ -133,7 +133,7 @@ public class DeckResource extends ItemBaseResource {
     @ApiOperation(value = "刪除卡組", httpMethod = "DELETE", response = ResponseEntity.class, notes = "刪除卡組")
     public ReturnResultDTO<?> saveDeck(@RequestParam(name = "deckId",required = true) String deckId){
         try {
-            UserInfo token = getToken();
+            UserInfo token = getUserInfo();
             deckService.delete(token.getId(),deckId);
             return prepareReturnResultDTO(ReturnCode.DELETE_SUCCESS,null);
         }catch (Exception e){
