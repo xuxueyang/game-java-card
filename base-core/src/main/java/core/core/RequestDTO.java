@@ -11,9 +11,9 @@ import java.io.Serializable;
 public class RequestDTO<Data> implements Serializable {
     //0级做保留
     @ApiModelProperty(required = true)
-    private Byte type;//一级协议(区分大区等）
+    private Byte type;//二级协议（区分模块等）
     @ApiModelProperty(required = true)
-    private Byte area;//二级协议（区分模块等）
+    private Byte area;//一级协议(区分大区等）
     private Integer protocol;//三级具体协议
     private Data data;
     @ApiModelProperty(required = true)

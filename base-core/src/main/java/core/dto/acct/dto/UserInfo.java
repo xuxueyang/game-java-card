@@ -22,7 +22,7 @@ public class UserInfo {
 
     private Long accountId;
 
-    private Long area;
+    private Byte area;
 
     public String getEmail() {
         return email;
@@ -81,11 +81,11 @@ public class UserInfo {
         this.accountId = accountId;
     }
 
-    public Long getArea() {
+    public Byte getArea() {
         return area;
     }
 
-    public void setArea(Long area) {
+    public void setArea(Byte area) {
         this.area = area;
     }
 }

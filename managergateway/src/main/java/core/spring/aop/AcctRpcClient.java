@@ -25,20 +25,15 @@ import java.util.Map;
 //        ,url = CubeuaaUrl.SERVICE_URL //rpc服务所在的绝对路径，该参数会使'value'失效，
 //        ,url = "${user-server-api.url}",
 //        fallback = AcctServiceHystrix.class
-        ,url = "http://localhost:20007"
+        ,url = "http://localhost:" + AcctRPCConstant.port
 )
 @EnableFeignClients
 public interface AcctRpcClient {
-//    @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.GET_TOKEN_ID)
-//    ReturnResultDTO getTokenById(@RequestBody RequestDTO dto);
 
     @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.CHECK_LOGIN)
     ReturnResultDTO checkToken(@RequestBody RequestDTO dto);
 
     @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.GET_USER_INFO)
     ReturnResultDTO getUserInfoByToken(@RequestBody RequestDTO dto);
-//
-//    @RequestMapping(method = RequestMethod.GET,value = AcctRPCConstant.TEST)
-//    ReturnResultDTO test();
 }
 

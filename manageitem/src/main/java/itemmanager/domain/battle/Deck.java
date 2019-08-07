@@ -30,6 +30,9 @@ public class Deck extends BaseEntity {
     @Column(name = "deckId",length = 40)
     private String deckId;//區服標記(group by)
 
+    @Column(name = "actived",length = 2)
+    private Integer actived = 1;//選中的卡組
+
     public String getType() {
         return type;
     }
@@ -76,5 +79,13 @@ public class Deck extends BaseEntity {
 
     public void setDeckId(String deckId) {
         this.deckId = deckId;
+    }
+
+    public Integer getActived() {
+        return actived;
+    }
+
+    public void setActived(Integer actived) {
+        this.actived = actived;
     }
 }

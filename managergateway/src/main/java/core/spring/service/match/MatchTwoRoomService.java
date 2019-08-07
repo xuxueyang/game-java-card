@@ -64,12 +64,15 @@ public class MatchTwoRoomService {
                 Map<String,Long> map = new HashMap<>();
                 map.put(MatchRPCConstant.Key.oneUser.name(),one.userId);
                 map.put(MatchRPCConstant.Key.twoUser.name(),two.userId);
+                map.put(MatchRPCConstant.Key.area.name(),Long.parseLong(one.area.toString()));
+
                 dto.setData(map);
                 LogUtil.debug(""+oneUserId,""+twoUserId,MatchRPCConstant.SERVICE_NAME,"match-two-room",dto);
                 ReturnResultDTO returnResultDTO = matchTwoRoomRpcClient.CREATE_TWO_ROOM(dto);
                 if(!returnResultDTO.getReturnCode().startsWith(ReturnCode.SUCCESS)){
                     //TODO 説明匹配失敗
                     log.error(returnResultDTO.getData().toString());
+                    //通知一下最好
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -87,7 +90,7 @@ public class MatchTwoRoomService {
 
                 RequestDTO dto = new RequestDTO();
                 Map<String,Long> map = new HashMap<>();
-                map.put(MatchRPCConstant.Key.area.name(),matchMeta.area);
+                map.put(MatchRPCConstant.Key.area.name(),Long.parseLong(matchMeta.area.toString()));
                 map.put(MatchRPCConstant.Key.accountId.name(),matchMeta.accountId);
                 map.put(MatchRPCConstant.Key.userId.name(),matchMeta.userId);
                 dto.setData(map);
@@ -101,12 +104,12 @@ public class MatchTwoRoomService {
     private class MatchMeta{
         public Long accountId;
         public Long userId;
-        public Long area;
+        public Byte area;
         public String roomId;
         public boolean remove = false;
         public int lock = 0;
 
-        public MatchMeta(Long accountId,Long userId, Long area) {
+        public MatchMeta(Long accountId,Long userId, Byte area) {
             this.accountId = accountId;
             this.area = area;
         }

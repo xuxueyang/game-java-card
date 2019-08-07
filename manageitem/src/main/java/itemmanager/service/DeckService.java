@@ -113,4 +113,12 @@ public class DeckService {
         }
         return null;
     }
+
+    public void deckSetActived(Long userId, String deckId) {
+        deckRepository.deckRepository(userId,deckId);
+    }
+
+    public Object getDeckConfigById(String deckId) {
+        return null;
+    }
 }

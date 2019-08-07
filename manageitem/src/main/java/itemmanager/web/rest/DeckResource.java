@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -125,6 +126,19 @@ public class DeckResource extends ItemBaseResource {
             if("".equals(deckId))
                 return prepareReturnResultDTO(ReturnCode.ERROR_CREATE,null);
             return prepareReturnResultDTO(ReturnCode.CREATE_SUCCESS,deckId);
+        }catch (Exception e){
+            return prepareReturnResultDTO(ReturnCode.ERROR_CREATE,null);
+        }
+    }
+
+    //TODO 設置某個卡組為激活狀態
+    @PostMapping("deck-set-actived")
+    @ApiOperation(value = "保存卡組", httpMethod = "POST", response = ResponseEntity.class, notes = "保存卡組")
+    public ReturnResultDTO<?> deckSetActived(@RequestParam(name = "deckId") String deckId){
+        try {
+            UserInfo token = getUserInfo();
+            deckService.deckSetActived(token.getId(), deckId);
+            return prepareReturnResultDTO(ReturnCode.UPDATE_SUCCESS,null);
         }catch (Exception e){
             return prepareReturnResultDTO(ReturnCode.ERROR_CREATE,null);
         }

@@ -88,7 +88,17 @@ public class ItemConstants {
         }
     }
 
+    public static CardType getCardTypeByCode(String code){
+        CardType[] values = CardType.values();
+        for(int i=0;i<values.length;i++){
+            if(values[i].getCode().equals(code)){
+                return values[i];
+            }
+        }
+        return CardType.DEFAULT;
+    }
     public  enum CardType{
+        DEFAULT("默认","DEFAULT"),
         CHANGDI("场地卡","CHANGDI"),//场地卡
         YINMOU("阴谋卡","YINMOU"),
         XIAOGUO("效果卡","XIAOGUO"),

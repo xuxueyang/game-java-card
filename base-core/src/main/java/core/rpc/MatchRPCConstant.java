@@ -1,7 +1,7 @@
 package core.rpc;
 
 public interface MatchRPCConstant {
-    String port = "20007";
+    String port = "20002";
 
     String SERVICE_NAME = "gateway";
     String _prefix = "/rpc/room";
