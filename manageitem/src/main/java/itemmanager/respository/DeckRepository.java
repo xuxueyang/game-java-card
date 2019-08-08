@@ -26,7 +26,8 @@ public interface DeckRepository extends BaseRepository<Deck,Long> {
     void deckRepository(Long userId, String  deckId);
 
 
+    @Query(nativeQuery = true,value = "select deck.id from t_deck deck where deck.userId =?1 and deck.actived = ?2 limit 1")
+    String findAllByDeckIdAndActived(Long deckId,Long actived);
 
     List<Deck> findAllByDeckId(String deckId);
-
 }

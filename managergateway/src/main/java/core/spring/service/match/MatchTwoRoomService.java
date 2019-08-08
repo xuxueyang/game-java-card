@@ -4,7 +4,7 @@ import core.core.RequestDTO;
 import core.core.ReturnCode;
 import core.core.ReturnResultDTO;
 import core.dto.acct.dto.UserInfo;
-import core.rpc.MatchRPCConstant;
+import core.rpc.RoomRPCConstant;
 import core.spring.aop.MatchTwoRoomRpcClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +15,6 @@ import util.logger.LogUtil;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -62,12 +60,12 @@ public class MatchTwoRoomService {
                 MatchMeta two = _userMetaMap.get(twoUserId);
                 RequestDTO dto = new RequestDTO();
                 Map<String,Long> map = new HashMap<>();
-                map.put(MatchRPCConstant.Key.oneUser.name(),one.userId);
-                map.put(MatchRPCConstant.Key.twoUser.name(),two.userId);
-                map.put(MatchRPCConstant.Key.area.name(),Long.parseLong(one.area.toString()));
+                map.put(RoomRPCConstant.Key.oneUser.name(),one.userId);
+                map.put(RoomRPCConstant.Key.twoUser.name(),two.userId);
+                map.put(RoomRPCConstant.Key.area.name(),Long.parseLong(one.area.toString()));
 
                 dto.setData(map);
-                LogUtil.debug(""+oneUserId,""+twoUserId,MatchRPCConstant.SERVICE_NAME,"match-two-room",dto);
+                LogUtil.debug(""+oneUserId,""+twoUserId, RoomRPCConstant.SERVICE_NAME,"match-two-room",dto);
                 ReturnResultDTO returnResultDTO = matchTwoRoomRpcClient.CREATE_TWO_ROOM(dto);
                 if(!returnResultDTO.getReturnCode().startsWith(ReturnCode.SUCCESS)){
                     //TODO 説明匹配失敗
@@ -90,9 +88,9 @@ public class MatchTwoRoomService {
 
                 RequestDTO dto = new RequestDTO();
                 Map<String,Long> map = new HashMap<>();
-                map.put(MatchRPCConstant.Key.area.name(),Long.parseLong(matchMeta.area.toString()));
-                map.put(MatchRPCConstant.Key.accountId.name(),matchMeta.accountId);
-                map.put(MatchRPCConstant.Key.userId.name(),matchMeta.userId);
+                map.put(RoomRPCConstant.Key.area.name(),Long.parseLong(matchMeta.area.toString()));
+                map.put(RoomRPCConstant.Key.accountId.name(),matchMeta.accountId);
+                map.put(RoomRPCConstant.Key.userId.name(),matchMeta.userId);
                 dto.setData(map);
                 matchTwoRoomRpcClient.SURRENDER(dto);
             }else {

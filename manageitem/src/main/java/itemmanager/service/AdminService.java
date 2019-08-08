@@ -1,16 +1,10 @@
 package itemmanager.service;
 
 import dist.ItemConstants;
-import itemmanager.domain.battle.Card;
-import itemmanager.domain.battle.Envoy;
-import itemmanager.domain.battle.RelatedCard;
-import itemmanager.domain.battle.RelatedEnvoy;
+import itemmanager.domain.battle.*;
 import itemmanager.dto.AdminUpdateCardDTO;
 import itemmanager.dto.AdminUpdateEnvoyDTO;
-import itemmanager.respository.CardRepository;
-import itemmanager.respository.EnvoyRepository;
-import itemmanager.respository.RelatedCardRepository;
-import itemmanager.respository.RelatedEnvoyRepository;
+import itemmanager.respository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import util.MyBeanUtils;
@@ -29,6 +23,8 @@ public class AdminService  {
     private RelatedCardRepository relatedCardRepository;
     @Autowired
     private RelatedEnvoyRepository relatedEnvoyRepository;
+    @Autowired
+    private EffectRepository effectRepository;
 
     //解鎖一個用戶下所有卡牌和妻子
     public void unLockAll(Long userId){
@@ -100,6 +96,11 @@ public class AdminService  {
         map.put("Grade",ItemConstants.Grade.values());
         map.put("Attribute",ItemConstants.Attribute.values());
         map.put("Race",ItemConstants.Race.values());
+        List<Effect> all = effectRepository.findAll();
+        map.put("Effect",all);
         return map;
     }
+    //计算星辰值，换算单位
+    //    1星辰力=14血量=4成长生命值=4基础攻击力=1成长攻击力=0.2移动力=0.1攻击距离=3防御=0.5成长防御，放到战斗房间中计算？
+
 }

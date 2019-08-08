@@ -23,7 +23,7 @@ public class RelatedEnvoy extends BaseEntity {
     @Column(nullable = false,name = "plusDefense",length = 5)
     private Integer plusDefense = 0;
     @Column(nullable = false,name = "plusBlood",length = 5)
-    private Integer plusBlood = 0;
+    private Integer plusHp = 0;
 
     public Long getUserId() {
         return userId;
@@ -65,11 +65,11 @@ public class RelatedEnvoy extends BaseEntity {
         this.plusDefense = plusDefense;
     }
 
-    public Integer getPlusBlood() {
-        return plusBlood;
+    public Integer getPlusHp() {
+        return plusHp;
     }
 
-    public void setPlusBlood(Integer plusBlood) {
-        this.plusBlood = plusBlood;
+    public void setPlusHp(Integer plusHp) {
+        this.plusHp = plusHp;
     }
 }

@@ -10,7 +10,7 @@ public class CardRpcDTO implements Serializable{
     private Integer feiyong;
     private ItemConstants.CardType cardType;
     //TODO 差个特效
-
+    private Long effectId;
     public String getId() {
         return id;
     }
@@ -41,5 +41,13 @@ public class CardRpcDTO implements Serializable{
 
     public void setCardType(ItemConstants.CardType cardType) {
         this.cardType = cardType;
+    }
+
+    public Long getEffectId() {
+        return effectId;
+    }
+
+    public void setEffectId(Long effectId) {
+        this.effectId = effectId;
     }
 }

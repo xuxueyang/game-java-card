@@ -24,8 +24,8 @@ public class Deck extends BaseEntity {
     //有棋子的偏好選擇
     @Column(name = "likeType",length = 10)
     private String likeType;//棋子的偏好選擇
-    @Column(name = "area",length = 10)
-    private String area;//區服標記
+//    @Column(name = "area",length = 10)
+//    private String area;//區服標記
 
     @Column(name = "deckId",length = 40)
     private String deckId;//區服標記(group by)
@@ -65,13 +65,13 @@ public class Deck extends BaseEntity {
         this.likeType = likeType;
     }
 
-    public String getArea() {
-        return area;
-    }
+//    public String getArea() {
+//        return area;
+//    }
 
-    public void setArea(String area) {
-        this.area = area;
-    }
+//    public void setArea(String area) {
+//        this.area = area;
+//    }
 
     public String getDeckId() {
         return deckId;

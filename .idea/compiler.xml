@@ -17,9 +17,16 @@
         <module name="managerroom" />
         <module name="netty" />
       </profile>
+      <profile name="Annotation profile for game.java.card" enabled="true">
+        <sourceOutputDir name="../baserabbit/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../baserabbit/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="base-rabbitmq" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="base-core" target="1.8" />
+      <module name="base-rabbitmq" target="1.5" />
       <module name="base-registry" target="1.5" />
       <module name="base-util" target="1.8" />
       <module name="baserabbit" target="1.5" />
@@ -29,7 +36,7 @@
       <module name="manageitem" target="1.8" />
       <module name="managergateway" target="1.7" />
       <module name="managerregistry" target="1.5" />
-      <module name="managerroom" target="1.5" />
+      <module name="managerroom" target="1.8" />
       <module name="netty" target="1.8" />
     </bytecodeTargetLevel>
   </component>

@@ -33,7 +33,8 @@ import java.util.List;
  * 卡包管理，可以開啓卡包，隨機獲取卡牌。棋子只能通過購買！
  */
 @Api(value = "卡組管理", description = "卡組管理")
-@RestController("/api/deck")
+@RestController
+@RequestMapping("/api/deck")
 @NeedLoginAspect
 public class DeckResource extends ItemBaseResource {
     //解鎖某個用戶所有卡牌和棋子

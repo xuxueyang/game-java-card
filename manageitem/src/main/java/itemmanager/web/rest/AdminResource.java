@@ -20,7 +20,8 @@ import java.util.Map;
  * 卡包管理，可以開啓卡包，隨機獲取卡牌。棋子只能通過購買！
  */
 @Api(value = "管理權限", description = "管理權限")
-@RestController("/api/admin")
+@RestController
+@RequestMapping("/api/admin")
 //@NeedLoginAspect
 public class AdminResource extends ItemBaseResource {
     //解鎖某個用戶所有卡牌和棋子
@@ -69,4 +70,5 @@ public class AdminResource extends ItemBaseResource {
             return prepareReturnResultDTO(ReturnCode.ERROR_QUERY,null);
         }
     }
+
 }

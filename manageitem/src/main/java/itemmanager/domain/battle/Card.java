@@ -26,6 +26,9 @@ public class Card extends BaseEntity {
     @Column(nullable = false,name = "type",length = 10)
     private String type;
 
+    @Column(nullable = false,name = "effectId",length = 10)
+    private Long effectId;
+
     public String getName() {
         return name;
     }
@@ -80,5 +83,14 @@ public class Card extends BaseEntity {
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+
+    public Long getEffectId() {
+        return effectId;
+    }
+
+    public void setEffectId(Long effectId) {
+        this.effectId = effectId;
     }
 }

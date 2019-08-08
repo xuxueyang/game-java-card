@@ -1,12 +1,18 @@
 package itemmanager.service;
 
 
+import core.dto.item.dto.CardDTO;
+import core.rpc.dto.CardRpcDTO;
 import core.rpc.dto.DeckRpcDTO;
+import core.rpc.dto.EnvoyRpcDTO;
 import core.util.UUIDGenerator;
 import dist.ItemConstants;
+import itemmanager.domain.battle.Card;
 import itemmanager.domain.battle.Deck;
+import itemmanager.domain.battle.Envoy;
+import itemmanager.domain.battle.RelatedEnvoy;
 import itemmanager.dto.SaveDeckDTO;
-import itemmanager.respository.DeckRepository;
+import itemmanager.respository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +23,14 @@ import java.util.*;
 public class DeckService {
     @Autowired
     private DeckRepository deckRepository;
-
+    @Autowired
+    private CardRepository cardRepository;
+    @Autowired
+    private EnvoyRepository envoyRepository;
+    @Autowired
+    private RelatedEnvoyRepository relatedEnvoyRepository;
+    @Autowired
+    private EffectRepository effectRepository;
 
     @Transactional
     public void delete(Long userId, String deckId) {
@@ -122,9 +135,52 @@ public class DeckService {
     public DeckRpcDTO getDeckConfigById(String deckId) {
         DeckRpcDTO deckRpcDTO = new DeckRpcDTO();
         deckRpcDTO.setDeckId(deckId);
-        List<Deck> allByDeckId = deckRepository.findAllByDeckId(deckId);
-        //todo 轉換卡組為需要的戰鬥數據
+        List<Deck> deckList = deckRepository.findAllByDeckId(deckId);
+        //轉換卡組為需要的戰鬥數據
+        List<EnvoyRpcDTO> envoyRpcDTOS = new ArrayList<>(3);
+        List<CardRpcDTO> cardRpcDTOS = new ArrayList<>(20);
+        for(Deck deck:deckList){
+            String type = deck.getType();
+            if(ItemConstants.Type.CARD.name().equals(type)){
+                CardRpcDTO cardRpcDTO = new CardRpcDTO();
+                cardRpcDTO.setId(UUIDGenerator.getUUID());
+                cardRpcDTO.setMetaCardId(deck.getRelatedId());
+                Card one = cardRepository.findOne(deck.getRelatedId());
+                if(one!=null){
+                    cardRpcDTO.setFeiyong(one.getFeiyong());
+                    cardRpcDTO.setCardType(ItemConstants.getCardTypeByCode(one.getType()));
+                    cardRpcDTO.setEffectId(effectRepository.findOne(one.getEffectId()).getId());
+                    cardRpcDTOS.add(cardRpcDTO);
+                }
+
+            }else if(ItemConstants.Type.ENVOY.name().equals(type)){
+                EnvoyRpcDTO envoyRpcDTO = new EnvoyRpcDTO();
+                envoyRpcDTO.setId(UUIDGenerator.getUUID());
+                Envoy one = envoyRepository.findOne(deck.getRelatedId());
+                RelatedEnvoy relatedEnvoy = relatedEnvoyRepository.findOneByUserIdAndEnvoyId(deck.getUserId(), deck.getRelatedId());
+                envoyRpcDTO.setAttack(one.getAttack()
+                        +relatedEnvoy.getLevel()*one.getIncrAttack()+relatedEnvoy.getPlusAttack());
+                envoyRpcDTO.setDefense(one.getDefense()
+                        +one.getIncrDefense()*relatedEnvoy.getLevel()+relatedEnvoy.getPlusDefense());
+                envoyRpcDTO.setHp(one.getHp()
+                        +one.getIncrHp()*relatedEnvoy.getLevel()+relatedEnvoy.getPlusHp());
+                envoyRpcDTO.setAttackDistance(one.getAttackDistance());
+                envoyRpcDTO.setAttribute(ItemConstants.getAttributeByCode(one.getAttribute()));
+                envoyRpcDTO.setCriticalRate(one.getCriticalRate());
+
+                envoyRpcDTO.setGrade(ItemConstants.getGradeByCode(one.getGrade()));
+
+                envoyRpcDTO.setMove(one.getMove());
+                envoyRpcDTO.setRace(ItemConstants.getRaceByCode(one.getRace()));
+
+                envoyRpcDTOS.add(envoyRpcDTO);
+            }
+        }
 
         return deckRpcDTO;
+    }
+
+    public String findActivedDeckByUserId(Long userId) {
+        return deckRepository.findAllByDeckIdAndActived(userId, 1L);
     }
 }

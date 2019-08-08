@@ -14,11 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-@RestController("/api/match")
+@RestController
+@RequestMapping("/api/match")
 public class MatchRoomResource extends BaseResource{
     //todo 加入戰鬥匹配，退出戰鬥匹配，通知進入戰鬥房間了
 
