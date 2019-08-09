@@ -256,7 +256,7 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
                             this.currentManager == this._oneManager?
                                     this._twoManager: this._oneManager;
                     this.currentManager.startRoundTimestamp = null;
-
+                    this._round++;
                     this.roundType = RoundType.pre_init;
                 }break;
             }
@@ -448,8 +448,17 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
             return roomRabbitDTOS;
         }
 
-        public List<RoomRabbitDTO> transferToDTO(AbstractBaseEffect.EffectData<ResourceManager> data) {
-            return null;
+        public List<RoomRabbitDTO> transferToDTO(AbstractBaseEffect.EffectData<ResourceManager> topData) {
+            List<RoomRabbitDTO> rabbitDTOS = new ArrayList<>(topData.eventList.size());
+            for(AbstractBaseEffect.EffectEvent event: topData.eventList){
+                RoomRabbitDTO rabbitDTO = new RoomRabbitDTO();
+                rabbitDTO.setProtocol(event.effectResult);
+                rabbitDTO.setUserId(event.userId);
+                rabbitDTO.setData(event.effectId);
+
+                rabbitDTOS.add(rabbitDTO);
+            }
+            return rabbitDTOS;
         }
     }
 }

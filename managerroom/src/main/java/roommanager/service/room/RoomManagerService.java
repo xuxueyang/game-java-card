@@ -1,5 +1,6 @@
 package roommanager.service.room;
 
+import com.alibaba.fastjson.JSON;
 import core.core.RequestDTO;
 import core.core.ReturnCode;
 import core.core.ReturnResultDTO;
@@ -81,6 +82,7 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
 
     @Override
     public void sendMsg(List<RoomRabbitDTO> msgList) {
-
+        log.debug(JSON.toJSONString(msgList));
+        //TODO 生产者
     }
 }
