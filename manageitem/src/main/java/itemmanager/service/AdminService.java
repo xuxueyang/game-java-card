@@ -92,10 +92,42 @@ public class AdminService  {
 
     public Map<String,Object> getAllConfig() {
         Map<String,Object> map = new HashMap<>();
-        map.put("CardType",ItemConstants.CardType.values());
-        map.put("Grade",ItemConstants.Grade.values());
-        map.put("Attribute",ItemConstants.Attribute.values());
-        map.put("Race",ItemConstants.Race.values());
+        {
+            ItemConstants.CardType[] values = ItemConstants.CardType.values();
+            Map<String,String> tmp = new HashMap<>();
+            for(int i=0;i<values.length;i++){
+                map.put("label",values[i].getName());
+                map.put("value",values[i].getCode());
+            }
+            map.put("CardType",tmp);
+        }
+        {
+            ItemConstants.Grade[] values = ItemConstants.Grade.values();
+            Map<String,String> tmp = new HashMap<>();
+            for(int i=0;i<values.length;i++){
+                map.put("label",values[i].getName());
+                map.put("value",values[i].getIndex());
+            }
+            map.put("Grade",tmp);
+        }
+        {
+            ItemConstants.Attribute[] values = ItemConstants.Attribute.values();
+            Map<String,String> tmp = new HashMap<>();
+            for(int i=0;i<values.length;i++){
+                map.put("label",values[i].getName());
+                map.put("value",values[i].getIndex());
+            }
+            map.put("Attribute",ItemConstants.Attribute.values());
+        }
+        {
+            ItemConstants.Race[] values = ItemConstants.Race.values();
+            Map<String,String> tmp = new HashMap<>();
+            for(int i=0;i<values.length;i++){
+                map.put("label",values[i].getName());
+                map.put("value",values[i].getIndex());
+            }
+            map.put("Race",ItemConstants.Race.values());
+        }
         List<Effect> all = effectRepository.findAll();
         map.put("Effect",all);
         return map;
