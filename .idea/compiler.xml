@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="base-core" />
+        <module name="base-rabbit" />
         <module name="base-util" />
         <module name="baserabbit" />
         <module name="manage.acct" />
@@ -17,15 +18,10 @@
         <module name="managerroom" />
         <module name="netty" />
       </profile>
-      <profile name="Annotation profile for game.java.card" enabled="true">
-        <sourceOutputDir name="../baserabbit/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../baserabbit/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="base-rabbitmq" />
-      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="base-core" target="1.8" />
+      <module name="base-rabbit" target="1.5" />
       <module name="base-rabbitmq" target="1.5" />
       <module name="base-registry" target="1.5" />
       <module name="base-util" target="1.8" />

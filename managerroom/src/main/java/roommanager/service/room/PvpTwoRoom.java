@@ -5,6 +5,9 @@ import core.protocol.Protocol;
 import core.rpc.dto.CardRpcDTO;
 import core.rpc.dto.DeckRpcDTO;
 import core.rpc.dto.EnvoyRpcDTO;
+import roommanager.service.effect.AbstractBaseEffect;
+import roommanager.service.effect.SysGetCardEffect;
+import roommanager.service.effect.SysIncrStarForceEffect;
 import roommanager.service.map.GameMap;
 import roommanager.service.map.GameMapFactory;
 import dist.ItemConstants;
@@ -13,12 +16,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
     public static final Logger log = LoggerFactory.getLogger(PvpTwoRoom.class);
+    private static final int CONFIG_MAX_STAR_FORCE = 10;
+    private static final Long MAX_ROUNT_TIME = 15*1000L;
+    private static final Long REMAINING_ROUNT_TIME = 5*1000L;
 
-    //回合狀態，5個R
+
     enum RoundType{
         pre_init,//        预准备阶段pre_init,0000001
         init,//        准备阶段init,0000010
@@ -27,6 +35,7 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
         pre_end,//预结束阶段pre_end,0001000
         end//结束阶段end,0001000
     }
+
     private String _roomId;
     private Long winnerUserId;
     private Long failureUserId;
@@ -40,11 +49,29 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
     private Timer timer = new Timer();
     private _MsgFactory _MsgFactory = new _MsgFactory();
     private int _round = 1;//縂回合數
-    private RoundType roundType = RoundType.pre_init;
+    private  RoundType roundType = RoundType.pre_init;
 
     private ResourceManager currentManager;
     private LinkedBlockingQueue<RequestDTO> blockingQueue = new LinkedBlockingQueue(20);
 
+    /**
+     * 队列处理效果
+     */
+    private ConcurrentHashMap<RoomConstants.EffectTime,List<AbstractBaseEffect>> effectList = new ConcurrentHashMap<>();
+    {
+        RoomConstants.EffectTime[] values = RoomConstants.EffectTime.values();
+        for(int i=0;i<values.length;i++){
+            effectList.put(values[i],new ArrayList<AbstractBaseEffect>());
+        }
+        //加入系统的每回合抽卡、增长水晶
+        effectList.get(RoomConstants.EffectTime.ST_GET_CARD).add(new SysGetCardEffect(currentManager));
+        effectList.get(RoomConstants.EffectTime.ST_PRE_INIT).add(new SysIncrStarForceEffect(currentManager));
+    }
+
+
+    /**
+     * 消息队列
+     */
     private RoomEventOverInterface<RoomEventOverInterface.DefaultOverDTO> _RoomEventOverInterface = null;
     private RoomEventSendInterface<RoomRabbitDTO> _RoomEventSendInterface = null;
 
@@ -84,6 +111,37 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
         this.currentManager.round += 1;
         //计算星辰值，换算单位
         // 1星辰力=14血量=4成长生命值=4基础攻击力=1成长攻击力=0.2移动力=0.1攻击距离=3防御=0.5成长防御，放到战斗房间中计算？
+        ResourceManager[] list = new ResourceManager[]{_oneManager,_twoManager};
+        for(ResourceManager manager:list){
+            List<EnvoyRpcDTO> envoys = manager.envoys;
+            for(EnvoyRpcDTO envoy:envoys){
+                envoy.setHp(14*envoy.getHp());
+                envoy.setDefense(3*envoy.getDefense());
+                envoy.setAttack(envoy.getAttack()*4);
+                envoy.setRoomId(_roomId);
+            }
+            // 初始化话手牌和卡组
+            //先排序卡组，然后出列3个到手牌中
+            //随机生成30个随机数
+            //根据ID也行。UUID反正也是随机的
+            List<CardRpcDTO> cards = manager.cards;
+            cards.sort(new Comparator<CardRpcDTO>() {
+                @Override
+                public int compare(CardRpcDTO o1, CardRpcDTO o2) {
+                    return o1.getId().compareToIgnoreCase(o2.getId());
+                }
+            });
+
+            for(int i=0;i<cards.size();i++){
+                manager.deckManager.add(cards.get(i));
+            }
+            //暂时不允许洗牌
+            for(int i=0;i<3;i++){
+                CardRpcDTO poll = manager.deckManager.poll();
+                manager.handCardsManager.add(poll);
+            }
+        }
+
     }
 
 
@@ -122,22 +180,50 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
         //開始
         _startGame();
     }
+
+
     private void _startGame(){
         _startTime = System.currentTimeMillis();
+        this.currentManager.startRoundTimestamp = System.currentTimeMillis();
+        //TODO 开启一个定时器,要结束的前10s发送通知
+        TimerTask roundListen = new TimerTask() {
+            @Override
+            public void run() {
+                if(currentManager.startRoundTimestamp==null){
+                    //说明才开始
+                    currentManager.startRoundTimestamp=System.currentTimeMillis();
+                }else{
+                    //先定死一回合10s
+                    //如果还剩下20秒要提示烧绳子,如果没时间了切换回合
+                    if(System.currentTimeMillis() - currentManager.startRoundTimestamp > MAX_ROUNT_TIME){
+                        log.debug("回合结束，切换");
+                        //添加一个结束回合的消息即可
+                        RequestDTO dto = new RequestDTO();
+                        dto.setProtocol(Protocol.PvpTwoRoomProtocol.CLINET_PLAYER_OVER);
+                        dto.setUserId(currentManager.userId);
+                        receiveMessage(dto);
+
+                    }else if(System.currentTimeMillis()-currentManager.startRoundTimestamp > MAX_ROUNT_TIME -  REMAINING_ROUNT_TIME){
+                        log.debug("剩余时间:" + (System.currentTimeMillis()-currentManager.startRoundTimestamp)/1000);
+                    }
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(roundListen, 0,5);
+
         //階段處理
         while (true){
             switch (roundType){
                 case pre_init:{
-                    sendMessage(_MsgFactory.getStartRoundMsg());//還有水晶增長
-                }break;
-                case end:{
-                    //理論上沒有消息了
-                    this.blockingQueue.clear();
-                    sendMessage(_MsgFactory.getEndRoundMsg());
-                    this.currentManager =
-                            this.currentManager == this._oneManager?
-                                    this._twoManager: this._oneManager;
-                    this.roundType = RoundType.pre_init;
+                    List<AbstractBaseEffect> abstractBaseEffects = this.effectList.get(RoomConstants.EffectTime.ST_PRE_INIT);
+                    AbstractBaseEffect.EffectData<ResourceManager> data = new AbstractBaseEffect.EffectData();
+                    data.eventList = new ArrayList<>();
+                    for(AbstractBaseEffect abstractBaseEffect:abstractBaseEffects){
+                        data = abstractBaseEffect.effect(data);
+                    }
+                    //将data转换成输出的dto
+                    List<RoomRabbitDTO> startRoundMsg = _MsgFactory.transferToDTO(data);
+                    sendMessage(startRoundMsg);//還有水晶增長
                 }break;
                 case init:{
                     //做階段預處理
@@ -146,7 +232,7 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
                     //抽卡
                 } break;
                 case start:{
-                    //阻塞等待玩家處理，同時記時間，超過40s結束回合
+                    //阻塞等待玩家處理，同時記時間，超過60s結束回合
                     while (roundType==RoundType.start){
                         try {
                             RequestDTO take = blockingQueue.take();
@@ -157,7 +243,22 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
                             e.printStackTrace();
                         }
                     }
-                }
+                } break;
+                case pre_end:{
+
+                } break;
+                case end:{
+                    //理論上沒有消息了
+                    this.blockingQueue.clear();
+                    sendMessage(_MsgFactory.getEndRoundMsg());
+                    this.currentManager.startRoundTimestamp = null;
+                    this.currentManager =
+                            this.currentManager == this._oneManager?
+                                    this._twoManager: this._oneManager;
+                    this.currentManager.startRoundTimestamp = null;
+
+                    this.roundType = RoundType.pre_init;
+                }break;
             }
         }
     }
@@ -222,7 +323,9 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
 
     @Override
     public void sendMessage(List<RoomRabbitDTO> msgList) {
-        this._RoomEventSendInterface.sendMsg(msgList);
+        if(msgList!=null){
+            this._RoomEventSendInterface.sendMsg(msgList);
+        }
     }
 
     @Override
@@ -252,13 +355,26 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
     // TODO 將生成的卡牌(新的ID）返回給前端
     private class ResourceManager{
         public boolean isOne;//主玩家標記
+        public int starForce;//星魄
         public Long userId;
         public boolean isReady = false;
         public List<EnvoyRpcDTO> envoys;
-        public List<CardRpcDTO> cards;
-        public List<CardRpcDTO> handCards = new ArrayList<>();
+        public int noCardDamage = 0;
+        public List<CardRpcDTO> cards;//所有卡
+        public ArrayBlockingQueue<CardRpcDTO> deckManager = new ArrayBlockingQueue<CardRpcDTO>(20);//
+        public ArrayBlockingQueue<CardRpcDTO> handCardsManager = new ArrayBlockingQueue<CardRpcDTO>(6);//
+
         public Long timestamp;//心跳
+        public Long startRoundTimestamp;
         public int round = 0;
+
+//        public RoomRabbitDTO addStarForce() {
+//            //添加水晶增长，如果有的话需要通知（或者这个逻辑客户端做吧--）
+//            if(currentManager.starForce<CONFIG_MAX_STAR_FORCE){
+//                currentManager.starForce++;
+//            }
+//            return null;
+//        }
     }
     private ResourceManager getByUserId(long userId){
         if(_oneManager.userId == userId  )
@@ -269,18 +385,30 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
     }
     private final class _MsgFactory{
         public List<RoomRabbitDTO> getStartRoundMsg(){
-//            RoomRabbitDTO oneDto = new RoomRabbitDTO();
-//            oneDto.setUserId(currentManager.userId);
-//            Map<String,Object> map = new HashMap<>();
-//            oneDto.setData(map);
-//            oneDto.setArea(area);
-//            oneDto.setType(Protocol.Type.ROOM);
-//            oneDto.setProtocol(Protocol.PvpTwoRoomProtocol.SERVER_ROOM_INIT);
-            //TODO 發送給2個人
-            return null;
+            List<RoomRabbitDTO> dtos = new ArrayList<>(2);
+            RoomRabbitDTO oneDto = new RoomRabbitDTO();
+            oneDto.setUserId(_oneManager.userId);
+            oneDto.setData(currentManager.userId);
+            oneDto.setArea(area);
+            oneDto.setType(Protocol.Type.ROOM);
+            oneDto.setProtocol(Protocol.PvpTwoRoomProtocol.SERVER_PLAYER_START);
+            dtos.add(oneDto);
+            // 發送給2個人
+            RoomRabbitDTO twoDto = new RoomRabbitDTO();
+            twoDto.setUserId(_twoManager.userId);
+            twoDto.setData(currentManager.userId);
+            twoDto.setArea(area);
+            twoDto.setType(Protocol.Type.ROOM);
+            twoDto.setProtocol(Protocol.PvpTwoRoomProtocol.SERVER_PLAYER_START);
+            dtos.add(twoDto);
+            return dtos;
         }
         public List<RoomRabbitDTO> getEndRoundMsg() {
-            return null;
+            List<RoomRabbitDTO> startRoundMsg = getStartRoundMsg();
+            for(int i=0;i<startRoundMsg.size();i++){
+                startRoundMsg.get(i).setProtocol(Protocol.PvpTwoRoomProtocol.SERVER_PLAYER_OVER);
+            }
+            return startRoundMsg;
         }
         public List<RoomRabbitDTO> getStartRoomMsg(){
             //构造主玩家返回值
@@ -294,10 +422,10 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
                 map.put(RoomConstants.Key_PvpTwoRoom.mapId.name(),_mapId);
                 map.put(RoomConstants.Key_PvpTwoRoom.envoys.name(),manager.envoys);
                 map.put(RoomConstants.Key_PvpTwoRoom.otherEnvoys.name(),list[i==0?1:0].envoys);
-                map.put(RoomConstants.Key_PvpTwoRoom.otherHandCards.name(),list[i==0?1:0].handCards.size());
+                map.put(RoomConstants.Key_PvpTwoRoom.otherHandCards.name(),list[i==0?1:0].handCardsManager.size());
                 map.put(RoomConstants.Key_PvpTwoRoom.cards.name(),manager.cards);
                 map.put(RoomConstants.Key_PvpTwoRoom.isOne.name(),manager.isOne);//表示位置其實
-                map.put(RoomConstants.Key_PvpTwoRoom.handCards.name(),manager.handCards);
+                map.put(RoomConstants.Key_PvpTwoRoom.handCards.name(),manager.handCardsManager);
                 oneDto.setData(map);
                 oneDto.setArea(area);
                 oneDto.setType(Protocol.Type.ROOM);
@@ -318,6 +446,10 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
             ArrayList<RoomRabbitDTO> roomRabbitDTOS = new ArrayList<>(1);
             roomRabbitDTOS.add(oneDto);
             return roomRabbitDTOS;
+        }
+
+        public List<RoomRabbitDTO> transferToDTO(AbstractBaseEffect.EffectData<ResourceManager> data) {
+            return null;
         }
     }
 }

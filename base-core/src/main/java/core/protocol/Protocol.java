@@ -56,6 +56,7 @@ public  interface Protocol {
 
         //服務器能做的：棋子移動、棋子攻擊、棋子使用技能、棋子死亡、卡牌觸發、卡使用、玩家抽卡、玩家回合結束、增長水晶
         //初始化
+        int SERVER_ERROR= _Index.PvpTwoRoomIndex_SERVER + 0;
         int SERVER_ROOM_INIT = _Index.PvpTwoRoomIndex_SERVER + 1;
         int SERVER_ENVOY_MOVE= _Index.PvpTwoRoomIndex_SERVER + 2;
         int SERVER_ENVOY_ATTACK = _Index.PvpTwoRoomIndex_SERVER + 3;
@@ -63,10 +64,15 @@ public  interface Protocol {
         int SERVER_ENVOY_DEAD = _Index.PvpTwoRoomIndex_SERVER + 5;
         int SERVER_CARD_TYPE_YINMOU_EFFECT = _Index.PvpTwoRoomIndex_SERVER + 6;
         int SERVER_CARD_USE= _Index.PvpTwoRoomIndex_SERVER + 7;
-        int SERVER_CARD_GET= _Index.PvpTwoRoomIndex_SERVER + 8;
+        int SERVER_CARD_GET_SUCCESS= _Index.PvpTwoRoomIndex_SERVER + 8;
         int SERVER_PLAYER_OVER= _Index.PvpTwoRoomIndex_SERVER + 9;
-        int SERVER_STAR_SPIRIT_INCR= _Index.PvpTwoRoomIndex_SERVER + 10;
+        int SERVER_STAR_STAR_FORCE_INCR= _Index.PvpTwoRoomIndex_SERVER + 10;
         int SERVER_PLAYER_SURRENDER= _Index.PvpTwoRoomIndex_SERVER + 11;
+
+        int SERVER_CARD_GET_DESTROY_CARD= _Index.PvpTwoRoomIndex_SERVER + 12;
+        int SERVER_CARD_GET_NO_CARD= _Index.PvpTwoRoomIndex_SERVER + 13;
+
+        int SERVER_PLAYER_START= _Index.PvpTwoRoomIndex_SERVER + 14;
 
 
 

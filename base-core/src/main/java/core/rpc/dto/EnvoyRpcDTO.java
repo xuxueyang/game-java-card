@@ -7,6 +7,7 @@ import java.io.Serializable;
 public class EnvoyRpcDTO implements Serializable{
     private String id;
     private Long metaEnvoyId;
+    private String roomId;
     private ItemConstants.Attribute attribute;//属性(code)
     private ItemConstants.Race race;//种族(code)
     private ItemConstants.Grade grade;//品级
@@ -148,5 +149,13 @@ public class EnvoyRpcDTO implements Serializable{
 
     public void setY(Integer y) {
         this.y = y;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
     }
 }
