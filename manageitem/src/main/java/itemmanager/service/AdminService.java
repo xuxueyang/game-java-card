@@ -88,8 +88,10 @@ public class AdminService  {
         //修改棋子属性（仅测试）
         if(adminUpdateEnvoy.getId()!=null){
             Envoy one = envoyRepository.findOne(adminUpdateEnvoy.getId());
-            if(one!=null)
+            if(one!=null){
                 MyBeanUtils.copyPropertiesExcludeNull(adminUpdateEnvoy,one);
+                envoyRepository.save(one);
+            }
             else
                 throw new Exception("不存在");
         }else{
