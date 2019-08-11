@@ -7,7 +7,7 @@ public class UUIDGenerator {
     }
 
     /**
-     * ×Ô¶¯Éú³É32Î»µÄUUid£¬¶ÔÓ¦Êı¾İ¿âµÄÖ÷¼üid½øĞĞ²åÈëÓÃ¡£
+     * è‡ªåŠ¨ç”Ÿæˆ32ä½çš„UUidï¼Œå¯¹åº”æ•°æ®åº“çš„ä¸»é”®idè¿›è¡Œæ’å…¥ç”¨ã€‚
      * @return
      */
     public static String getUUID() {

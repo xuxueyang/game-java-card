@@ -22,6 +22,7 @@ public class AdminUpdateEnvoyDTO {
     private Integer attackDistance;//攻击距离
 
     private String description;
+    private String designDescription;
 
     public Integer getAttribute() {
         return attribute;
@@ -141,5 +142,13 @@ public class AdminUpdateEnvoyDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDesignDescription() {
+        return designDescription;
+    }
+
+    public void setDesignDescription(String designDescription) {
+        this.designDescription = designDescription;
     }
 }

@@ -55,6 +55,19 @@ public class EnvoyService {
     }
 
     public EnvoyDTO findOne(Long id) {
-        return transferTo(envoyRepository.findOne(id));
+        Envoy one = envoyRepository.findOne(id);
+        one.setGradeName(ItemConstants.getGradeByCode(one.getGrade()).getName());
+        one.setStarForce(ItemConstants.getGradeByCode(one.getGrade()).getStarForce());
+        return transferTo(one);
+    }
+
+    public List<Envoy> findAllAdmin() {
+        List<Envoy> all = envoyRepository.findAll();
+        all.forEach(envoy -> {
+            envoy.setGradeName(ItemConstants.getGradeByCode(envoy.getGrade()).getName());
+            envoy.setAttributeName(ItemConstants.getAttributeByCode(envoy.getAttribute()).getName());
+            envoy.setRaceName(ItemConstants.getRaceByCode(envoy.getRace()).getName());
+        });
+        return all;
     }
 }

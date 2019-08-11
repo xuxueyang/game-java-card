@@ -19,7 +19,7 @@ public abstract class BaseEntity {
     private String spaceCode;
 
     @Column(name = "is_deleted",length = 2)
-    private Integer isDeleted;
+    private Integer isDeleted = 0;
 
     @Column(name = "created_date")
     private ZonedDateTime createdDate = ZonedDateTime.now();

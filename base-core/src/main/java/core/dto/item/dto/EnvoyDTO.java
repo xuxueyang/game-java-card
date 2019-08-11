@@ -2,9 +2,9 @@ package core.dto.item.dto;
 
 public class EnvoyDTO {
     private Long id;
-    private Integer attributeName;//属性(code)
+    private String attributeName;//属性(code)
 
-    private Integer raceName;//种族名字(code)
+    private String raceName;//种族名字(code)
 
     private String name;//名字
 
@@ -37,21 +37,7 @@ public class EnvoyDTO {
         this.id = id;
     }
 
-    public Integer getAttributeName() {
-        return attributeName;
-    }
 
-    public void setAttributeName(Integer attributeName) {
-        this.attributeName = attributeName;
-    }
-
-    public Integer getRaceName() {
-        return raceName;
-    }
-
-    public void setRaceName(Integer raceName) {
-        this.raceName = raceName;
-    }
 
     public String getName() {
         return name;
@@ -171,5 +157,21 @@ public class EnvoyDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAttributeName() {
+        return attributeName;
+    }
+
+    public void setAttributeName(String attributeName) {
+        this.attributeName = attributeName;
+    }
+
+    public String getRaceName() {
+        return raceName;
+    }
+
+    public void setRaceName(String raceName) {
+        this.raceName = raceName;
     }
 }

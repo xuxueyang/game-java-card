@@ -1,5 +1,4 @@
 package dist;
-
 public class ItemConstants {
 
     private static int _Attribute = 1000;
@@ -133,7 +132,7 @@ public class ItemConstants {
         return null;
     }
     public enum Race{
-        DEFAULT("",1);
+        DEFAULT("默认",1);
         private String name;
         private int index;
         private Race(String name,int code)

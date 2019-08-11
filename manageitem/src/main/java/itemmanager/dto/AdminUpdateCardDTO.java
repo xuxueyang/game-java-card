@@ -1,5 +1,7 @@
 package itemmanager.dto;
 
+import java.util.Map;
+
 public class AdminUpdateCardDTO {
     private Long id;//如果有ID的话视为更新，不然为创建
     private String grade;
@@ -12,6 +14,7 @@ public class AdminUpdateCardDTO {
     private Integer feiyong;
     private String type;
     private String effectCode;//TODO 卡牌和特效的绑定
+    private Map jsonMap;
 
     public Long getId() {
         return id;
@@ -84,5 +87,13 @@ public class AdminUpdateCardDTO {
 
     public void setEffectCode(String effectCode) {
         this.effectCode = effectCode;
+    }
+
+    public Map getJsonMap() {
+        return jsonMap;
+    }
+
+    public void setJsonMap(Map jsonMap) {
+        this.jsonMap = jsonMap;
     }
 }

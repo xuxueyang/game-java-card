@@ -27,7 +27,7 @@ public class Envoy extends BaseEntity {
     private String name;//名字
 
     @Column(nullable = false,name = "icon",length = 255)
-    private String icon;//头像
+    private String icon = "";//头像
 
     @Column(nullable = false,name = "grade",length = 5)
     private Integer grade;//品级
@@ -36,35 +36,39 @@ public class Envoy extends BaseEntity {
     private String gradeName;//品级
 
     @Column(nullable = false,name = "starForce",length = 5)
-    private Integer starForce;//星辰值
+    private Integer starForce = 0;//星辰值
 
     @Column(nullable = false,name = "maxPlusStarForce",length = 5)
     private Integer maxPlusStarForce=20;//最大的星辰值
 
     @Column(nullable = false,name = "attack",length = 10)
-    private Integer attack;//攻击力
+    private Integer attack = 0;//攻击力
     @Column(nullable = false,name = "incrAttack",length = 10)
-    private Integer incrAttack;//成长攻击力
+    private Integer incrAttack = 0;//成长攻击力
 
     @Column(nullable = false,name = "defense",length = 10)
-    private Integer defense;//防御
+    private Integer defense = 0;//防御
     @Column(nullable = false,name = "incrDefense",length = 10)
-    private Integer incrDefense;//成长防御
+    private Integer incrDefense = 0;//成长防御
     @Column(nullable = false,name = "hp",length = 10)
-    private Integer hp;//血量
+    private Integer hp = 0;//血量
     @Column(nullable = false,name = "incrHp",length = 10)
-    private Integer incrHp;//成长血量
+    private Integer incrHp = 0;//成长血量
     @Column(nullable = false,name = "move",length = 10)
-    private Integer move;//移动力
+    private Integer move = 0;//移动力
     @Column(nullable = false,name = "attackDistance",length = 10)
-    private Integer attackDistance;//攻击距离
+    private Integer attackDistance = 0;//攻击距离
 
     @Column(nullable = false,name = "criticalRate",length = 10)
     private Integer criticalRate = 10;//暴击率
 
     @Column(nullable = false,name = "description",length = 255)
-    private String description;
+    private String description= "";
 
+    @Column(nullable = false,name = "designDescription",length = 255)
+    private String designDescription= "";
+    @Column(nullable = false,name = "jsonMap",length = 255)
+    private String jsonMap = "";
 //    @Column(nullable = false,name = "level",length = 5)
 //    private Integer level = 1;
 
@@ -234,5 +238,21 @@ public class Envoy extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDesignDescription() {
+        return designDescription;
+    }
+
+    public void setDesignDescription(String designDescription) {
+        this.designDescription = designDescription;
+    }
+
+    public String getJsonMap() {
+        return jsonMap;
+    }
+
+    public void setJsonMap(String jsonMap) {
+        this.jsonMap = jsonMap;
     }
 }

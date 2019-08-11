@@ -40,7 +40,7 @@ public class Validators {
         if(obj==null||"".equals(String.valueOf(obj))){
             return false;
         }
-        //类似 2018-06-02
+        //绫讳技 2018-06-02
         String pattern = "\\d{4}-\\d{2}-\\d{2}";
         return Pattern.matches(pattern,String.valueOf(obj));
     }
@@ -48,7 +48,7 @@ public class Validators {
         if(obj==null||"".equals(String.valueOf(obj))){
             return false;
         }
-        //类似 2018-06-02
+        //绫讳技 2018-06-02
         if(obj.toString().contains("\\\\")
                 ||obj.toString().contains("/")
                 ||obj.toString().startsWith(".")){
@@ -70,9 +70,9 @@ public class Validators {
     }
 
     /**
-     * ????????Ч??Χ???????true,???fieldValue?null?????????fieldRangeValues?null
+     * ????????效??围???????true,???fieldValue?null?????????fieldRangeValues?null
      * @param fieldValue      ????
-     * @param fieldRangeValues ??Ч??Χ
+     * @param fieldRangeValues ??效??围
      * @return
      */
     public static <T> boolean fieldRangeValue(T fieldValue, T... fieldRangeValues) {
