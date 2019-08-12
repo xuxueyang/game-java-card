@@ -8,7 +8,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="base-core" />
         <module name="base-rabbit" />
+        <module name="base-rabbitmq" />
         <module name="base-util" />
+        <module name="basemq" />
         <module name="baserabbit" />
         <module name="manage.acct" />
         <module name="manageacct" />
@@ -22,9 +24,10 @@
     <bytecodeTargetLevel>
       <module name="base-core" target="1.8" />
       <module name="base-rabbit" target="1.5" />
-      <module name="base-rabbitmq" target="1.5" />
+      <module name="base-rabbitmq" target="1.8" />
       <module name="base-registry" target="1.5" />
       <module name="base-util" target="1.8" />
+      <module name="basemq" target="1.5" />
       <module name="baserabbit" target="1.5" />
       <module name="gamejavacard" target="1.5" />
       <module name="manage.acct" target="1.8" />

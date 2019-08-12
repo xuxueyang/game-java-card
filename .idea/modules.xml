@@ -3,8 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/base-core/base-core.iml" filepath="$PROJECT_DIR$/base-core/base-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/base-rabbitmq/base-rabbit.iml" filepath="$PROJECT_DIR$/base-rabbitmq/base-rabbit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-rabbitmq/base-rabbitmq.iml" filepath="$PROJECT_DIR$/base-rabbitmq/base-rabbitmq.iml" />
       <module fileurl="file://$PROJECT_DIR$/base-util/base-util.iml" filepath="$PROJECT_DIR$/base-util/base-util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base-mq/basemq.iml" filepath="$PROJECT_DIR$/base-mq/basemq.iml" />
       <module fileurl="file://$PROJECT_DIR$/gamejavacard.iml" filepath="$PROJECT_DIR$/gamejavacard.iml" />
       <module fileurl="file://$PROJECT_DIR$/manageacct/manage.acct.iml" filepath="$PROJECT_DIR$/manageacct/manage.acct.iml" />
       <module fileurl="file://$PROJECT_DIR$/manageitem/manageitem.iml" filepath="$PROJECT_DIR$/manageitem/manageitem.iml" />

@@ -1,6 +1,7 @@
 package roommanager.service.room;
 
 import com.alibaba.fastjson.JSON;
+import rabbitmq.mq.consumer.RabbitMQConsumer;
 import core.core.RequestDTO;
 import core.core.ReturnCode;
 import core.core.ReturnResultDTO;
@@ -11,14 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rabbitmq.mq.producer.RabbitMQProducer;
 import roommanager.rpc.DeckRpcClient;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 @Service
 public class RoomManagerService implements RoomEventOverInterface<RoomEventOverInterface.DefaultOverDTO>,RoomEventSendInterface<RoomRabbitDTO> {
@@ -26,6 +26,11 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
 
     @Autowired
     private DeckRpcClient deckRpcClient;
+    @Autowired
+    private RabbitMQConsumer consumer;
+    @Autowired
+    private RabbitMQProducer producer;
+
 
     //todo 注入rabbit，并且接受消息
 //    Executor executor = Executors.newFixedThreadPool(10);

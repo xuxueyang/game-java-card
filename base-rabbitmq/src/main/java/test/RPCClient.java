@@ -38,7 +38,6 @@ public class RPCClient {
                 .correlationId(corrId)
                 .replyTo(replyQueueName)
                 .build();
-
         channel.basicPublish("", requestQueueName, props, message.getBytes("UTF-8"));
 
         final BlockingQueue<String> response = new ArrayBlockingQueue<String>(1);

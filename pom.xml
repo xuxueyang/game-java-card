@@ -16,13 +16,15 @@
     <modules>
         <module>base-core</module>
         <module>base-util</module>
+        <module>base-rabbitmq</module>
+
         <module>managerregistry</module>
         <module>managergateway</module>
         <module>manageacct</module>
         <module>manageitem</module>
         <module>netty</module>
         <module>managerroom</module>
-        <module>baserabbit</module>
+        <module>base-mq</module>
 
     </modules>
     <dependencies>

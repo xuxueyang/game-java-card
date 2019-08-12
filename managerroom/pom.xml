@@ -133,6 +133,12 @@
             <artifactId>base.util</artifactId>
             <version>0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.xxy.www</groupId>
+            <artifactId>base-rabbitmq</artifactId>
+            <version>0.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>

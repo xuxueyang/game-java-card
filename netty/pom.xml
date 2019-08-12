@@ -66,5 +66,10 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.xxy.www</groupId>
+            <artifactId>base-rabbitmq</artifactId>
+            <version>0.1</version>
+        </dependency>
     </dependencies>
 </project>
