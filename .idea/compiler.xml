@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="base-core" />
         <module name="base-rabbit" />
-        <module name="base-rabbitmq" />
         <module name="base-util" />
         <module name="basemq" />
         <module name="baserabbit" />

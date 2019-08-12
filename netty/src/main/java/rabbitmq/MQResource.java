@@ -1,11 +1,6 @@
 package rabbitmq;
 
-//import rabbitmq.mq.consumer.RabbitMQConsumer;
 import core.rpc.RoomRPCConstant;
-import rabbitmq.mq.consumer.RabbitMQConsumer;
-import rabbitmq.mq.producer.RabbitMQProducer;
-//import rabbitmq.mq.producer.RabbitMQProducer;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.TimeoutException;

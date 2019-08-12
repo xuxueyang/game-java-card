@@ -1,4 +1,4 @@
-package rabbitmq.mq.consumer;
+package rabbitmq;
 
 import com.rabbitmq.client.*;
 import core.ConnectionUtil;

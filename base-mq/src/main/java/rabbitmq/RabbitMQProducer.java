@@ -1,14 +1,15 @@
-package rabbitmq.mq.producer;
+package rabbitmq;
 
 import com.rabbitmq.client.*;
 import core.ConnectionUtil;
-//import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeoutException;
+
+//import org.springframework.stereotype.Component;
 
 //@Component
 public class RabbitMQProducer {
