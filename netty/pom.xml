@@ -24,7 +24,12 @@
     </build>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.caucho</groupId>
+            <artifactId>hessian</artifactId>
+            <version>3.1.5</version>
+        </dependency>
+        <!--https://agapple.iteye.com/blog/859052-->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>

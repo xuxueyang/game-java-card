@@ -1,6 +1,7 @@
 package roommanager.service.room;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import rabbitmq.mq.consumer.RabbitMQConsumer;
 import core.core.RequestDTO;
 import core.core.ReturnCode;
@@ -15,10 +16,14 @@ import org.springframework.stereotype.Service;
 import rabbitmq.mq.producer.RabbitMQProducer;
 import roommanager.rpc.DeckRpcClient;
 
+import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 @Service
 public class RoomManagerService implements RoomEventOverInterface<RoomEventOverInterface.DefaultOverDTO>,RoomEventSendInterface<RoomRabbitDTO> {
@@ -30,12 +35,59 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
     private RabbitMQConsumer consumer;
     @Autowired
     private RabbitMQProducer producer;
+//    private LinkedBlockingQueue<RequestDTO> storageConsumer = new LinkedBlockingQueue<RequestDTO>();
+    private LinkedBlockingQueue<RequestDTO> storageProducer = new LinkedBlockingQueue<RequestDTO>();
 
 
+    @PostConstruct
+    private void initManager() {
+        Runnable runnableConsumer = new Runnable() {
+            @Override
+            public void run() {
+                if(consumer!=null){
+                    //循环读取读出消息
+                    try {
+                        RequestDTO dto = JSONObject.parseObject(consumer.consume(), RequestDTO.class);
+//                        storageConsumer.put(dto);
+                        receiveMessage(dto);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        Runnable runnableProducer = new Runnable() {
+            @Override
+            public void run() {
+                if(producer!=null){
+                    //循环读取读出消息
+                    try {
+                        RequestDTO take = storageProducer.take();
+                        try {
+                            producer.produce(JSON.toJSONString(take));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        Thread threadConsumer = new Thread(runnableConsumer);
+
+        Thread threadProducer  = new Thread(runnableProducer);
+
+
+        threadConsumer.run();
+        threadProducer.run();
+    }
     //todo 注入rabbit，并且接受消息
 //    Executor executor = Executors.newFixedThreadPool(10);
     private ConcurrentHashMap<String,RoomInterface> _roomMap = new ConcurrentHashMap<>();
     public void CREATE_TWO_ROOM(Long oneUserId, Long twoUserId,Byte area) throws Exception {
+
         //init初始化房間,根據xmind
         //創建一個綫程執行附件
         String roomId = UUIDGenerator.getUUID();
@@ -89,5 +141,21 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
     public void sendMsg(List<RoomRabbitDTO> msgList) {
         log.debug(JSON.toJSONString(msgList));
         //TODO 生产者
+        if(msgList!=null){
+            for(RoomRabbitDTO dto:msgList){
+                RequestDTO requestDTO = new RequestDTO();
+                requestDTO.setUserId(dto.getUserId());
+                requestDTO.setProtocol(dto.getProtocol());
+                requestDTO.setArea(dto.getArea());
+                requestDTO.setData(dto.getData());
+                requestDTO.setType(dto.getType());
+                try {
+                    storageProducer.put(requestDTO);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    //TODO
+                }
+            }
+        }
     }
 }
