@@ -11,6 +11,7 @@
         <module name="base-util" />
         <module name="basemq" />
         <module name="baserabbit" />
+        <module name="feign" />
         <module name="manage.acct" />
         <module name="manageacct" />
         <module name="manageitem" />
@@ -28,6 +29,7 @@
       <module name="base-util" target="1.8" />
       <module name="basemq" target="1.5" />
       <module name="baserabbit" target="1.5" />
+      <module name="feign" target="1.5" />
       <module name="gamejavacard" target="1.5" />
       <module name="manage.acct" target="1.8" />
       <module name="manageacct" target="1.6" />

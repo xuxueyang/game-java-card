@@ -19,6 +19,9 @@ public class MQResource {
         MQResource.getMQResource();
     }
 
+    public RabbitMQProducer getRabbitMQProducer(){
+        return producerHashMap.get(RoomRPCConstant.MQ_NAME_PRODUCER);
+    }
 
     public void initRoomMQ(){
         try {

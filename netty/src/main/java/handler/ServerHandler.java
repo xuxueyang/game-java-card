@@ -1,5 +1,6 @@
 package handler;
 
+import com.alibaba.fastjson.JSON;
 import core.core.RequestDTO;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
@@ -8,6 +9,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import rabbitmq.MQResource;
 
 public class ServerHandler extends ChannelInboundHandlerAdapter {
     private static Log log = LogFactory.getLog(ServerHandler.class);
@@ -31,7 +33,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         byte[] req = new byte[buf.readableBytes()];
         buf.readBytes(req);
         RequestDTO dto = RequestDTO.toObject(req);
-        System.out.println(dto);
+//        System.out.println(dto);
+        String json = JSON.toJSONString(dto);
+        log.debug(json);
+        MQResource.getMQResource().getRabbitMQProducer().produce(json);
 //        ReferenceCountUtil.release(msg);
 //        UserLoginDoData.doData(req);
     }

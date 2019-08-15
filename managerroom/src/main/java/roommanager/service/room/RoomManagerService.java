@@ -121,6 +121,8 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
             }catch (Exception e){
                 log.error("roomId : " + roomId + " ;message: " +  e.getMessage());
             }
+        }else{
+            log.debug(JSON.toJSONString(dto));
         }
     }
     public void startRoom(RoomInterface room){
