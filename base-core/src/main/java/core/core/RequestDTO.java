@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.data.redis.util.ByteUtils;
 
 import java.io.Serializable;
 
@@ -28,10 +29,31 @@ public class RequestDTO<Data> implements Serializable {
     private Long userId = null;
     private String roomId;
 
+    public static void main(String[] args){
+
+        RequestDTO dto = new RequestDTO();
+        dto.setUserId(1L);
+        byte[] bytes = toByteArray(dto);
+        System.out.println(bytes);
+
+    }
     public static byte[] toByteArray(RequestDTO dto){
         //序列化自己
         byte[] bytes = JSON.toJSONBytes(dto);
-        return bytes;
+        return intToByte(bytes);
+//        byte[][] bytes1 = ByteUtils.mergeArrays(first, bytes);
+//        return bytes;
+    }
+    public static byte[] intToByte(byte[] data){
+        byte[] b = new byte[6 + data.length];
+        b[0] = (byte)(data.length & 0xff);
+        b[1] = (byte)((data.length >> 8) & 0xff);
+        b[2] = (byte)((data.length >> 16) & 0xff);
+        b[3] = (byte)((data.length >> 24) & 0xff);
+        b[4] = 0x0;
+        b[5] = 0x1;
+        System.arraycopy(data, 0, b, 6, data.length);
+        return b;
     }
     public static RequestDTO toObject(byte[] bytes){
         Object object = JSONObject.parse(bytes, Feature.IgnoreNotMatch );
