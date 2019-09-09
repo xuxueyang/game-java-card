@@ -18,6 +18,8 @@ public class DefaultChannelInitializer extends ChannelInitializer<SocketChannel>
         socketChannel.pipeline().addLast(new StringDecoder(Charset.forName("UTF-8")));
         socketChannel.pipeline().addLast(new StringEncoder(Charset.forName("UTF-8")));
         socketChannel.pipeline().addLast(new ServerHandler());
+        socketChannel.pipeline().addLast(new DefaultFrameEncoder());
+
 
     }
 }

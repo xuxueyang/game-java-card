@@ -1,6 +1,7 @@
 package common;
 
 import config.DefaultFrameDecoder;
+import config.DefaultFrameEncoder;
 import core.core.RequestDTO;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -28,7 +29,7 @@ public class ApiTest {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel channel) throws Exception {
-                    // 基于换行符号
+                    channel.pipeline().addLast(new DefaultFrameEncoder());
                     channel.pipeline().addLast(new DefaultFrameDecoder());
                     // 解码转String，注意调整自己的编码格式GBK、UTF-8
                     channel.pipeline().addLast(new StringDecoder(Charset.forName("UTF-8")));
