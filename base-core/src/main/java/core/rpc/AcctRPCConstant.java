@@ -6,5 +6,5 @@ public interface AcctRPCConstant {
 
     String CHECK_LOGIN = "/rpc/acct/CHECK_LOGIN";
     String GET_USER_INFO = "/rpc/acct/GET_USER_INFO";
-
+    String GET_TOKEN = "/rpc/acct/GET_TOKEN";
 }

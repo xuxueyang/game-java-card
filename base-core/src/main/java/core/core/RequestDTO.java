@@ -29,14 +29,7 @@ public class RequestDTO<Data> implements Serializable {
     private Long userId = null;
     private String roomId;
 
-    public static void main(String[] args){
 
-        RequestDTO dto = new RequestDTO();
-        dto.setUserId(1L);
-        byte[] bytes = toByteArray(dto);
-        System.out.println(bytes);
-
-    }
     public static byte[] toByteArray(RequestDTO dto){
         //序列化自己
         byte[] bytes = JSON.toJSONBytes(dto);
@@ -46,7 +39,8 @@ public class RequestDTO<Data> implements Serializable {
     }
 
     public static RequestDTO toObject(byte[] bytes){
-        Object object = JSONObject.parse(bytes, Feature.IgnoreNotMatch );
+        Object object = JSON.parseObject(bytes, RequestDTO.class);//JSONObject.parse(bytes, Feature.IgnoreNotMatch );
+//        Object object1 = JSON.parseObject(bytes, RequestDTO.class);
         return (RequestDTO)object;
     }
 

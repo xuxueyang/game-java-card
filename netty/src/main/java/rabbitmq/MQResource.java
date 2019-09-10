@@ -15,26 +15,23 @@ public class MQResource {
         MQResource.mqResource = new MQResource();
         getMQResource().initRoomMQ();
     }
-    public static void main(String[] args){
-        MQResource.getMQResource();
-    }
 
     public RabbitMQProducer getRabbitMQProducer(){
-        return producerHashMap.get(RoomRPCConstant.MQ_NAME_PRODUCER);
+        return producerHashMap.get(RoomRPCConstant.MQ_NAME_CONSUMER);
     }
 
     public void initRoomMQ(){
         try {
-            RabbitMQProducer rabbitMQProducer = new RabbitMQProducer(RoomRPCConstant.MQ_NAME_PRODUCER);
-            producerHashMap.put(RoomRPCConstant.MQ_NAME_PRODUCER,rabbitMQProducer);
+            RabbitMQProducer rabbitMQProducer = new RabbitMQProducer(RoomRPCConstant.MQ_NAME_CONSUMER);
+            producerHashMap.put(RoomRPCConstant.MQ_NAME_CONSUMER,rabbitMQProducer);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TimeoutException e) {
             e.printStackTrace();
         }
         try {
-            RabbitMQConsumer rabbitMQConsumer = new RabbitMQConsumer(RoomRPCConstant.MQ_NAME_CONSUMER);
-            consumerHashMap.put(RoomRPCConstant.MQ_NAME_CONSUMER,rabbitMQConsumer);
+            RabbitMQConsumer rabbitMQConsumer = new RabbitMQConsumer(RoomRPCConstant.MQ_NAME_PRODUCER);
+            consumerHashMap.put(RoomRPCConstant.MQ_NAME_PRODUCER,rabbitMQConsumer);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TimeoutException e) {

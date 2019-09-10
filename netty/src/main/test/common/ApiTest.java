@@ -1,5 +1,6 @@
 package common;
 
+import com.alibaba.fastjson.JSON;
 import config.DefaultFrameDecoder;
 import config.DefaultFrameEncoder;
 import core.core.RequestDTO;
@@ -15,6 +16,7 @@ import io.netty.handler.codec.string.StringEncoder;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import static core.core.RequestDTO.toByteArray;
 
@@ -29,8 +31,8 @@ public class ApiTest {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel channel) throws Exception {
-                    channel.pipeline().addLast(new DefaultFrameEncoder());
                     channel.pipeline().addLast(new DefaultFrameDecoder());
+                    channel.pipeline().addLast(new DefaultFrameEncoder());
                     // 解码转String，注意调整自己的编码格式GBK、UTF-8
                     channel.pipeline().addLast(new StringDecoder(Charset.forName("UTF-8")));
                     // 解码转String，注意调整自己的编码格式GBK、UTF-8
@@ -40,7 +42,9 @@ public class ApiTest {
                         @Override
                         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                             //接收msg消息{与上一章节相比，此处已经不需要自己进行解码}
-                            System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " 客户端接收到消息：" + msg);
+                            RequestDTO dto = (RequestDTO)msg;
+                            System.out.println(
+                                    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " 客户端接收到消息：" + JSON.toJSON(dto) );
                         }
                     });
                 }
@@ -50,9 +54,12 @@ public class ApiTest {
 
             //向服务端发送信息
             RequestDTO dto = new RequestDTO();
-            dto.setUserId(1L);
+            HashMap<Object, Object> data = new HashMap<>();
+            data.put("message","Hello world");
+            dto.setUserId(0L);
+            dto.setData(data);
             byte[] bytes = toByteArray(dto);
-            f.channel().writeAndFlush(bytes);
+            f.channel().writeAndFlush(dto);
 
             f.channel().closeFuture().syncUninterruptibly();
         } catch (InterruptedException e) {

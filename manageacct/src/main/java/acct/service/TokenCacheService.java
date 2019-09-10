@@ -67,4 +67,12 @@ public class TokenCacheService {
         }
         return null;
     }
+
+    public String getToeknById(String id) {
+        if(id!=null&&userIdToken.contains(id)){
+            return userIdToken.get(id);
+        }else{
+            return null;
+        }
+    }
 }

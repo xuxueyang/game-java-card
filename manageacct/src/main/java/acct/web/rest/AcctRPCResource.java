@@ -40,6 +40,11 @@ public class AcctRPCResource extends BaseResource {
         String token = dto.getData().toString();
         return prepareReturnResultDTO(ReturnCode.GET_SUCCESS,tokenCacheService.getUserInfoByToken(token));
     }
+    @RequestMapping(value = "/GET_TOKEN", method = RequestMethod.POST)
+    public ReturnResultDTO getToeknById(@RequestBody  RequestDTO dto){
+        String id = dto.getData().toString();
+        return prepareReturnResultDTO(ReturnCode.GET_SUCCESS,tokenCacheService.getToeknById(id));
+    }
 //
 //    @RequestMapping(value = "/TEST", method = RequestMethod.GET)
 //    public ReturnResultDTO test(){

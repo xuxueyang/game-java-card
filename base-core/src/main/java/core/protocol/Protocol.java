@@ -13,6 +13,10 @@ public  interface Protocol {
     //token超时时间
     public static final Long REDIS_VAILD_TIME = TOKEN_VALID_TIME;
 
+    final class Area{
+//        public static Byte TEXT = 0x1;
+        public static Byte CHECKLOGIN = 0xa;
+    }
     final  class Type{
         public static Byte SYS = 10;
         public static Byte LOGIN = 20;

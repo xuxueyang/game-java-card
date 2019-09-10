@@ -6,15 +6,18 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultFrameEncoder extends MessageToByteEncoder<RequestDTO> {
+    private Logger logger = LoggerFactory.getLogger(DefaultFrameEncoder.class);
 
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, RequestDTO requestDTO, ByteBuf byteBuf) throws Exception {
-
+        logger.info("转换DTOing");
         byte[] bytes = RequestDTO.toByteArray(requestDTO);// 将对象转换为byte
         int length = bytes.length;// 读取 ProtoMsg 消息的长度
-        ByteBuf buf = Unpooled.buffer(6 + length);
+        ByteBuf buf = Unpooled.buffer(Constants.PROTOCOL_HEADLENGTH + length);
         // 先将消息协议的版本写入，也就是消息头
         buf.writeShort(Constants.PROTOCOL_VERSION);
         // 再将 ProtoMsg 消息的长度写入

@@ -17,7 +17,7 @@ public class DefaultFrameDecoder<T extends RequestDTO> extends ByteToMessageDeco
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
         //...
-
+        logger.info("解码DTOing");
         // 读取传送过来的消息的长度。
         short version = byteBuf.readShort();
         if(version != Constants.PROTOCOL_VERSION){

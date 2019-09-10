@@ -44,15 +44,20 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
         Runnable runnableConsumer = new Runnable() {
             @Override
             public void run() {
-                if(consumer!=null){
-                    //循环读取读出消息
-                    try {
-                        RequestDTO dto = JSONObject.parseObject(consumer.consume(), RequestDTO.class);
-//                        storageConsumer.put(dto);
-                        receiveMessage(dto);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                //循环读取读出消息
+                while (true){
+                    if(consumer!=null){
+                        try {
+                            String consume = consumer.consume();
+                            log.info(consume);
+                            RequestDTO dto = JSONObject.parseObject(consume, RequestDTO.class);
+    //                        storageConsumer.put(dto);
+                            receiveMessage(dto);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
+
                 }
             }
         };
@@ -115,7 +120,7 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
     }
     public void receiveMessage(RequestDTO dto){
         String roomId = dto.getRoomId();
-        if(_roomMap.contains(roomId)){
+        if(roomId!=null&&_roomMap.contains(roomId)){
             try {
                 _roomMap.get(roomId).receiveMessage(dto);
             }catch (Exception e){
