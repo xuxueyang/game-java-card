@@ -1,37 +1,43 @@
 package handler;
 
-import aop.AcctRpcClient;
+import org.springframework.stereotype.Component;
+import rpc.AcctRpcClient;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import core.core.RequestDTO;
 import core.core.ReturnResultDTO;
 import core.protocol.Protocol;
-import core.rpc.AcctRPCConstant;
 import core.util.MD5Util;
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.Channel;
+import factory.ResDTOFactory;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.util.ReferenceCountUtil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import rabbitmq.MQResource;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.lang.ref.SoftReference;
-import java.lang.ref.WeakReference;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+
+@Component
 public class ServerHandler extends ChannelInboundHandlerAdapter {
+    public static ServerHandler serverHandler;
+    public ServerHandler(){}
+
     private static Log log = LogFactory.getLog(ServerHandler.class);
 
-    private static final boolean TEST = true;
+    private static final boolean TEST = false;
+
     @Autowired
     private AcctRpcClient acctRpcClient;
+    @PostConstruct
+    public void init(){
+        serverHandler = this;
+        serverHandler.acctRpcClient = this.acctRpcClient;
+    }
 
     private static ConcurrentHashMap<String,Long> channelIdUserId = new ConcurrentHashMap<>();
     private static ConcurrentHashMap<Long,String> userIdChannelId = new ConcurrentHashMap<>();
@@ -104,8 +110,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         if(!channelIdUserId.contains(ctx.channel().id().asLongText())){
             // 説明第一次接入，需要驗證token
             if(!TEST){
-                if(!Protocol.Area.CHECKLOGIN.equals(dto.getArea())
+                if(!Protocol.Area.Netty.equals(dto.getArea())
+                        ||!Protocol.Type.LOGIN.equals(dto.getType())
                         ||dto.getTimestamp()==null
+                        ||dto.getAreaL()==null
                         ||dto.getUserId()==null
                         ||dto.getMd5() == null){
                     return;
@@ -113,14 +121,16 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 //校驗token
                 SoftReference<RequestDTO> newDto = new SoftReference<>(new RequestDTO());
                 newDto.get().setData(dto.getUserId());
+                newDto.get().setAreaL(dto.getAreaL());
                 ReturnResultDTO returnResultDTO = null;
                 try {
-                    returnResultDTO = acctRpcClient.getTokenById(newDto.get());
+                    returnResultDTO = serverHandler.acctRpcClient.getTokenById(newDto.get());
                 }catch (Exception e){
-                    log.error("rpc acct失败");
+                    log.error("rpc acct失败" + e.getMessage());
                 }
                 if(returnResultDTO==null||returnResultDTO.getData()==null){
                     log.info("未登录");
+                    ctx.close();
                     return;
                 }
                 if(dto.getMd5()
@@ -128,6 +138,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                     channelIdUserId.put(ctx.channel().id().asLongText(),dto.getUserId());
                     userIdChannelId.put(dto.getUserId(),ctx.channel().id().asLongText());
                     userIdChannels.put(dto.getUserId(),ctx);
+                    ctx.channel().writeAndFlush(ResDTOFactory.getSuccessConnected());
+                    return;
+
                 }
             }else{
                 channelIdUserId.put(ctx.channel().id().asLongText(),dto.getUserId());

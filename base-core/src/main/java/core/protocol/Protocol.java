@@ -13,16 +13,24 @@ public  interface Protocol {
     //token超时时间
     public static final Long REDIS_VAILD_TIME = TOKEN_VALID_TIME;
 
+    final class AreaL {
+        private static final Long TEXT = 1L;
+        public static Long[] getAllArea(){
+            return new Long[]{TEXT};
+        }
+        public static final String split = "-";
+    }
     final class Area{
 //        public static Byte TEXT = 0x1;
-        public static Byte CHECKLOGIN = 0xa;
+        public final static Byte Sys = 0x1;
+        public final static Byte Netty = 0x2;
     }
     final  class Type{
-        public static Byte SYS = 10;
-        public static Byte LOGIN = 20;
-        public static Byte CHAT = 30;
-        public static Byte ITEM = 40;
-        public static Byte ROOM = 40;
+        public static Byte SYS = 0x1;
+        public static Byte LOGIN = 0x2;
+        public static Byte CHAT = 0x3;
+        public static Byte ITEM = 0x4;
+        public static Byte ROOM = 0x5;
     }
     public final static class Status{
         public static int YES =1;
@@ -30,15 +38,15 @@ public  interface Protocol {
     }
     interface HeadType
     {
-        int  Login_Request = 1; //登陆请求
-        int  Login_Response = 2; //登录响应
-        int  Logout_Request =3 ;//退出请求
-        int  Logout_Response =3 ;
-        int  Keepalive_Request =3 ;//心跳请求ping;
-        int  Keepalive_Response =3 ;
-        int  Message_Request =3 ;//消息请求;
-        int  Message_Response =3 ;//消息回执;
-        int  Message_Notification =3 ;//通知消息
+        Byte  Login_Request = 1; //登陆请求
+        Byte  Login_Response = 2; //登录响应
+        Byte  Logout_Request =3 ;//退出请求
+        Byte  Logout_Response =3 ;
+        Byte  Keepalive_Request =3 ;//心跳请求ping;
+        Byte  Keepalive_Response =3 ;
+        Byte  Message_Request =3 ;//消息请求;
+        Byte  Message_Response =3 ;//消息回执;
+        Byte  Message_Notification =3 ;//通知消息
     }
     interface _Index {
         int ConstatnProtocolIndex = 100;
@@ -47,6 +55,8 @@ public  interface Protocol {
     }
     interface ConstatnProtocol{
         int Head = _Index.ConstatnProtocolIndex + 1;
+        int SUCCESS = _Index.ConstatnProtocolIndex + 2;
+
     }
     interface PvpTwoRoomProtocol{
         //玩家能做的事情：使用卡牌、棋子移動、棋子攻擊、棋子使用技能，結束回合、逃跑投降

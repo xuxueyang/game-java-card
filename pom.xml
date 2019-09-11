@@ -17,7 +17,6 @@
         <module>base-core</module>
         <module>base-util</module>
         <module>base-mq</module>
-        <module>feign</module>
 
         <module>managerregistry</module>
         <module>managergateway</module>

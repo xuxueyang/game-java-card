@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import config.DefaultFrameDecoder;
 import config.DefaultFrameEncoder;
 import core.core.RequestDTO;
+import core.protocol.Protocol;
+import core.util.MD5Util;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -15,6 +17,7 @@ import io.netty.handler.codec.string.StringEncoder;
 
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -56,10 +59,16 @@ public class ApiTest {
             RequestDTO dto = new RequestDTO();
             HashMap<Object, Object> data = new HashMap<>();
             data.put("message","Hello world");
-            dto.setUserId(0L);
+            dto.setUserId(1L);
+            dto.setTimestamp(new Date().getTime());
+            dto.setArea(Protocol.Area.Netty);
+            dto.setAreaL(1L);
+            dto.setType(Protocol.Type.LOGIN);
+            dto.setMd5(MD5Util.MD5("8254a4f9aa08420092f3c6f8f01b2370" + dto.getTimestamp() ));
             dto.setData(data);
-            byte[] bytes = toByteArray(dto);
+
             f.channel().writeAndFlush(dto);
+
 
             f.channel().closeFuture().syncUninterruptibly();
         } catch (InterruptedException e) {

@@ -7,6 +7,7 @@ import core.core.BaseResource;
 import core.core.RequestDTO;
 import core.core.ReturnCode;
 import core.core.ReturnResultDTO;
+import core.protocol.Protocol;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,8 @@ public class AcctRPCResource extends BaseResource {
     @RequestMapping(value = "/GET_TOKEN", method = RequestMethod.POST)
     public ReturnResultDTO getToeknById(@RequestBody  RequestDTO dto){
         String id = dto.getData().toString();
-        return prepareReturnResultDTO(ReturnCode.GET_SUCCESS,tokenCacheService.getToeknById(id));
+        String toeknById = tokenCacheService.getToeknById(id, dto.getAreaL());
+        return prepareReturnResultDTO(ReturnCode.GET_SUCCESS, toeknById);
     }
 //
 //    @RequestMapping(value = "/TEST", method = RequestMethod.GET)

@@ -10,6 +10,7 @@
       <set>
         <option value="$PROJECT_DIR$/base-rabbitmq/pom.xml" />
         <option value="$PROJECT_DIR$/base-registry/pom.xml" />
+        <option value="$PROJECT_DIR$/feign/pom.xml" />
       </set>
     </option>
   </component>

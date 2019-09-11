@@ -12,10 +12,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-@EnableDiscoveryClient
+
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
 //@ComponentScans(value = {@ComponentScan(value = "main")})
 @ComponentScan
+@EnableDiscoveryClient
 @EnableEurekaClient
 @EnableFeignClients
 public class GatewayApplication {

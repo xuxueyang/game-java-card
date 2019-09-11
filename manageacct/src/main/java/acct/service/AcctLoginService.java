@@ -97,7 +97,7 @@ public class AcctLoginService {
         if(allByCreatedid!=null||allByCreatedid.size()>0){
             for(Token token: allByCreatedid){
                 tokenRepository.delete(token);
-                tokenCacheService.deleteToken(token.getAccesstoken());
+                tokenCacheService.deleteToken(token.getAccesstoken(),area);
             }
         }
         //登录，创建token

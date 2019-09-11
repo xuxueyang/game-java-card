@@ -47,8 +47,7 @@ public class AccountResource  extends BaseResource {
             String header = attributes.getRequest().getHeader(Protocol.TOKEN);
             Long accountId = loginService.getAccountIdByToken(header);
             //TODO 校驗area不能用這個賬號
-            acctService.createUser(createUserDTO,accountId);
-            return prepareReturnResultDTO(ReturnCode.CREATE_SUCCESS,null);
+            return prepareReturnResultDTO(ReturnCode.CREATE_SUCCESS,acctService.createUser(createUserDTO,accountId));
         }catch (Exception e){
             return prepareReturnResultDTO(ReturnCode.ERROR_CREATE,e.getMessage());
         }

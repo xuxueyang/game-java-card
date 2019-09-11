@@ -34,6 +34,9 @@ public class MatchRoomResource extends BaseResource{
     public ReturnResultDTO joinTwoRoom(){
         try {
             UserInfo userInfo = getUserInfo();
+            if(userInfo==null){
+                return prepareReturnResultDTO(ReturnCode.ERROR_USER_HAS_LOGOUT,null);
+            }
             boolean b = matchService.joinTwoRoom(userInfo);
             if(b)
                 return prepareReturnResultDTO(ReturnCode.UPDATE_SUCCESS,null);
@@ -48,6 +51,9 @@ public class MatchRoomResource extends BaseResource{
     public ReturnResultDTO quitTwoRoom(){
         try {
             UserInfo userInfo = getUserInfo();
+            if(userInfo==null){
+                return prepareReturnResultDTO(ReturnCode.ERROR_USER_HAS_LOGOUT,null);
+            }
             matchService.quitTwoRoom(userInfo);
             return prepareReturnResultDTO(ReturnCode.UPDATE_SUCCESS,null);
         }catch (Exception e){

@@ -1,4 +1,4 @@
-package aop;
+package rpc;
 
 
 import core.core.RequestDTO;
@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 )
 @EnableFeignClients
 public interface AcctRpcClient {
+//    {
+//        System.out.println("加载");
+//    }
     @RequestMapping(method = RequestMethod.POST,value = AcctRPCConstant.CHECK_LOGIN)
     ReturnResultDTO checkToken(@RequestBody RequestDTO dto);
 

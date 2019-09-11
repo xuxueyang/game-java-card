@@ -44,7 +44,7 @@ public class AcctService {
     }
 
     @Transactional
-    public void createUser(CreateUserDTO createUserDTO, Long accountId) throws Exception {
+    public Long createUser(CreateUserDTO createUserDTO, Long accountId) throws Exception {
         User oneByNickNameAndArea = userRepository.findOneByNickNameAndArea(createUserDTO.getNickName(), createUserDTO.getArea());
         if(oneByNickNameAndArea!=null)
             throw  new Exception("角色名已存在");
@@ -59,6 +59,7 @@ public class AcctService {
         user.setNickName(createUserDTO.getNickName());
         userRepository.save(user);
         tokenCacheService.createUser(accountId,createUserDTO.getArea(),user.getId());
+        return user.getId();
     }
 
 

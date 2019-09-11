@@ -14,7 +14,9 @@ public class RequestDTO<Data> implements Serializable {
     @ApiModelProperty(required = true)
     private Byte type;//二级协议（区分模块等）
     @ApiModelProperty(required = true)
-    private Byte area;//一级协议(区分大区等）
+    private Byte area;//一级协议(区分大区等.NEW:顶级协议）
+    @ApiModelProperty(required = true)
+    private Long areaL;//大区
     private Integer protocol;//三级具体协议
     private Data data;
     @ApiModelProperty(required = true)
@@ -131,5 +133,13 @@ public class RequestDTO<Data> implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getAreaL() {
+        return areaL;
+    }
+
+    public void setAreaL(Long areaL) {
+        this.areaL = areaL;
     }
 }

@@ -11,7 +11,6 @@
         <module name="base-util" />
         <module name="basemq" />
         <module name="baserabbit" />
-        <module name="feign" />
         <module name="manage.acct" />
         <module name="manageacct" />
         <module name="manageitem" />

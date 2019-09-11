@@ -8,5 +8,7 @@ import java.util.List;
 public interface TokenRepository extends JpaRepository<Token, Long> {
     Token findOneByAccesstoken(String accesstoken);
 
-    List<Token> findAllByCreatedBy(Long userId);
+    List<Token> findAllByCreatedBy(Long acctId);
+    Token findOneByCreatedBy(Long acctId);
+
 }
