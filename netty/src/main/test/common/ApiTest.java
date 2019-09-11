@@ -58,7 +58,7 @@ public class ApiTest {
             //向服务端发送信息
             RequestDTO dto = new RequestDTO();
             HashMap<Object, Object> data = new HashMap<>();
-            data.put("message","Hello world");
+            data.put("message1","Hello world");
             dto.setUserId(1L);
             dto.setTimestamp(new Date().getTime());
             dto.setArea(Protocol.Area.Netty);
@@ -69,6 +69,19 @@ public class ApiTest {
 
             f.channel().writeAndFlush(dto);
 
+            RequestDTO dto2 = new RequestDTO();
+            HashMap<Object, Object> data2 = new HashMap<>();
+            data2.put("message2","Hello world");
+            dto2.setUserId(1L);
+            dto2.setTimestamp(new Date().getTime());
+            dto2.setArea(Protocol.Area.Netty);
+            dto2.setAreaL(1L);
+            dto2.setMd5(MD5Util.MD5("8254a4f9aa08420092f3c6f8f01b2370" + dto.getTimestamp() ));
+            dto2.setData(data2);
+
+            dto2.setType(Protocol.Type.ROOM);
+
+            f.channel().writeAndFlush(dto2);
 
             f.channel().closeFuture().syncUninterruptibly();
         } catch (InterruptedException e) {

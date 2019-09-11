@@ -34,6 +34,16 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <version>1.4.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!--<dependency>-->
 
             <!--<groupId>org.springframework.boot</groupId>-->
@@ -118,7 +128,7 @@
         </dependency>
         <dependency>
             <groupId>com.xxy.www</groupId>
-            <artifactId>base-mq</artifactId>
+            <artifactId>base-rabbitmq</artifactId>
             <version>0.1</version>
         </dependency>
 <!--aaaaaaaaaaaaaaaaaaaaa-->
@@ -132,6 +142,7 @@
             <artifactId> aspectjweaver</artifactId >
             <version> 1.8.13</version >
         </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-eureka</artifactId>

@@ -33,10 +33,17 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Autowired
     private AcctRpcClient acctRpcClient;
+    @Autowired
+    private ChatServerHandler chatServerHandler;
+    @Autowired
+    private RoomServerHandler roomServerHandler;
+
     @PostConstruct
     public void init(){
         serverHandler = this;
         serverHandler.acctRpcClient = this.acctRpcClient;
+        serverHandler.chatServerHandler = this.chatServerHandler;
+        serverHandler.roomServerHandler = this.roomServerHandler;
     }
 
     private static ConcurrentHashMap<String,Long> channelIdUserId = new ConcurrentHashMap<>();
@@ -107,13 +114,14 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         log.info("ServerHandler ========================= ");
         RequestDTO dto = (RequestDTO) msg;
-        if(!channelIdUserId.contains(ctx.channel().id().asLongText())){
+        log.info(dto);
+        if(!channelIdUserId.containsKey(ctx.channel().id().asLongText())){
             // 説明第一次接入，需要驗證token
             if(!TEST){
-                if(!Protocol.Area.Netty.equals(dto.getArea())
-                        ||!Protocol.Type.LOGIN.equals(dto.getType())
+                if(Protocol.Area.Netty - dto.getArea() != 0
+                        ||Protocol.Type.LOGIN  - dto.getType() != 0
                         ||dto.getTimestamp()==null
-                        ||dto.getAreaL()==null
+                        ||dto.getAreaL()== 0
                         ||dto.getUserId()==null
                         ||dto.getMd5() == null){
                     return;
@@ -152,12 +160,16 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
         //这样就内部以UserId维系连接
         dto.setUserId(channelIdUserId.get(ctx.channel().id().asLongText()));
-        String json = JSON.toJSONString(dto);
-        log.info(json);
-        try {
-            MQResource.getMQResource().getRabbitMQProducer().produce(json);
-        }catch (Exception e){
-            log.error("消息队列出错" + e.getMessage());
+        switch (dto.getType()){
+            case Protocol.Type.CHAT:{
+                serverHandler.chatServerHandler.channelRead(ctx,dto);
+            }break;
+            case Protocol.Type.ROOM:{
+                serverHandler.roomServerHandler.channelRead(ctx,dto);
+            }break;
+            default:{
+                log.error("未知协议");
+            }
         }
     }
 

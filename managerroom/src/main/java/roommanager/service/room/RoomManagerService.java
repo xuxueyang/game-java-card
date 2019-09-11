@@ -120,7 +120,7 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
     }
     public void receiveMessage(RequestDTO dto){
         String roomId = dto.getRoomId();
-        if(roomId!=null&&_roomMap.contains(roomId)){
+        if(roomId!=null&&_roomMap.containsKey(roomId)){
             try {
                 _roomMap.get(roomId).receiveMessage(dto);
             }catch (Exception e){

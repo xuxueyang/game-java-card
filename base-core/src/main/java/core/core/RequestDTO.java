@@ -12,11 +12,11 @@ import java.io.Serializable;
 public class RequestDTO<Data> implements Serializable {
     //0级做保留
     @ApiModelProperty(required = true)
-    private Byte type;//二级协议（区分模块等）
+    private byte type;//二级协议（区分模块等）
     @ApiModelProperty(required = true)
-    private Byte area;//一级协议(区分大区等.NEW:顶级协议）
+    private byte area;//一级协议(区分大区等.NEW:顶级协议）
     @ApiModelProperty(required = true)
-    private Long areaL;//大区
+    private long areaL;//大区
     private Integer protocol;//三级具体协议
     private Data data;
     @ApiModelProperty(required = true)
@@ -26,7 +26,7 @@ public class RequestDTO<Data> implements Serializable {
             required = true
     )
     private String md5;
-    private Byte messageType;
+    private byte messageType;
     private Integer index;//包序列
     private Long userId = null;
     private String roomId;
@@ -47,7 +47,7 @@ public class RequestDTO<Data> implements Serializable {
     }
 
     public static boolean verify(RequestDTO dto){
-        if(dto==null||dto.type==null||dto.area==null||dto.timestamp==null||dto.md5==null)
+        if(dto==null||dto.type==0||dto.area==0||dto.timestamp==null||dto.md5==null)
             return false;
         return true;
     }
@@ -135,11 +135,11 @@ public class RequestDTO<Data> implements Serializable {
         this.userId = userId;
     }
 
-    public Long getAreaL() {
+    public long getAreaL() {
         return areaL;
     }
 
-    public void setAreaL(Long areaL) {
+    public void setAreaL(long areaL) {
         this.areaL = areaL;
     }
 }

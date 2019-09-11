@@ -22,36 +22,38 @@ public  interface Protocol {
     }
     final class Area{
 //        public static Byte TEXT = 0x1;
-        public final static Byte Sys = 0x1;
-        public final static Byte Netty = 0x2;
+        public final static byte Sys = 0x1;
+        public final static byte Netty = 0x2;
     }
     final  class Type{
-        public static Byte SYS = 0x1;
-        public static Byte LOGIN = 0x2;
-        public static Byte CHAT = 0x3;
-        public static Byte ITEM = 0x4;
-        public static Byte ROOM = 0x5;
+        public static final byte SYS = 0x1;
+        public static final byte LOGIN = 0x2;
+        public static final byte CHAT = 0x3;
+        public static final byte ITEM = 0x4;
+        public static final byte ROOM = 0x5;
     }
+
     public final static class Status{
         public static int YES =1;
         public static int NOT =0;
     }
     interface HeadType
     {
-        Byte  Login_Request = 1; //登陆请求
-        Byte  Login_Response = 2; //登录响应
-        Byte  Logout_Request =3 ;//退出请求
-        Byte  Logout_Response =3 ;
-        Byte  Keepalive_Request =3 ;//心跳请求ping;
-        Byte  Keepalive_Response =3 ;
-        Byte  Message_Request =3 ;//消息请求;
-        Byte  Message_Response =3 ;//消息回执;
-        Byte  Message_Notification =3 ;//通知消息
+        byte  Login_Request = 1; //登陆请求
+        byte  Login_Response = 2; //登录响应
+        byte  Logout_Request =3 ;//退出请求
+        byte  Logout_Response =3 ;
+        byte  Keepalive_Request =3 ;//心跳请求ping;
+        byte  Keepalive_Response =3 ;
+        byte  Message_Request =3 ;//消息请求;
+        byte  Message_Response =3 ;//消息回执;
+        byte  Message_Notification =3 ;//通知消息
     }
     interface _Index {
         int ConstatnProtocolIndex = 100;
         int PvpTwoRoomIndex_CLIENT = 10000;
         int PvpTwoRoomIndex_SERVER = 12000;
+        int ChatIndex = 20000;
     }
     interface ConstatnProtocol{
         int Head = _Index.ConstatnProtocolIndex + 1;
@@ -90,6 +92,10 @@ public  interface Protocol {
 
 
 
+    }
+    interface ChatIndex{
+        int WORLD = _Index.ChatIndex + 1;
+        int ONE = _Index.ChatIndex + 1;
     }
     /*登录信息*/
     // LoginRequest对应的HeadType为Login_Request
