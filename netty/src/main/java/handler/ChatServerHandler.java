@@ -1,10 +1,8 @@
 package handler;
 
-import com.alibaba.fastjson.JSON;
 import core.core.RequestDTO;
 import core.rpc.ChatRPCConstant;;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.Data;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,10 +11,11 @@ import rabbitmq.MQResource;
 import rabbitmq.mq.consumer.RabbitMQConsumer;
 import rabbitmq.mq.producer.RabbitMQProducer;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 @Service
-public class ChatServerHandler implements ServerHandlerInterface<RequestDTO, RequestDTO> {
+public class ChatServerHandler extends AbstactSelfServerHandler<RequestDTO, RequestDTO> {
     private static Log log = LogFactory.getLog(ChatServerHandler.class);
 
     @Resource(name = ChatRPCConstant.MQ_NAME_PRODUCER)
@@ -25,6 +24,30 @@ public class ChatServerHandler implements ServerHandlerInterface<RequestDTO, Req
     private RabbitMQProducer producer;
 
 
+    @PostConstruct
+    private void initManager() {
+        Runnable runnableConsumer = new Runnable() {
+            @Override
+            public void run() {
+                //循环读取读出消息
+                while (true){
+                    if(consumer!=null){
+                        try {
+                            String consume = consumer.consume();
+                            log.info(consume);
+                            RequestDTO dto = decode(consume,RequestDTO.class);
+                            //TODO 转发 receiveMessage(dto);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            }
+        };
+        Thread threadConsumer = new Thread(runnableConsumer);
+        threadConsumer.run();
+    }
     @Override
     public void channelRead(ChannelHandlerContext ctx, RequestDTO dto) throws Exception {
         String json = encode(dto);
@@ -36,16 +59,6 @@ public class ChatServerHandler implements ServerHandlerInterface<RequestDTO, Req
         }
     }
 
-    @Override
-    public String encode(RequestDTO object) {
-        return JSON.toJSONString(object);
-    }
-
-    @Override
-    public RequestDTO decode(String json) {
-        return JSON.parseObject(json,RequestDTO.class);
-    }
-    //TODO 线程不断读取数据，并且推送自己以外的人（自己encode，自己decode)
 
     @Data
     private class Message{
@@ -54,11 +67,4 @@ public class ChatServerHandler implements ServerHandlerInterface<RequestDTO, Req
         private long toId;//单独发送到哪里
         private String message;
     }
-//    private enum Type{
-//        GROUP,
-//        ONE,
-//        WORLD,
-//        CURRENT,
-//        ROOM
-//    }
 }

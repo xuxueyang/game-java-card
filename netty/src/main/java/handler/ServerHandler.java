@@ -1,5 +1,6 @@
 package handler;
 
+import core.manager.UserObjectManager;
 import org.springframework.stereotype.Component;
 import rpc.AcctRpcClient;
 import com.alibaba.fastjson.JSON;
@@ -46,40 +47,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         serverHandler.roomServerHandler = this.roomServerHandler;
     }
 
-    private static ConcurrentHashMap<String,Long> channelIdUserId = new ConcurrentHashMap<>();
-    private static ConcurrentHashMap<Long,String> userIdChannelId = new ConcurrentHashMap<>();
-    private static ConcurrentHashMap<Long,ChannelHandlerContext> userIdChannels = new ConcurrentHashMap<>();
+    private  UserObjectManager<ChannelHandlerContext> manager = new UserObjectManager<ChannelHandlerContext>(1);
 
-    static {
-        initManager();
-    }
-    private static void initManager() {
-
-        if(TEST){
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if(!userIdChannelId.isEmpty()){
-                        try {
-                            Enumeration<Long> keys = userIdChannels.keys();
-                            while (keys.hasMoreElements()){
-                                Long aLong = keys.nextElement();
-                                ChannelHandlerContext ctx = userIdChannels.get(aLong);
-                                RequestDTO o = new RequestDTO<>();
-                                HashMap<Object, Object> objectObjectHashMap = new HashMap<>();
-                                objectObjectHashMap.put("message","hello world");
-                                o.setData(objectObjectHashMap);
-                                ctx.channel().writeAndFlush(o);
-                            }
-                        } catch (Exception e) {
-                            log.error("推送消息 error" + e.getMessage());
-                        }
-                    }
-                }
-            },0,5L  * 1000);
-        }
-
-    }
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
@@ -102,11 +71,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
         super.handlerRemoved(ctx);
         log.info(ctx.channel().id() + "离开了");
-        if(channelIdUserId.contains(ctx.channel().id().asLongText())){
-            Long aLong = channelIdUserId.get(ctx.channel().id().asLongText());
-            userIdChannelId.remove(aLong);
-            userIdChannels.remove(aLong);
-            channelIdUserId.remove(ctx.channel().id().asLongText());
+        if(manager.containsValue(ctx.channel().id().asLongText())){
+            manager.removeByValue(ctx.channel().id().asLongText());
+
         }
     }
 
@@ -115,7 +82,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         log.info("ServerHandler ========================= ");
         RequestDTO dto = (RequestDTO) msg;
         log.info(dto);
-        if(!channelIdUserId.containsKey(ctx.channel().id().asLongText())){
+        if(!manager.containsValue(ctx.channel().id().asLongText())){
             // 説明第一次接入，需要驗證token
             if(!TEST){
                 if(Protocol.Area.Netty - dto.getArea() != 0
@@ -138,28 +105,26 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 }
                 if(returnResultDTO==null||returnResultDTO.getData()==null){
                     log.info("未登录");
-                    ctx.close();
+                    close(ctx);
                     return;
                 }
                 if(dto.getMd5()
                         .equals(MD5Util.MD5(returnResultDTO.getData().toString() + dto.getTimestamp()))){
-                    channelIdUserId.put(ctx.channel().id().asLongText(),dto.getUserId());
-                    userIdChannelId.put(dto.getUserId(),ctx.channel().id().asLongText());
-                    userIdChannels.put(dto.getUserId(),ctx);
+                    manager.put(dto.getUserId(),ctx.channel().id().asLongText(),ctx);
                     ctx.channel().writeAndFlush(ResDTOFactory.getSuccessConnected());
+                    serverHandler.chatServerHandler.channelActive(ctx,dto.getUserId());
+                    serverHandler.roomServerHandler.channelActive(ctx,dto.getUserId());
                     return;
 
                 }
             }else{
-                channelIdUserId.put(ctx.channel().id().asLongText(),dto.getUserId());
-                userIdChannelId.put(dto.getUserId(),ctx.channel().id().asLongText());
-                userIdChannels.put(dto.getUserId(),ctx);
+                manager.put(dto.getUserId(),ctx.channel().id().asLongText(),ctx);
             }
 
         }
 
         //这样就内部以UserId维系连接
-        dto.setUserId(channelIdUserId.get(ctx.channel().id().asLongText()));
+        dto.setUserId(manager.getKeyByValue(ctx.channel().id().asLongText()));
         switch (dto.getType()){
             case Protocol.Type.CHAT:{
                 serverHandler.chatServerHandler.channelRead(ctx,dto);
@@ -184,7 +149,14 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         log.info("异常信息：\r\n" + cause.getMessage());
 
 //        cause.printStackTrace();
+        serverHandler.chatServerHandler.cloes(ctx);
+        serverHandler.roomServerHandler.cloes(ctx);
         ctx.close();
+    }
+    private void close(ChannelHandlerContext ctx){
+        serverHandler.chatServerHandler.cloes(ctx);
+        serverHandler.roomServerHandler.cloes(ctx);
+
     }
 
 }
