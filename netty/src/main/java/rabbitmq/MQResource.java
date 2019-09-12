@@ -9,17 +9,18 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.TimeoutException;
 
+@Deprecated
 public class MQResource {
     private MQResource(){}
     private static MQResource mqResource = null;
     public static MQResource getMQResource(){return mqResource;}
     private HashMap<String,RabbitMQProducer> producerHashMap = new HashMap<>();
     private HashMap<String,RabbitMQConsumer> consumerHashMap = new HashMap<>();
-//    static {
+    static {
 //        MQResource.mqResource = new MQResource();
 //        getMQResource().initRoomMQ();
 //        getMQResource().initChatMQ();
-//    }
+    }
 
     public RabbitMQProducer getRoomRabbitMQProducer(){
         return getRabbitMQProducer(RoomRPCConstant.MQ_NAME_CONSUMER);

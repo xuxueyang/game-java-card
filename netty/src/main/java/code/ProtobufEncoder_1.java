@@ -7,6 +7,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
+@Deprecated
 public class ProtobufEncoder_1 extends MessageToByteEncoder<RequestDTO> {
 
     @Override

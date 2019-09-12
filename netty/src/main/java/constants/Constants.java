@@ -1,5 +1,6 @@
 package constants;
 
+@Deprecated
 public class Constants {
     //协议版本号
     public static final short PROTOCOL_VERSION = 0xa0;

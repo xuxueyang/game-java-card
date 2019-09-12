@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import rabbitmq.mq.consumer.RabbitMQConsumer;
 import rabbitmq.mq.producer.RabbitMQProducer;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 

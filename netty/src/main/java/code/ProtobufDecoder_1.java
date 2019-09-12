@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import java.util.List;
 
+@Deprecated
 public class ProtobufDecoder_1 extends ByteToMessageDecoder {
     private static Log log = LogFactory.getLog(ProtobufDecoder_1.class);
 

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+@Deprecated
 public class DefaultFrameDecoder<T extends RequestDTO> extends ByteToMessageDecoder {
 //    private static int versionL = 2;
 //    private static int lengthL = 4;

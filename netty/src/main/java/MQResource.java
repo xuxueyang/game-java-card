@@ -16,6 +16,7 @@ import rpc.AcctRpcClient;
 //import org.springframework.web.bind.annotation.PostMapping;
 
 
+@Deprecated
 @RestController
 public class MQResource extends BaseResource {
 
