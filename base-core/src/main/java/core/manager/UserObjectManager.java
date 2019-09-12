@@ -32,6 +32,9 @@ public class UserObjectManager<T> {
         return valueKey.containsKey(value);
     }
     public Long getKeyByValue(String value){
+        if(value==null){
+            return null;
+        }
         if(valueKey.containsKey(value)){
             return Long.parseLong(valueKey.get(value).split(Protocol.AreaL.split)[0]);
         }
@@ -47,7 +50,10 @@ public class UserObjectManager<T> {
             keyLongs.remove(aLong);
         }
     }
-    public void put(Long key,String value,T object){
+    public void put(Long key,String value,T object) throws Exception {
+        if(key==null){
+            throw new Exception("key为空");
+        }
         keyLongs.add(key);
         valueKey.put(value,key + Protocol.AreaL.split + this.areaL);
         keyValue.put(key + Protocol.AreaL.split + this.areaL,value);

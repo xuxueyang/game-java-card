@@ -31,6 +31,8 @@ public  interface Protocol {
         public static final byte CHAT = 0x3;
         public static final byte ITEM = 0x4;
         public static final byte ROOM = 0x5;
+        public static final byte FILE = 0x6;
+
     }
 
     public final static class Status{

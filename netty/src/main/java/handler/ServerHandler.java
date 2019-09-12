@@ -5,6 +5,7 @@ import com.googlecode.protobuf.format.JsonFormat;
 import config.DefaultChannelInitializer;
 import core.manager.UserObjectManager;
 import org.springframework.stereotype.Component;
+import proto.MsgUtil;
 import rpc.AcctRpcClient;
 import com.alibaba.fastjson.JSON;
 import core.core.RequestDTO;
@@ -29,11 +30,14 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class ServerHandler extends ChannelInboundHandlerAdapter {
     public static ServerHandler serverHandler;
+
     public ServerHandler(){}
 
     private static Log log = LogFactory.getLog(ServerHandler.class);
 
-    private static final boolean TEST = false;
+    private static final boolean TEST = true;
+
+    public List<AbstactSelfServerHandler> handlers = new ArrayList<>();
 
     @Autowired
     private AcctRpcClient acctRpcClient;
@@ -41,13 +45,20 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     private ChatServerHandler chatServerHandler;
     @Autowired
     private RoomServerHandler roomServerHandler;
+    @Autowired
+    private FileServerHandler fileServerHandler;
 
     @PostConstruct
     public void init(){
         serverHandler = this;
         serverHandler.acctRpcClient = this.acctRpcClient;
         serverHandler.chatServerHandler = this.chatServerHandler;
+        serverHandler.fileServerHandler = this.fileServerHandler;
         serverHandler.roomServerHandler = this.roomServerHandler;
+
+        serverHandler.handlers.add(this.chatServerHandler);
+        serverHandler.handlers.add(this.roomServerHandler);
+        serverHandler.handlers.add(this.fileServerHandler);
     }
 
     private  UserObjectManager<ChannelHandlerContext> manager = new UserObjectManager<ChannelHandlerContext>(1);
@@ -79,6 +90,25 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
         }
     }
+//    @PostConstruct
+//    private void initManager() {
+//        Timer timer = new Timer();
+//        TimerTask timerTask = new TimerTask() {
+//            @Override
+//            public void run() {
+//                List<Long> keys = manager.keys();
+//                if(keys!=null){
+//                    keys.forEach(item -> {
+//                        ChannelHandlerContext object = manager.getObject(item);
+//                        if(object!=null){
+//                            object.channel().writeAndFlush(MsgUtil.buildObj("XXXXXXXXXXXXXXXXXXXX"));
+//                        }
+//                    });
+//                }
+//            }
+//        };
+//        timer.scheduleAtFixedRate(timerTask, 0,5);
+//    }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -113,15 +143,21 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 }
                 if(returnResultDTO==null||returnResultDTO.getData()==null){
                     log.info("未登录");
-                    close(ctx);
+                    _close(ctx);
                     return;
                 }
                 if(dto.getMd5()
                         .equals(MD5Util.MD5(returnResultDTO.getData().toString() + dto.getTimestamp()))){
                     manager.put(dto.getUserId(),ctx.channel().id().asLongText(),ctx);
                     ctx.channel().writeAndFlush(ResDTOFactory.getSuccessConnected());
-                    serverHandler.chatServerHandler.channelActive(ctx,dto.getUserId());
-                    serverHandler.roomServerHandler.channelActive(ctx,dto.getUserId());
+                    final Long userId = dto.getUserId();
+                    serverHandler.handlers.forEach(item -> {
+                        try {
+                            item.channelActive(ctx, userId);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
                     return;
 
                 }
@@ -140,6 +176,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             case Protocol.Type.ROOM:{
                 serverHandler.roomServerHandler.channelRead(ctx,dto);
             }break;
+            case Protocol.Type.FILE:{
+                serverHandler.fileServerHandler.channelRead(ctx,dto);
+            }break;
             default:{
                 log.error("未知协议");
             }
@@ -155,15 +194,18 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         // TODO Auto-generated method stub
         log.info("异常信息：\r\n" + cause.getMessage());
-
-//        cause.printStackTrace();
-        serverHandler.chatServerHandler.cloes(ctx);
-        serverHandler.roomServerHandler.cloes(ctx);
-        ctx.close();
+        cause.printStackTrace();
+        _close(ctx);
     }
-    private void close(ChannelHandlerContext ctx){
-        serverHandler.chatServerHandler.cloes(ctx);
-        serverHandler.roomServerHandler.cloes(ctx);
+    private void _close(ChannelHandlerContext ctx){
+        serverHandler.handlers.forEach(item -> {
+            try {
+                item.cloes(ctx);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        ctx.close();
 
     }
 
