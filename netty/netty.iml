@@ -35,7 +35,6 @@
     <orderEntry type="library" name="Maven: com.googlecode.protobuf-java-format:protobuf-java-format:1.2" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.9.1" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty:3.10.6.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.9.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.9.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.9.Final" level="project" />

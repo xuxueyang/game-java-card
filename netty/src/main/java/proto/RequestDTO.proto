@@ -6,3 +6,4 @@ option java_outer_classname = "RequestDTO"; //转换后的java源文件文件名
 message RequestDTOProto {
     string message = 1; //json
 }
+//https://www.cnblogs.com/talenth/p/5820040.html
