@@ -1,5 +1,8 @@
 package handler;
 
+import com.alibaba.fastjson.JSONObject;
+import com.googlecode.protobuf.format.JsonFormat;
+import config.DefaultChannelInitializer;
 import core.manager.UserObjectManager;
 import org.springframework.stereotype.Component;
 import rpc.AcctRpcClient;
@@ -80,7 +83,12 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         log.info("ServerHandler ========================= ");
-        RequestDTO dto = (RequestDTO) msg;
+        RequestDTO dto = null;
+        if(DefaultChannelInitializer.useProtobuf){
+            dto = (RequestDTO)JSON.parseObject(((proto.dto.RequestDTO.RequestDTOProto) msg).getMessage(),RequestDTO.class);
+        }else{
+            dto = (RequestDTO) msg;
+        }
         log.info(dto);
         if(!manager.containsValue(ctx.channel().id().asLongText())){
             // 説明第一次接入，需要驗證token

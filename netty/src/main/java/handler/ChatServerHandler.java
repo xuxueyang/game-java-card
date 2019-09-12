@@ -23,8 +23,8 @@ public class ChatServerHandler extends AbstactSelfServerHandler<RequestDTO, Requ
     @Resource(name = ChatRPCConstant.MQ_NAME_CONSUMER)
     private RabbitMQProducer producer;
 
-
-    @PostConstruct
+//    TODO 会卡死
+//    @PostConstruct
     private void initManager() {
         Runnable runnableConsumer = new Runnable() {
             @Override

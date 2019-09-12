@@ -32,15 +32,20 @@ public class UserObjectManager<T> {
         return valueKey.containsKey(value);
     }
     public Long getKeyByValue(String value){
-        return Long.parseLong(valueKey.get(value).split(Protocol.AreaL.split)[0]);
+        if(valueKey.containsKey(value)){
+            return Long.parseLong(valueKey.get(value).split(Protocol.AreaL.split)[0]);
+        }
+        return null;
     }
 
     public void removeByValue(String value) {
         Long aLong = getKeyByValue(value);
-        keyValue.remove(aLong);
-        keyObject.remove(aLong);
-        valueKey.remove(value);
-        keyLongs.remove(aLong);
+        if(aLong!=null){
+            keyValue.remove(aLong);
+            keyObject.remove(aLong);
+            valueKey.remove(value);
+            keyLongs.remove(aLong);
+        }
     }
     public void put(Long key,String value,T object){
         keyLongs.add(key);
