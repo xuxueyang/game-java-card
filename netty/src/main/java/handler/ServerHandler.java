@@ -23,6 +23,7 @@ import rabbitmq.MQResource;
 
 import javax.annotation.PostConstruct;
 import java.lang.ref.SoftReference;
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -51,14 +52,27 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     @PostConstruct
     public void init(){
         serverHandler = this;
-        serverHandler.acctRpcClient = this.acctRpcClient;
-        serverHandler.chatServerHandler = this.chatServerHandler;
-        serverHandler.fileServerHandler = this.fileServerHandler;
-        serverHandler.roomServerHandler = this.roomServerHandler;
+//        serverHandler.acctRpcClient = this.acctRpcClient;
 
-        serverHandler.handlers.add(this.chatServerHandler);
-        serverHandler.handlers.add(this.roomServerHandler);
-        serverHandler.handlers.add(this.fileServerHandler);
+        Field[] fields = serverHandler.getClass().getFields();
+        for (int i = 0; i < fields.length; i++) {
+            Field field = fields[i];
+            if(field.getClass().isAssignableFrom(AbstactSelfServerHandler.class) ){
+                try {
+                    serverHandler.handlers.add((AbstactSelfServerHandler)field.get(serverHandler));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+//        serverHandler.chatServerHandler = this.chatServerHandler;
+//        serverHandler.fileServerHandler = this.fileServerHandler;
+//        serverHandler.roomServerHandler = this.roomServerHandler;
+
+//        serverHandler.handlers.add(this.chatServerHandler);
+//        serverHandler.handlers.add(this.roomServerHandler);
+//        serverHandler.handlers.add(this.fileServerHandler);
     }
 
     private  UserObjectManager<ChannelHandlerContext> manager = new UserObjectManager<ChannelHandlerContext>(1);
