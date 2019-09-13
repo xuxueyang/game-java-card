@@ -81,6 +81,10 @@ public class FileServerHandler extends AbstactSelfServerHandler<RequestDTO, Requ
 
     }
 
+    @Override
+    public byte getType() {
+         return Protocol.Type.FILE;
+    }
 
 
 }

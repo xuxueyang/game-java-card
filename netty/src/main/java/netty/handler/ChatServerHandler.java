@@ -1,6 +1,7 @@
 package netty.handler;
 
 import core.core.RequestDTO;
+import core.protocol.Protocol;
 import core.rpc.ChatRPCConstant;;
 import netty.handler.inter.AbstactSelfServerHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -58,6 +59,11 @@ public class ChatServerHandler extends AbstactSelfServerHandler<RequestDTO, Requ
         }catch (Exception e){
             log.error("消息队列出错" + e.getMessage());
         }
+    }
+
+    @Override
+    public byte getType() {
+        return Protocol.Type.CHAT;
     }
 
 

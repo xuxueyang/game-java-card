@@ -1,6 +1,7 @@
 package netty.handler;
 
 import core.core.RequestDTO;
+import core.protocol.Protocol;
 import core.rpc.RoomRPCConstant;
 import netty.handler.inter.AbstactSelfServerHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -34,7 +35,10 @@ public class RoomServerHandler extends AbstactSelfServerHandler<RequestDTO,Reque
         }
     }
 
-
+    @Override
+    public byte getType() {
+        return Protocol.Type.ROOM;
+    }
 
 
 }

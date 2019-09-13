@@ -22,6 +22,7 @@ import javax.annotation.PostConstruct;
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 @Component
@@ -34,7 +35,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     private static final boolean TEST = true;
 
-    public List<AbstactSelfServerHandler> handlers = new ArrayList<>();
+//    public ConcurrentHashMap<Byte,AbstactSelfServerHandler> handlers = new ConcurrentHashMap<>();
+    public ArrayList<AbstactSelfServerHandler> handlers = new ArrayList<>();
 
     @Autowired
     private AcctRpcClient acctRpcClient;
@@ -55,7 +57,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             Field field = fields[i];
             if(field.getClass().isAssignableFrom(AbstactSelfServerHandler.class) ){
                 try {
-                    serverHandler.handlers.add((AbstactSelfServerHandler)field.get(serverHandler));
+//                    AbstactSelfServerHandler handler = (AbstactSelfServerHandler)field.get(serverHandler);
+//                    serverHandler.handlers.put(handler.getType(),handler);
+                    AbstactSelfServerHandler handler = (AbstactSelfServerHandler)field.get(serverHandler);
+                    serverHandler.handlers.add(handler);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }

@@ -26,4 +26,6 @@ public abstract class AbstactSelfServerHandler<T,A> {
     protected A decode(String json,Class<A> aClass){
         return JSON.parseObject(json, aClass);
     }
+
+    public abstract byte getType();
 }
