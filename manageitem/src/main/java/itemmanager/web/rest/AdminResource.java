@@ -110,7 +110,7 @@ public class AdminResource extends ItemBaseResource {
         }
     }
     //获取所有配置信息
-    @GetMapping("/all-config")
+    @GetMapping("/all-netty.config")
     @ApiOperation(value = "获取所有配置信息", httpMethod = "POST", response = ResponseEntity.class, notes = "获取所有配置信息")
     public ReturnResultDTO<?> getAllConfig() {
         try {

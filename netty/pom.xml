@@ -137,11 +137,6 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.xxy.www</groupId>
-            <artifactId>base-rabbitmq</artifactId>
-            <version>0.1</version>
-        </dependency>
 <!--aaaaaaaaaaaaaaaaaaaaa-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -180,6 +175,11 @@
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-annotation</artifactId>
             <version>3.2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xxy.www</groupId>
+            <artifactId>base-mq</artifactId>
+            <version>0.1</version>
         </dependency>
 
     </dependencies>

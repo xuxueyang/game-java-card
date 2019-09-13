@@ -1,0 +1,47 @@
+spring:
+    application:
+      name: acct
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:mysql://localhost:3306/gameacct?useUnicode=true&characterEncoding=utf8&useSSL=false
+        username: root
+        password: 123456
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        database: MYSQL
+        show-sql: true
+        properties:
+            hibernate.id.new_generator_mappings: true
+            hibernate.cache.use_second_level_cache: false
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: true
+#            hibernate.cache.region.factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
+#            hibernate.cache.hazelcast.instance_name: aa
+#            hibernate.cache.use_minimal_puts: true
+#            hibernate.cache.hazelcast.use_lite_member: true
+        open-in-view: false
+        hibernate:
+            ddl-auto: update
+            naming:
+                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+                implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+server:
+    port: 20007
+eureka:
+  enabled: true
+  instance:
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 10
+    #在eureka中显示ip地址
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    appname: acct
+#    prefer-ip-address: true
+    instance-id: ${spring.application.name}
+#    hostname: ${spring.application.name}
+  client:
+#    healthcheck:
+#      enabled: true
+    service-url:
+      defaultZone: http://localhost:20000/eureka/
+

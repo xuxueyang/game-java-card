@@ -1,10 +1,10 @@
 package roommanager.config;
 
-import rabbitmq.mq.consumer.RabbitMQConsumer;
-import rabbitmq.mq.producer.RabbitMQProducer;
 import core.rpc.RoomRPCConstant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import netty.rabbitmq.RabbitMQConsumer;
+import netty.rabbitmq.RabbitMQProducer;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;

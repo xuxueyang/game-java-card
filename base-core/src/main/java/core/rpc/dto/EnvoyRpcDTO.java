@@ -8,8 +8,8 @@ public class EnvoyRpcDTO implements Serializable{
     private String id;
     private Long metaEnvoyId;
     private String roomId;
-    private ItemConstants.Attribute attribute;//属性(code)
-    private ItemConstants.Race race;//种族(code)
+    private ItemConstants.Attribute attribute;//属性(netty.code)
+    private ItemConstants.Race race;//种族(netty.code)
     private ItemConstants.Grade grade;//品级
 
     private Integer attack;//攻击力

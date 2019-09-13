@@ -28,11 +28,11 @@
             <artifactId>base.core</artifactId>
             <version>0.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.xxy</groupId>
-            <artifactId>base-tool</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.xxy</groupId>-->
+            <!--<artifactId>base-tool</artifactId>-->
+            <!--<version>1.0-SNAPSHOT</version>-->
+        <!--</dependency>-->
     </dependencies>
 
 

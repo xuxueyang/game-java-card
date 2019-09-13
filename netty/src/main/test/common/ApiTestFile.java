@@ -2,10 +2,9 @@ package common;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.googlecode.protobuf.format.JsonFormat;
-import config.DefaultChannelInitializer;
-import config.DefaultFrameDecoder;
-import config.DefaultFrameEncoder;
+import netty.config.DefaultChannelInitializer;
+import netty.config.DefaultFrameDecoder;
+import netty.config.DefaultFrameEncoder;
 import core.core.RequestDTO;
 import core.dto.file.*;
 import core.protocol.Protocol;
@@ -21,7 +20,7 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
-import proto.MsgUtil;
+import netty.proto.MsgUtil;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -43,7 +42,7 @@ public class ApiTestFile {
                 protected void initChannel(SocketChannel channel) throws Exception {
                     if(DefaultChannelInitializer.useProtobuf){
                         channel.pipeline().addLast(new ProtobufVarint32FrameDecoder());
-                        channel.pipeline().addLast(new ProtobufDecoder(proto.dto.RequestDTO.RequestDTOProto.getDefaultInstance()));
+                        channel.pipeline().addLast(new ProtobufDecoder(netty.proto.dto.RequestDTO.RequestDTOProto.getDefaultInstance()));
                         channel.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
                         channel.pipeline().addLast(new ProtobufEncoder());
                     }else{
@@ -62,7 +61,7 @@ public class ApiTestFile {
                             //接收msg消息{与上一章节相比，此处已经不需要自己进行解码}
                             RequestDTO tmp = null;
                             if(DefaultChannelInitializer.useProtobuf){
-                                tmp = (RequestDTO)JSON.parseObject(((proto.dto.RequestDTO.RequestDTOProto) dto).getMessage(),RequestDTO.class);
+                                tmp = (RequestDTO)JSON.parseObject(((netty.proto.dto.RequestDTO.RequestDTOProto) dto).getMessage(),RequestDTO.class);
                             }else {
                                 tmp = (RequestDTO)dto;
                             }

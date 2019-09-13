@@ -16,8 +16,8 @@ import java.util.HashMap;
 
 @RestController
 @AutoJsonRpcServiceImpl
-@JsonRpcService("/rpc/acct")
-@RequestMapping("/rpc/acct")
+@JsonRpcService("/netty.rpc/acct")
+@RequestMapping("/netty.rpc/acct")
 @Api(value = "账号登录的rpc调用",description = "账号登录的rpc调用")
 public class AcctRPCResource extends BaseResource {
 

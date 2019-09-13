@@ -69,12 +69,12 @@ public class WebSocketService {
 //    }
 //    //连接
 //    @OnOpen
-//    public void onOpen(Session session, EndpointConfig config) {
+//    public void onOpen(Session session, EndpointConfig netty.config) {
 ////    public void onOpen(Session session) {
 //        //这里作为websocket的接口，不做修改
 //        //TODO 自动注入的话需要设置
 //        if(this.acctLoginService==null){
-//            this.httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
+//            this.httpSession = (HttpSession) netty.config.getUserProperties().get(HttpSession.class.getName());
 //            if(httpSession != null){
 //                ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(httpSession.getServletContext());
 //                if(this.acctLoginService==null){

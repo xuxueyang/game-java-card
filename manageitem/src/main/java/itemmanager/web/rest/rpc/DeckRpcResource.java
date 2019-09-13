@@ -18,7 +18,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/api/rpc/deck")
+@RequestMapping("/api/netty.rpc/deck")
 public class DeckRpcResource extends BaseResource {
     @Autowired
     private DeckService deckService;

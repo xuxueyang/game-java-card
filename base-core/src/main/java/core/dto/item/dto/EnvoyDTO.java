@@ -2,9 +2,9 @@ package core.dto.item.dto;
 
 public class EnvoyDTO {
     private Long id;
-    private String attributeName;//属性(code)
+    private String attributeName;//属性(netty.code)
 
-    private String raceName;//种族名字(code)
+    private String raceName;//种族名字(netty.code)
 
     private String name;//名字
 

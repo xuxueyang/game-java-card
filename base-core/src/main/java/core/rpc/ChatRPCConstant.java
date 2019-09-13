@@ -7,7 +7,7 @@ public interface ChatRPCConstant {
     String MQ_NAME_PRODUCER = "chat_producer";
     String MQ_NAME_CONSUMER = "chat_consumer";
 
-//    String _prefix = "/rpc/chat";
+//    String _prefix = "/netty.rpc/chat";
 //    String CREATE_TWO_ROOM = _prefix + "/two/CREATE_TWO_ROOM";
 //    String SURRENDER = _prefix + "/two/SURRENDER";
 

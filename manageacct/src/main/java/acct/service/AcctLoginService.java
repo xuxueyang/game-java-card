@@ -47,7 +47,7 @@ public class AcctLoginService {
     private final String AUTHORIZED_GRANT_TYPES_PASSWORD = "password";
     private final String AUTHORIZED_GRANT_TYPES_REFRESH_TOKEN = "refresh_token";
     private final String AUTHORIZED_GRANT_TYPES = "grant_type";
-    private final String GRAPH_TYPE_CODE = "code";
+    private final String GRAPH_TYPE_CODE = "netty.code";
     private final String GRAPH_TYPE_NUM  = "num";
 
 

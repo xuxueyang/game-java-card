@@ -13,15 +13,15 @@ import javax.persistence.Transient;
 public class Envoy extends BaseEntity {
 
     @Column(nullable = false,name = "attribute",length = 5)
-    private Integer attribute;//属性(code)
+    private Integer attribute;//属性(netty.code)
 
     @Transient
-    private String attributeName;//属性(code)
+    private String attributeName;//属性(netty.code)
 
     @Column(nullable = false,name = "race",length = 5)
-    private Integer race;//种族(code)
+    private Integer race;//种族(netty.code)
     @Transient
-    private String raceName;//种族名字(code)
+    private String raceName;//种族名字(netty.code)
 
     @Column(nullable = false,name = "name",length = 5)
     private String name;//名字

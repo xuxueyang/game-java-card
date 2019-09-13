@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/rpc/room")
+@RequestMapping("/api/netty.rpc/room")
 public class RoomManagerRpcResource extends BaseResource {
     public static final Logger log = LoggerFactory.getLogger(RoomManagerRpcResource.class);
 

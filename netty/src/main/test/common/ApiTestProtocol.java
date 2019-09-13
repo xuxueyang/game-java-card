@@ -2,8 +2,6 @@ package common;
 
 import com.alibaba.fastjson.JSON;
 import com.googlecode.protobuf.format.JsonFormat;
-import config.DefaultFrameDecoder;
-import config.DefaultFrameEncoder;
 import core.core.RequestDTO;
 import core.protocol.Protocol;
 import core.util.MD5Util;
@@ -16,11 +14,8 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
-import proto.MsgUtil;
+import netty.proto.MsgUtil;
 
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,7 +33,7 @@ public class ApiTestProtocol {
                 @Override
                 protected void initChannel(SocketChannel channel) throws Exception {
                     channel.pipeline().addLast(new ProtobufVarint32FrameDecoder());
-                    channel.pipeline().addLast(new ProtobufDecoder(proto.dto.RequestDTO.RequestDTOProto.getDefaultInstance()));
+                    channel.pipeline().addLast(new ProtobufDecoder(netty.proto.dto.RequestDTO.RequestDTOProto.getDefaultInstance()));
                     channel.pipeline().addLast(new ProtobufVarint32LengthFieldPrepender());
                     channel.pipeline().addLast(new ProtobufEncoder());
                     // 在管道中添加我们自己的接收数据实现方法
@@ -47,7 +42,7 @@ public class ApiTestProtocol {
                         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
                             //接收msg消息{与上一章节相比，此处已经不需要自己进行解码}
 //                            RequestDTO dto = (RequestDTO)msg;
-                            String string = JsonFormat.printToString((proto.dto.RequestDTO.RequestDTOProto) msg);
+                            String string = JsonFormat.printToString((netty.proto.dto.RequestDTO.RequestDTOProto) msg);
 
                             System.out.println(
                                     new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " 客户端接收到消息：" + string );

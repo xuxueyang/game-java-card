@@ -13,17 +13,17 @@ import java.util.Random;
 
 
 public final class CaptchaGenerator {
-    //Use Algerian£¬remove 1,0,i,o
+    //Use Algerianï¿½ï¿½remove 1,0,i,o
     private static final String GRAPH_BASE_CODES = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
     private static final String SMS_BASE_CODES = "0123456789";
     private static Random random = new Random();
 
 
     /**
-     * Generate captcha code via default base
+     * Generate captcha netty.code via default base
      *
-     * @param size captcha code size
-     * @return captcha code
+     * @param size captcha netty.code size
+     * @return captcha netty.code
      */
     public static String generateCaptchaCode(int size) {
         return generateCaptchaCode(size, GRAPH_BASE_CODES);
@@ -34,11 +34,11 @@ public final class CaptchaGenerator {
     }
 
     /**
-     * Generate captcha code
+     * Generate captcha netty.code
      *
-     * @param size    captcha code size
+     * @param size    captcha netty.code size
      * @param sources base codes
-     * @return captcha code
+     * @return captcha netty.code
      */
     private static String generateCaptchaCode(int size, String sources) {
         if (sources == null || sources.length() == 0) {
@@ -53,10 +53,10 @@ public final class CaptchaGenerator {
         return captchaCode.toString();
     }
 
-    public static String GetImageStr(String imgFilePath) {// ½«Í¼Æ¬ÎÄ¼þ×ª»¯Îª×Ö½ÚÊý×é×Ö·û´®£¬²¢¶ÔÆä½øÐÐBase64±àÂë´¦Àí
+    public static String GetImageStr(String imgFilePath) {// ï¿½ï¿½Í¼Æ¬ï¿½Ä¼ï¿½×ªï¿½ï¿½Îªï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Base64ï¿½ï¿½ï¿½ë´¦ï¿½ï¿½
         byte[] data = null;
 
-        // ¶ÁÈ¡Í¼Æ¬×Ö½ÚÊý×é
+        // ï¿½ï¿½È¡Í¼Æ¬ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½
         try {
             InputStream in = new FileInputStream(imgFilePath);
             data = new byte[in.available()];
@@ -66,24 +66,24 @@ public final class CaptchaGenerator {
             e.printStackTrace();
         }
 
-        // ¶Ô×Ö½ÚÊý×éBase64±àÂë
+        // ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½Base64ï¿½ï¿½ï¿½ï¿½
         BASE64Encoder encoder = new BASE64Encoder();
-        return encoder.encode(data);// ·µ»ØBase64±àÂë¹ýµÄ×Ö½ÚÊý×é×Ö·û´®
+        return encoder.encode(data);// ï¿½ï¿½ï¿½ï¿½Base64ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½
     }
 
-    public static boolean GenerateImage(String imgStr, String imgFilePath) {// ¶Ô×Ö½ÚÊý×é×Ö·û´®½øÐÐBase64½âÂë²¢Éú³ÉÍ¼Æ¬
-        if (imgStr == null) // Í¼ÏñÊý¾ÝÎª¿Õ
+    public static boolean GenerateImage(String imgStr, String imgFilePath) {// ï¿½ï¿½ï¿½Ö½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Base64ï¿½ï¿½ï¿½ë²¢ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
+        if (imgStr == null) // Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½
             return false;
         BASE64Decoder decoder = new BASE64Decoder();
         try {
-            // Base64½âÂë
+            // Base64ï¿½ï¿½ï¿½ï¿½
             byte[] bytes = decoder.decodeBuffer(imgStr);
             for (int i = 0; i < bytes.length; ++i) {
-                if (bytes[i] < 0) {// µ÷ÕûÒì³£Êý¾Ý
+                if (bytes[i] < 0) {// ï¿½ï¿½ï¿½ï¿½ï¿½ì³£ï¿½ï¿½ï¿½ï¿½
                     bytes[i] += 256;
                 }
             }
-            // Éú³ÉjpegÍ¼Æ¬
+            // ï¿½ï¿½ï¿½ï¿½jpegÍ¼Æ¬
             OutputStream out = new FileOutputStream(imgFilePath);
             out.write(bytes);
             out.flush();
@@ -94,13 +94,13 @@ public final class CaptchaGenerator {
         }
     }
     /**
-     * Generate random captcha code file and return captcha code
+     * Generate random captcha netty.code file and return captcha netty.code
      *
      * @param width      image width
      * @param high       image high
      * @param outputFile file directory
-     * @param size       captcha code size
-     * @return captcha code
+     * @param size       captcha netty.code size
+     * @return captcha netty.code
      * @throws IOException I/O Exception
      */
     public static String outputCaptchaImage(int width, int high, File outputFile, int size) throws IOException {
@@ -111,13 +111,13 @@ public final class CaptchaGenerator {
     }
 
     /**
-     * Generate random captcha code output stream and return captcha code
+     * Generate random captcha netty.code output stream and return captcha netty.code
      *
      * @param width image width
      * @param high  image high
      * @param os    output stream
-     * @param size  captcha code size
-     * @return captcha code
+     * @param size  captcha netty.code size
+     * @return captcha netty.code
      * @throws IOException I/O Exception
      */
     public static String outputCaptchaImage(int width, int high, OutputStream os, int size) throws IOException {
@@ -127,12 +127,12 @@ public final class CaptchaGenerator {
     }
 
     /**
-     * Generate captcha code file via captcha code
+     * Generate captcha netty.code file via captcha netty.code
      *
      * @param width       picture width
      * @param high        picture high
      * @param outputFile  output file
-     * @param captchaCode captcha code
+     * @param captchaCode captcha netty.code
      * @throws IOException I/O Exception
      */
     public static void outputImage(int width, int high, File outputFile, String captchaCode) throws IOException {
@@ -154,12 +154,12 @@ public final class CaptchaGenerator {
     }
 
     /**
-     * Generate captcha code output stream via captcha code
+     * Generate captcha netty.code output stream via captcha netty.code
      *
      * @param width       picture width
      * @param high        picture high
      * @param os          output stream
-     * @param captchaCode captcha code
+     * @param captchaCode captcha netty.code
      * @throws IOException I/O Exception
      */
     public static void outputImage(int width, int high, OutputStream os, String captchaCode) throws IOException {

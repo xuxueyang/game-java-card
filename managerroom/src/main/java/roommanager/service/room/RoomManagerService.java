@@ -2,7 +2,6 @@ package roommanager.service.room;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import rabbitmq.mq.consumer.RabbitMQConsumer;
 import core.core.RequestDTO;
 import core.core.ReturnCode;
 import core.core.ReturnResultDTO;
@@ -13,13 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import rabbitmq.mq.producer.RabbitMQProducer;
+import netty.rabbitmq.RabbitMQConsumer;
+import netty.rabbitmq.RabbitMQProducer;
 import roommanager.rpc.DeckRpcClient;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

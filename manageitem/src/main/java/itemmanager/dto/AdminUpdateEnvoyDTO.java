@@ -2,8 +2,8 @@ package itemmanager.dto;
 
 public class AdminUpdateEnvoyDTO {
     private Long id;
-    private Integer attribute;//属性(code)
-    private Integer race;//种族(code)
+    private Integer attribute;//属性(netty.code)
+    private Integer race;//种族(netty.code)
 
     private String name;//名字
 
