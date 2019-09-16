@@ -23,14 +23,63 @@ import io.netty.handler.codec.string.StringEncoder;
 import netty.proto.MsgUtil;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
 public class ApiTestFile {
+    public static void checkFile(String file1,String file2) throws IOException {
+        File one1 = new File(file1);
+        File two2 = new File(file2);
+        RandomAccessFile one = new RandomAccessFile(one1, "r");//r: 只读模式 rw:读写模式
+        RandomAccessFile two = new RandomAccessFile(two2, "r");//r: 只读模式 rw:读写模式
+        Integer position = 0;
+        while (true){
+            one.seek(position);
+            two.seek(position);
+            byte[] bytes = new byte[1024];
+            byte[] bytes2 = new byte[1024];
+            int readSize = one.read(bytes);
+            int readSize2 = two.read(bytes2);
+            if(readSize>0){
+                byte[] copy = new byte[readSize];
+                byte[] copy2 = new byte[readSize2];
+                System.arraycopy(bytes, 0, copy, 0, readSize);
+                System.arraycopy(bytes, 0, copy2, 0, readSize2);
+//                System.out.println("————————————————————————————");
+                String x = JSON.toJSONString(copy);
+//                System.out.println(x);
+                String x1 = JSON.toJSONString(copy2);
+//                System.out.println(x1);
+                if(!x.equals(x1)){
+                    System.out.println("————————————————————————————");
+                }
+//                System.out.println("————————————————————————————");
 
+                if(readSize<1024){
+                    return;
+                }else {
+                    position+=1024;
+
+                }
+            }else{
+                return;
+            }
+        }
+    }
     public static void main(String[] args) {
+        testFile("D:\\project_new\\protoc-3.9.1-win64.zip");
+//        testFile("D:\\project_new\\game-java-card\\managerroom\\src\\main\\java\\roommanager\\RoomApplication.java");
+//        try {
+//            checkFile("D:\\project_new\\protoc-3.9.1-win64.zip","D:\\protoc-3.9.1-win64.zip");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+    private static void testFile(String filePath){
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             Bootstrap b = new Bootstrap();
@@ -88,7 +137,12 @@ public class ApiTestFile {
                                         System.exit(-1);
                                         return;
                                     }
-                                    FileBurstData fileBurstData = FileUtil.readFile(fileBurstInstruct.getClientFileUrl(), fileBurstInstruct.getReadPosition());
+                                    FileBurstData fileBurstData = null;
+                                    try {
+                                         fileBurstData = FileUtil.readFile(fileBurstInstruct.getClientFileUrl(), fileBurstInstruct.getReadPosition());
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
                                     FileTransferProtocol clientSend = new FileTransferProtocol();
                                     clientSend.setTransferType(FileConstants.TransferType.DATA);//0请求传输文件、1文件传输指令、2文件传输数据
                                     clientSend.setTransferObj(fileBurstData);
@@ -140,7 +194,7 @@ public class ApiTestFile {
 
             //传输文件
             //文件信息{文件大于1024kb方便测试断点续传}
-            File file = new File("D:\\project_new\\1.rar");
+            File file = new File(filePath);
             FileTransferProtocol fileTransferProtocol = FileUtil.buildRequestTransferFile(file.getAbsolutePath(), file.getName(), file.length());
 
             dto2.setData(fileTransferProtocol);

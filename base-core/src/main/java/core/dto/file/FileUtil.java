@@ -5,12 +5,18 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class FileUtil {
+    //TODO bug:读取分片合并的时候多一个NUL位
+    private static int fileLength = 1024;
     public static FileBurstData readFile(String fileUrl, Integer readPosition) throws IOException {
         File file = new File(fileUrl);
         RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");//r: 只读模式 rw:读写模式
         randomAccessFile.seek(readPosition);
-        byte[] bytes = new byte[1024];
+        byte[] bytes = new byte[fileLength];
         int readSize = randomAccessFile.read(bytes);
+//        while(download.getInputStream().read(b,0,10240) != -1){
+//            fos.write(b,0,10240);
+//        }
+
         if (readSize <= 0) {
             randomAccessFile.close();
             return new FileBurstData(FileConstants.FileStatus.COMPLETE);//Constants.FileStatus ｛0开始、1中间、2结尾、3完成｝
@@ -19,13 +25,14 @@ public class FileUtil {
         fileInfo.setFileUrl(fileUrl);
         fileInfo.setFileName(file.getName());
         fileInfo.setBeginPos(readPosition);
-        fileInfo.setEndPos(readPosition + readSize);
+        fileInfo.setEndPos(readPosition + readSize-1);//-1是去除结尾的字节符号
         //不足1024需要拷贝去掉空字节
-        if (readSize < 1024) {
+        if (readSize < fileLength) {
             byte[] copy = new byte[readSize];
             System.arraycopy(bytes, 0, copy, 0, readSize);
             fileInfo.setBytes(copy);
             fileInfo.setStatus(FileConstants.FileStatus.END);
+//            fileInfo.setEndPos(readPosition + readSize);//读取完毕就不需要加了
         } else {
             fileInfo.setBytes(bytes);
             fileInfo.setStatus(FileConstants.FileStatus.CENTER);
@@ -54,7 +61,7 @@ public class FileUtil {
         FileBurstInstruct fileBurstInstruct = new FileBurstInstruct();
         fileBurstInstruct.setStatus(FileConstants.FileStatus.CENTER);            //Constants.FileStatus ｛0开始、1中间、2结尾、3完成｝
         fileBurstInstruct.setClientFileUrl(fileBurstData.getFileUrl());      //客户端文件URL
-        fileBurstInstruct.setReadPosition(fileBurstData.getEndPos() + 1);    //读取位置
+        fileBurstInstruct.setReadPosition(fileBurstData.getEndPos()+1);    //读取位置
 
         return fileBurstInstruct;
     }

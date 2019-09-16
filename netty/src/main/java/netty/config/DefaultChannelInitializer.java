@@ -1,5 +1,8 @@
 package netty.config;
 
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.stream.ChunkedWriteHandler;
 import netty.handler.ServerHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
@@ -18,6 +21,7 @@ public class DefaultChannelInitializer extends ChannelInitializer<SocketChannel>
     public static final boolean useProtobuf =  true;
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
+
         if(useProtobuf){
             //protobuf 处理
             socketChannel.pipeline().addLast(new ProtobufVarint32FrameDecoder());
@@ -34,6 +38,10 @@ public class DefaultChannelInitializer extends ChannelInitializer<SocketChannel>
             socketChannel.pipeline().addLast(new ServerHandler());
             socketChannel.pipeline().addLast(new DefaultFrameEncoder());
         }
-
+        if(false){
+            socketChannel.pipeline().addLast("http-codec", new HttpServerCodec());
+            socketChannel.pipeline().addLast("aggregator", new HttpObjectAggregator(65536));
+            socketChannel.pipeline().addLast("http-chunked", new ChunkedWriteHandler());
+        }
     }
 }
