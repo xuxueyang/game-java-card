@@ -1,5 +1,6 @@
 package netty.handler;
 
+import io.netty.util.ReferenceCountUtil;
 import netty.config.DefaultChannelInitializer;
 import core.manager.UserObjectManager;
 import netty.handler.inter.AbstactSelfServerHandler;
@@ -198,6 +199,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 log.error("未知协议");
             }
         }
+//        ReferenceCountUtil.release(msg);
+
     }
 
     @Override

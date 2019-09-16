@@ -21,6 +21,7 @@ public class RequestDTO<Data> implements Serializable {
     private Data data;
     @ApiModelProperty(required = true)
     private Long timestamp;
+//    transient
     @ApiModelProperty(name = "由token+時間戳，md5加密組成。" +
             "相同的用戶和token的情況下：不允許出現同樣的時間戳，碰撞概率反正很小",
             required = true

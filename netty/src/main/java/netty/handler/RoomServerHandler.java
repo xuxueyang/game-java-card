@@ -3,6 +3,9 @@ package netty.handler;
 import core.core.RequestDTO;
 import core.protocol.Protocol;
 import core.rpc.RoomRPCConstant;
+import io.netty.channel.group.ChannelGroup;
+import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.util.concurrent.GlobalEventExecutor;
 import netty.handler.inter.AbstactSelfServerHandler;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.commons.logging.Log;
@@ -22,6 +25,7 @@ public class RoomServerHandler extends AbstactSelfServerHandler<RequestDTO,Reque
     private RabbitMQConsumer consumer;
     @Resource(name = RoomRPCConstant.MQ_NAME_CONSUMER)
     private RabbitMQProducer producer;
+    public static ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
 
     @Override

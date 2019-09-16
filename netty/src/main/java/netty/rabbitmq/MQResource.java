@@ -8,13 +8,19 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.TimeoutException;
 
+
 @Deprecated
 public class MQResource {
     private MQResource(){}
-    private static MQResource mqResource = null;
-    public static MQResource getMQResource(){return mqResource;}
+//    private static MQResource mqResource = null;
+//    public  static MQResource getMQResource(){return mqResource;}
+
+    public synchronized static MQResource getMQResource(){return MQResource._Init.mqResource;}// 延迟初始化占位
     private HashMap<String,RabbitMQProducer> producerHashMap = new HashMap<>();
     private HashMap<String,RabbitMQConsumer> consumerHashMap = new HashMap<>();
+    private static class _Init{
+        private static MQResource mqResource = new MQResource();
+    }
     static {
 //        netty.MQResource.mqResource = new netty.MQResource();
 //        getMQResource().initRoomMQ();
