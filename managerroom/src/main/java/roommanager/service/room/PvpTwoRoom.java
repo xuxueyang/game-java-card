@@ -19,6 +19,7 @@ import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
     public static final Logger log = LoggerFactory.getLogger(PvpTwoRoom.class);
@@ -36,9 +37,8 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
         end//结束阶段end,0001000
     }
 
+
     private String _roomId;
-    private Long winnerUserId;
-    private Long failureUserId;
     private Long _startTime;
     private Integer _mapId;
     private ResourceManager _oneManager;
@@ -49,7 +49,7 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
     private Timer timer = new Timer();
     private _MsgFactory _MsgFactory = new _MsgFactory();
     private int _round = 1;//縂回合數
-    private  RoundType roundType = RoundType.pre_init;
+    private  RoundType _roundType = RoundType.pre_init;
 
     private ResourceManager currentManager;
     private LinkedBlockingQueue<RequestDTO> blockingQueue = new LinkedBlockingQueue(20);
@@ -88,8 +88,8 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
         //todo 随机生成地图
         this._mapId = 0;
         this._gameMap =  GameMapFactory.getGameMapById(this._mapId);
-        ResourceManager resourceManager = _getResourceManager(oneUserId,oneUserDeck, true);
-        ResourceManager resourceManager1 = _getResourceManager(twoUserId,twoUserDeck, false);
+        ResourceManager resourceManager = _initResourceManager(oneUserId,oneUserDeck, true);
+        ResourceManager resourceManager1 = _initResourceManager(twoUserId,twoUserDeck, false);
         this._oneManager = resourceManager;
         this._twoManager = resourceManager1;
         _checkData();//核查数据合法性，比如棋子3个，棋子数值不能过高，星辰值转为具体数值等等
@@ -157,16 +157,12 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
                 long timestamp = System.currentTimeMillis();
                 if(timestamp-_oneManager.timestamp<Protocol.Head_TIME){
                     //説明失去聯係了
-                    winnerUserId = _twoManager.userId;
-                    failureUserId = _oneManager.userId;
-                    over();
+                    overTime(_twoManager.userId,_oneManager.userId);
                     timer.cancel();
                     return;
                 }
                 if(timestamp-_twoManager.timestamp<Protocol.Head_TIME){
-                    winnerUserId = _oneManager.userId;
-                    failureUserId = _twoManager.userId;
-                    over();
+                    overTime(_oneManager.userId, _twoManager.userId);
                     timer.cancel();
                     return;
                 }
@@ -196,11 +192,12 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
                     //先定死一回合10s
                     //如果还剩下20秒要提示烧绳子,如果没时间了切换回合
                     if(System.currentTimeMillis() - currentManager.startRoundTimestamp > MAX_ROUNT_TIME){
-                        log.debug("回合结束，切换");
+                        log.debug("TODO回合结束，切换");
                         //添加一个结束回合的消息即可
                         RequestDTO dto = new RequestDTO();
                         dto.setProtocol(Protocol.PvpTwoRoomProtocol.CLINET_PLAYER_OVER);
                         dto.setUserId(currentManager.userId);
+                        dto.setRoomOperatorLong(getByUserId(currentManager.userId).operatorLong.longValue());
                         receiveMessage(dto);
 
                     }else if(System.currentTimeMillis()-currentManager.startRoundTimestamp > MAX_ROUNT_TIME -  REMAINING_ROUNT_TIME){
@@ -213,7 +210,7 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
 
         //階段處理
         while (true){
-            switch (roundType){
+            switch (_roundType){
                 case pre_init:{
                     List<AbstractBaseEffect> abstractBaseEffects = this.effectList.get(RoomConstants.EffectTime.ST_PRE_INIT);
                     AbstractBaseEffect.EffectData<ResourceManager> data = new AbstractBaseEffect.EffectData();
@@ -233,7 +230,7 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
                 } break;
                 case start:{
                     //阻塞等待玩家處理，同時記時間，超過60s結束回合
-                    while (roundType==RoundType.start){
+                    while (_roundType==RoundType.start){
                         try {
                             RequestDTO take = blockingQueue.take();
                             sendMessage(_reslove(take));
@@ -257,7 +254,7 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
                                     this._twoManager: this._oneManager;
                     this.currentManager.startRoundTimestamp = null;
                     this._round++;
-                    this.roundType = RoundType.pre_init;
+                    this._roundType = RoundType.pre_init;
                 }break;
             }
         }
@@ -284,7 +281,7 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
 
             }break;
         }
-        return null;
+        return _MsgFactory.getSuccessMsg(dto);
     }
     @Override
     public void receiveMessage(RequestDTO dto) {
@@ -302,15 +299,26 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
                         //發送使用失敗的回調
                         sendMessage(_MsgFactory.getErrorMsg(dto));
                     }
+                }else{
+                    sendMessage(_MsgFactory.getErrorMsg(dto));
                 }
             }
         }
     }
     private boolean _checkRequestDTO(RequestDTO dto) {
-        return this.roundType == RoundType.start
+        boolean check = this._roundType == RoundType.start
+                &&dto.getRoomOperatorLong()!=null
                 &&dto.getUserId() == this.currentManager.userId
                 &&dto.getProtocol()>= Protocol.PvpTwoRoomProtocol.CLINET_CARD_USE
                 && dto.getProtocol()<=Protocol.PvpTwoRoomProtocol.CLINET_PLAYER_SURRENDER;
+        if(!check)
+            return false;
+        //判斷dto操作數要和自己一直
+        if(Protocol.ConstatnProtocol.Head != dto.getProtocol()
+                &&getByUserId(dto.getUserId()).operatorLong.longValue()!=dto.getRoomOperatorLong()){
+            return false;
+        }
+        return true;
     }
 
 
@@ -329,20 +337,20 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
     }
 
     @Override
-    public void over() {
+    public void overTime(Long winnerUserId,Long failureUserId) {
         if(!isOver)
             return;
         isOver = !isOver;
         //結算
         RoomEventOverInterface.DefaultOverDTO defaultOverDTO = new RoomEventOverInterface.DefaultOverDTO();
-        defaultOverDTO.winnerUserId = this.winnerUserId;
+        defaultOverDTO.winnerUserId = winnerUserId;
         defaultOverDTO.battleTime = System.currentTimeMillis() - this._startTime;
-        defaultOverDTO.failureUserId = this.failureUserId;
+        defaultOverDTO.failureUserId = failureUserId;
         defaultOverDTO.roomId = _roomId;
 
         _RoomEventOverInterface.over(defaultOverDTO);
     }
-    private ResourceManager _getResourceManager(Long userId,DeckRpcDTO deckRpcDTO,boolean isOne){
+    private ResourceManager _initResourceManager(Long userId,DeckRpcDTO deckRpcDTO,boolean isOne){
         ResourceManager resourceManager = new ResourceManager();
         resourceManager.isOne = isOne;
         resourceManager.userId = userId;
@@ -354,6 +362,9 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
     //用内部的卡牌和棋子，和管理.
     // TODO 將生成的卡牌(新的ID）返回給前端
     private class ResourceManager{
+        //操作數
+        public AtomicLong operatorLong = new AtomicLong(0);
+
         public boolean isOne;//主玩家標記
         public int starForce;//星魄
         public Long userId;
@@ -441,10 +452,25 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
             oneDto.setUserId(dto.getUserId());
             oneDto.setData(false);
             oneDto.setArea(dto.getArea());
+            oneDto.setRoomOperatorLong(dto.getRoomOperatorLong());
             oneDto.setType(dto.getType());
             oneDto.setProtocol(dto.getProtocol());
             ArrayList<RoomRabbitDTO> roomRabbitDTOS = new ArrayList<>(1);
             roomRabbitDTOS.add(oneDto);
+            return roomRabbitDTOS;
+        }
+        public List<RoomRabbitDTO> getSuccessMsg(RequestDTO dto) {
+            //對錯誤的消息，需要原樣返回，説明失敗
+            RoomRabbitDTO oneDto = new RoomRabbitDTO();
+            oneDto.setUserId(dto.getUserId());
+            oneDto.setData(true);
+            oneDto.setArea(dto.getArea());
+            oneDto.setRoomOperatorLong(dto.getRoomOperatorLong());
+            oneDto.setType(dto.getType());
+            oneDto.setProtocol(dto.getProtocol());
+            ArrayList<RoomRabbitDTO> roomRabbitDTOS = new ArrayList<>(1);
+            roomRabbitDTOS.add(oneDto);
+            getByUserId(dto.getUserId()).operatorLong.getAndIncrement();//計數增長1
             return roomRabbitDTOS;
         }
 

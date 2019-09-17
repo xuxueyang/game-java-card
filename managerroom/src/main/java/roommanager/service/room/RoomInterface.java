@@ -11,5 +11,5 @@ public interface RoomInterface<T> extends Runnable{
     List<T> sendStartMsg();
     void receiveMessage(RequestDTO dto);
     void sendMessage(List<T> msg);
-    void over();
+    void overTime(Long winnerUserId,Long failureUserId);
 }
