@@ -37,7 +37,7 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
 //    private LinkedBlockingQueue<RequestDTO> storageConsumer = new LinkedBlockingQueue<RequestDTO>();
     private LinkedBlockingQueue<RequestDTO> storageProducer = new LinkedBlockingQueue<RequestDTO>();
 
-
+    private LinkedBlockingQueue<String> _consumerMessage = new LinkedBlockingQueue<>();
     @PostConstruct
     private void initManager() {
         Runnable runnableConsumer = new Runnable() {
@@ -48,9 +48,29 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
                     if(consumer!=null){
                         try {
                             String consume = consumer.consume();
+                            _consumerMessage.put(consume);
                             log.info(consume);
-                            RequestDTO dto = JSONObject.parseObject(consume, RequestDTO.class);
+//                            RequestDTO dto = JSONObject.parseObject(consume, RequestDTO.class);
     //                        storageConsumer.put(dto);
+//                            receiveMessage(dto);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }
+            }
+        };
+        Runnable _runnableConsumer = new Runnable() {
+            @Override
+            public void run() {
+                //循环读取读出消息
+                while (true){
+                    if(consumer!=null){
+                        try {
+                            String consume = _consumerMessage.take();
+                            RequestDTO dto = JSONObject.parseObject(consume, RequestDTO.class);
+                            //                        storageConsumer.put(dto);
                             receiveMessage(dto);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -60,7 +80,6 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
                 }
             }
         };
-
         Runnable runnableProducer = new Runnable() {
             @Override
             public void run() {
@@ -82,10 +101,11 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
         Thread threadConsumer = new Thread(runnableConsumer);
 
         Thread threadProducer  = new Thread(runnableProducer);
-
+        Thread _threadConsumer  = new Thread(_runnableConsumer);
 
         threadConsumer.run();
         threadProducer.run();
+        _threadConsumer.run();
     }
     //todo 注入rabbit，并且接受消息
 //    Executor executor = Executors.newFixedThreadPool(10);
