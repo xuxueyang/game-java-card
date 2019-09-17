@@ -314,6 +314,13 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
         if(!check)
             return false;
         //判斷dto操作數要和自己一直
+        //（不丢弃处理方式、不需要包顺序） 以后这样判断：会将数据存在队列中，每次取的时候判断是不是一样，如果不一样，要计算当前队列，将
+        //比如吧dto和n-operator的位置和数组交换,Array，直到Array[0],有数据才处理，同时客户端有一个check，会check没回调成功的数据操作数
+        //需要客户端配合，同时允许一部分操作放在客户端
+        //因为目前演算都在服务器端，所以，不需要吧
+
+        //目前丢弃方式，需要保证包顺序
+
         if(Protocol.ConstatnProtocol.Head != dto.getProtocol()
                 &&getByUserId(dto.getUserId()).operatorLong.longValue()!=dto.getRoomOperatorLong()){
             return false;
