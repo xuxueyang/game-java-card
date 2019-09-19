@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)https://www.gameres.com/841302.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	       
+           <title>《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网</title> 
+		        
+        <meta name="description" content=""> 
+        <meta name="keywords" content="自走棋,策划,产品分析,GameRes,游资网">
+                <script src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/push.js.下载"></script><script src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/hm.js.下载"></script><script src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/all.min.js.下载" type="text/javascript"></script>
+        <script src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/main.js.下载" type="text/javascript"></script>
+        <script src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/layui.js.下载" type="text/javascript"></script>
+        <link href="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/layui.css" rel="stylesheet" type="text/css">
+        <link href="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/main.css" rel="stylesheet" type="text/css">
+        <link href="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/style_1_forum_viewthread.css" rel="stylesheet" type="text/css">
+        
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<link rel="dns-prefetch" href="https://news.16p.com/">
+
+        <script>
+            function isMobile (ua) {
+  if (!ua && typeof navigator != 'undefined') ua = navigator.userAgent;
+  if (ua && ua.headers && typeof ua.headers['user-agent'] == 'string') {
+    ua = ua.headers['user-agent'];
+  }
+  if (typeof ua != 'string') return false;
+
+  return /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(ua) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(ua.substr(0, 4));
+            }
+            jq(function () {
+                setTimeout(function () {
+                    jq.get(location.href, {updateCache: 1}, function (data, status, xhr) {});
+                }, 100);
+                if(isMobile())
+                {
+                    jq("embed").css("display","none");
+					jq("#qrcode-span").css("display","none");
+					
+                }
+
+            });
+        </script>
+
+
+        <script>
+            var newsListJsonUrl = "/newslistJson";
+            var JSPATH = 'https://img.gameres.com/static/js/';
+            var VERHASH = 'WM5'
+        </script>
+        <style>
+            embed
+            {
+                max-width:100%!important;
+            }
+            @media screen and (max-width: 800px){
+                .footerdiv{
+                    display:none;
+                }
+            }
+            
+            
+            @media screen and (max-width: 800px)
+            {
+
+                .zsy-style
+                {
+                    width: 100%;
+                    margin: 0 auto;
+                }
+
+            }
+           
+            @media screen and (min-width: 800px)
+            {
+                 .zsy-style
+                {
+                    width: 800px;
+                    margin: 0 auto;
+                }
+            }
+        </style>
+    </head>
+    <body style="position:relative;">
+                 <div class="navbar">
+     <div class="navbar-header">
+         <div class="logo" style="padding:15px 10px;display:flex;align-items: center;float: left;height: 100%;" title="GameRes游资网">
+             <a target="_blank" href="https://www.gameres.com/"> <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/logo.png"></a>
+         </div>
+
+        <div class="meitihao" style="    
+    height: 100%;position: relative;
+    padding: 22px 15px;">
+            <button class="meiti-btn more_menu_btn" data-target="#meiti_menu">
+                <span>媒体号<i class="layui-icon layui-icon-down" style="vertical-align: middle;    font-size: 14px;padding: 0 3px;"></i>   </span>
+            </button>
+          <div class="meiti_poptip  more_menu_pane" id="meiti_menu" style="display: none;">
+              <div class="ivu-poptip-arrow"></div> 
+              <div class="ivu-poptip-inner">
+                  <div class="gameres-qrcode">
+                  <h3>微信公众号</h3>
+                  <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/d0cd41.jpg">
+                </div>
+                <div class="gameres-qrcode">
+                    <h3>微博<a href="https://weibo.com/gamerescom" target="_blank" rel="nofollow">&nbsp;<i class="layui-icon layui-icon-link" style="color: #2d8cf0;"></i></a></h3>
+                  <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/489313.png">
+                </div>
+                <div class="gameres-qrcode">
+                  <h3>头条号</h3>
+                  <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/a55d2d.jpeg">
+                </div>
+              </div>
+          </div>
+        </div>
+        
+        <span id="headermenuwrapper">
+            <ul class="spread-nav layui-nav layui-nav-tree  layui-nav-side" style="display: none;">
+                <li><a class="close-spread-nav-btn" target="_blank"><i class="layui-icon layui-icon-spread-left" style="font-size: 20px;"></i></a></li>
+                <li class=" first"><a href="https://www.gameres.com/" target="_blank">首页</a></li>
+                <li><a href="https://www.gameres.com/list/43" target="_blank">原创</a></li>
+                <li><a href="https://bbs.gameres.com/" target="_blank">论坛</a></li>
+                <li><a href="http://www.16p.com/gamecenter/gamelist?web_mode=1" target="_blank">产品库</a></li>
+                <li><a href="https://www.gameres.com/newgame" target="_blank">开测表</a></li>
+                <li><a href="https://bbs.gameres.com/forum_47_1.html" target="_blank">招聘</a></li>
+            <span class="layui-nav-bar"></span></ul>
+            <ul id="logomenu">
+                <li class=" first"><a href="https://www.gameres.com/" target="_blank">首页</a></li>
+                <li><a href="https://www.gameres.com/list/43" target="_blank">原创</a></li>
+                <li><a href="https://bbs.gameres.com/" target="_blank">论坛</a></li>
+                <li><a href="http://www.16p.com/gamecenter/gamelist?web_mode=1" target="_blank">产品库</a></li>
+                <li><a href="https://www.gameres.com/newgame" target="_blank">开测表</a></li>
+                <li><a href="https://bbs.gameres.com/forum_47_1.html" target="_blank">招聘</a></li>
+            </ul>
+           
+            <a class="more_menu_btn" data-target="#main_menu_pane">More<i class="layui-icon layui-icon-down"></i></a>
+            <a href="https://www.gameres.com/search" target="_blank"><i class="layui-icon layui-icon-search" style="font-size: 20px;"></i></a>
+            <a class="spread-side-btn" target="_blank"><i class="layui-icon layui-icon-shrink-right" style="font-size: 20px;"></i></a>
+        </span>
+
+      </div>
+     <div class="more_menu_pane" id="main_menu_pane" style="display:none;width:100%">
+        <div class="tagMenuPane" style="display: flex">
+          <div class="header-web-info hide-width-800">
+            <div style="flex:auto;display: flex;flex-direction: column;justify-content: center;">
+            <div class="slogan1">
+              开<span class="slogan-highlight">放</span>&nbsp;分<span class="slogan-highlight">享</span>&nbsp;
+            </div>
+            <div class="slogan2">游戏梦的起点！</div>
+            </div>
+            <div class="contact-pane">
+              <p>投稿邮箱：news@gameres.com</p>
+              <p>产品邮箱：cp@gameres.com</p>
+            </div>
+          </div>
+          <div class="tagMenuList">
+                          <div class="tagMenuListColumn" style="flex: aut;float:left;width:20%;">
+              <h3 style="color:#de5650;font-size: 14px;font-weight: bold">产业</h3>
+              <div>
+                <ul>
+                                      <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/1">
+                    <span class="tag-item-span">
+                        厂商·专访                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/11">
+                    <span class="tag-item-span">
+                        观察·投资                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/6">
+                    <span class="tag-item-span">
+                        产品                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/45">
+                    <span class="tag-item-span">
+                        政策                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/14">
+                    <span class="tag-item-span">
+                        电子竞技                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/42">
+                    <span class="tag-item-span">
+                        直播                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/41">
+                    <span class="tag-item-span">
+                        区块链                    </span>
+                       </a>
+                  </li>
+                                   </ul>
+              </div>
+            </div>
+                      <div class="tagMenuListColumn" style="flex: aut;float:left;width:20%;">
+              <h3 style="color:#de5650;font-size: 14px;font-weight: bold">平台</h3>
+              <div>
+                <ul>
+                                      <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/46">
+                    <span class="tag-item-span">
+                        <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/ios.png" style="width:18px;vertical-align: middle;">App Store                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/40">
+                    <span class="tag-item-span">
+                        <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/Steam.png" style="width:18px;vertical-align: middle;">Steam                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/5">
+                    <span class="tag-item-span">
+                        手游                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/17">
+                    <span class="tag-item-span">
+                        页游·H5                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/18">
+                    <span class="tag-item-span">
+                        端游·PC                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/21">
+                    <span class="tag-item-span">
+                        主机                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/16">
+                    <span class="tag-item-span">
+                        虚拟·VR·AR                    </span>
+                       </a>
+                  </li>
+                                   </ul>
+              </div>
+            </div>
+                      <div class="tagMenuListColumn" style="flex: aut;float:left;width:20%;">
+              <h3 style="color:#de5650;font-size: 14px;font-weight: bold">研发</h3>
+              <div>
+                <ul>
+                                      <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/24">
+                    <span class="tag-item-span">
+                        拆解分析                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/25">
+                    <span class="tag-item-span">
+                        策划                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/26">
+                    <span class="tag-item-span">
+                        程序·引擎                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/27">
+                    <span class="tag-item-span">
+                        美术                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/28">
+                    <span class="tag-item-span">
+                        音乐                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/29">
+                    <span class="tag-item-span">
+                        测试                    </span>
+                       </a>
+                  </li>
+                                   </ul>
+              </div>
+            </div>
+                      <div class="tagMenuListColumn" style="flex: aut;float:left;width:20%;">
+              <h3 style="color:#de5650;font-size: 14px;font-weight: bold">市场</h3>
+              <div>
+                <ul>
+                                      <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/38">
+                    <span class="tag-item-span">
+                        职场·创业                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/34">
+                    <span class="tag-item-span">
+                        运营·渠道                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/47">
+                    <span class="tag-item-span">
+                        海外                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/33">
+                    <span class="tag-item-span">
+                        数据·报告                    </span>
+                       </a>
+                  </li>
+                                   </ul>
+              </div>
+            </div>
+                      <div class="tagMenuListColumn" style="flex: aut;float:left;width:20%;">
+              <h3 style="color:#de5650;font-size: 14px;font-weight: bold">其他</h3>
+              <div>
+                <ul>
+                                      <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/44">
+                    <span class="tag-item-span">
+                        硬件·周边                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/15">
+                    <span class="tag-item-span">
+                        八卦                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/22">
+                    <span class="tag-item-span">
+                        活动                    </span>
+                       </a>
+                  </li>
+                                     <li style="margin:5px 0;">
+                       <a target="_blank" href="https://www.gameres.com/list/39">
+                    <span class="tag-item-span">
+                        综合                    </span>
+                       </a>
+                  </li>
+                                   </ul>
+              </div>
+            </div>
+                    </div>
+          <!--<span :class="{'more-tag-cls':true,'tab-menu-active':tag.urlstr==currentTab}" v-for="(tag,index) in minorTags"  @click="clickTab(tag.urlstr,'more')">{{ tag.tname}}</span>-->
+        </div>
+      </div>
+    </div>
+<div id="scrolltop" style="" display="block">
+    <div class="back-top-inner" id="build-qrcode-btn"><i class="layui-icon layui-icon-share" style=""></i></div>
+    <div class="back-top-inner" id="top"><i class="layui-icon layui-icon-up" style=""></i></div>
+   
+</div>
+<div id="url-qrcode" class="hide" style="display: none;">
+    <div id="qrcode"><canvas width="150" height="150"></canvas></div>
+    <div style="color: #333;
+    font-size: 18px;
+    margin-top: 10px;">扫一扫，手机打开</div>
+</div>
+
+                   <div id="main" class="main clearfix mainCenter">
+             <section class="index-page-left pl" style="padding:0 15px;">
+                        <!--<h3 class="article-title">{}</h3>
+<div class="article-desc"></div>
+<div class="article-content"></div>-->
+<!--<link href="http://di.gameres.com/cache/style_1_forum_viewthread.css" rel="stylesheet">-->
+<style>
+#maincontent img{
+max-width: 100%;
+}
+
+.contentdiv,#attach_286661,.contentdiv>*
+{
+
+ word-break:keep-all;
+ word-wrap:break-word;
+	
+}
+.cgtl tr th
+{
+	min-width:125px;
+}
+.cgtl tr td,.t_f
+{
+/*	white-space:pre-wrap;*/
+	word-wrap:break-word;
+	word-break:break-all;
+	
+}
+p{
+  height:auto;
+  margin:0;
+  padding:0;
+}
+div.t_fsz > table{
+	margin:0 auto;
+}
+#maincontent
+{
+word-break: break-all; 
+    text-align: justify;
+    text-justify:inter-ideograph;
+font-size:17px;
+color:#333;
+margin-top:20px;
+}
+#maincontent a,#maincontent a:link,#maincontent a:visited
+{
+    color: #007DDB;
+    text-decoration: underline;
+}
+#maincontent a:hover{
+    color: #0b6ab1;
+}
+.contentdiv
+{
+   width:100%;
+   margin:0 auto;
+}
+.t_f, .t_f td {
+   font-size: 18px;
+    line-height: 28px;
+}
+.article-title
+{
+ word-wrap:break-word;
+ word-break:break-all;
+    text-align: justify;
+    text-justify:inter-ideograph;
+ font-weight:400;margin-bottom:0;padding-bottom:3px;text-align:left;font-size: 24px;
+ font-family: "Microsoft YaHei","Hiragino Sans GB",STHeiti,Tahoma,SimHei,sans-serif;
+ font-weight: bold;
+}
+.post-message
+{
+/*    width:100%;height: 150px;display: flex;align-items: center;border: 1px solid #01AAED;
+    color:#01AAED;*/
+text-align: center;
+    
+}
+.post-message:hover{
+/*    border-color: #007DDB;
+    cursor: pointer;color:#007DDB;*/
+}
+.article-main-title
+{
+    font-size:20px;font-weight: bold;
+}
+.app-entry-btn{
+    flex:auto;height:40px;max-width:30px;font-size:25px;
+    margin-top: 10px;
+}
+.app-entry-btn i{
+     font-size:25px;
+     color:#888;
+}
+.app-entry-btn i:hover{
+     color: #333;
+}
+.app-item
+{
+    display:flex;
+    background-color:#f2f2f2;
+    padding:8px 12px;
+    align-items:center;
+}
+
+</style>
+<div class="contentdiv" style="">
+<div>
+<h1 class="article-title">《自走棋》设计拆解：真正的爆款，靠的不只是“随机性”</h1>
+<div style="color:#aaa;margin-bottom:10px;font-size:14px">
+    <div style="margin-top:10px;">
+
+<span id="qrcode-span"><i id="article-qrcode-btn" class="layui-icon layui-icon-share" style=""></i></span>
+</div>
+ <div id="maincontent">
+<table cellspacing="0" cellpadding="0"><tbody><tr><td class="t_f" id="postmessage_2356544">
+<div align="center"><div align="left"><font face="宋体"><i><font color="#000000">作者昵称：风林孤火。邮箱：<a href="mailto:150092480@qq.com" target="_blank">150092480@qq.com</a></font></i></font></div></div><div align="center"><font face="宋体"><i><font color="#000000"><br>
+</font></i></font></div><div align="center"><font face="宋体"><i><font color="#000000"><br>
+</font></i></font></div><div align="left"><font face="宋体"> </font></div><strong><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="5">一、&nbsp; &nbsp; 前言</font></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p></strong><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">自走棋的火爆离不开DotA2平台的助力、也离不开直播平台的推动，抛开这些常规操作不谈，一款设计精良的游戏也许会被市场埋没，但一款口碑和市场双丰收的作品，必然有着先进的设计理念。自走棋的游戏体验以“高随机性”著称，那么自走棋成为爆款这件事本身又有多少“随机性”呢？</font></p><div align="center"><font face="宋体">
+<img id="aimg_746469" aid="746469" zoomfile="https://di.gameres.com/attachment/forum/201903/31/185828vr4zrofyudfu4ddq.png" data-original="https://di.gameres.com/attachment/forum/201903/31/185828vr4zrofyudfu4ddq.png" width="600" inpost="1" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/185828vr4zrofyudfu4ddq.png" style="">
+ </font></div><div align="center"><font face="宋体"><i>3</i><i>月10日至27日，自走棋订阅人数从590万提升到了680万，活跃玩家数量从308万提升到了425万，图为各段位人数增幅（最左侧为新手玩家数量）</i></font></div><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">透过现象看到本质：一款游戏火爆的部分原因是它的可玩性，可玩性则来源于设计者的精心设计，而设计方法和思路则靠的是其背后的设计理念作为支撑。兵法所谓“正合奇胜”，今天我们就来探讨一下自走棋的“奇”在哪里。</font></p><div align="left"><font face="宋体"> </font></div><br>
+<p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">【注1】&nbsp;&nbsp;本文共1.8w字，数据表格10张，图片11张。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">【注2】&nbsp;&nbsp;本文主要内容为《自走棋》的设计解构与逆推反拆，不涉及运营、营销和传播相关问题，只讨论游戏策划与设计的相关内容。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">【注3】&nbsp;&nbsp;文中涉及的部分游戏体验和可玩性，有极低的概率可能是设计团队自己也没有预想到的，但是这并不妨碍这些“可玩性”成为《自走棋》成功的部分因素，因此依然具有分析价值（游戏史上比较著名的类似例子是文明系列中的“甘地的核战争倾向”）。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">【注4】&nbsp;&nbsp;关于游戏的核心玩法、机制和各系统的设定，可参见游资网文章《刀塔自走棋简单分析》和知乎问题“《刀塔自走棋》怎么玩？”中的回答《没玩过也能看懂的刀塔自走棋攻略》。除特殊情况外，本文将不会再介绍游戏内各系统的设定细节等公开存在知识，而将着重于分析“创作团队为什么这么设计？”、“该设计能为玩家提供何种游戏体验？”、“该可玩性的成功之处是什么？”、“与竞品游戏的对比如何？”等相关问题。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">【注5】&nbsp;&nbsp;自走棋的简要游戏流程图如下：</font></p><div align="center"><font face="宋体"> 
+<img id="aimg_746470" aid="746470" zoomfile="https://di.gameres.com/attachment/forum/201903/31/190116c00btmdbb02e8tf8.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/190116c00btmdbb02e8tf8.jpg" width="600" inpost="1" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/190116c00btmdbb02e8tf8.jpg" style="">
+</font></div><div align="center"><font face="宋体"><br>
+</font></div><div align="center"><font face="宋体"><br>
+</font></div><br>
+<div align="left"><font face="宋体"> </font></div><div align="left"><font face="宋体"> </font></div><strong><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="5">二、&nbsp; &nbsp;设计理念和亮点的一句话描述</font></font></p></strong><br>
+<div align="left"><font face="宋体"><br>
+</font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">自走棋的核心玩法可拆分为<strong>4个主要模块：</strong></font></p><br>
+<ul><li><strong><font face="宋体">自动兵战与升级布阵</font></strong></li><li><strong><font face="宋体">类轮抽式的公共牌池选卡机制</font></strong></li><li><strong><font face="宋体">兵种之间的“羁绊”关系与属性加成</font></strong></li><li><strong><font face="宋体">大逃杀式的多人车轮配对机制</font></strong><br>
+</li></ul><br>
+<br>
+<p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">这4个核心模块都或多或少承袭自之前曾风靡一时的几款war3的RPG地图（战三国、忍法战场、宠物小精灵防御战），但巨鸟团队对这些玩法进行了调整和微创新，并将各部分以适应现代玩家习惯的方式融合在了一起，实现了“玩法改良”+“组合模式的创新”。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">在游戏发展史上，有很多成功的例子通过“组合模式的创新”开创了某种游戏类型的新纪元：饥荒（生存+建造+Roguelike）、皇室战争（简化RTS+卡牌）、守望先锋（FPS+MOBA）、刺客信条4黑旗（RPG冒险+海战）等。另外，很多爆款游戏就是在具备一定玩家数量和簇拥群体的“沃土”上，通过对现存的“好玩但不成熟”的同类型游戏进行改良，最终一举成为该类型游戏的“完全体”和“模板”，比如绝地求生。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">设计团队在项目初期，一般会为游戏的整体设计制定了几条基本的设计理念，并在策划和开发过程中严格贯彻和完善这些理念，因此也形成了这款游戏的设计亮点。以下是个人总结的自走棋设计理念和亮点，并在后文中进行详尽分析：</font></p><br>
+<p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">(一)&nbsp; &nbsp;&nbsp;&nbsp;分布式的细节规则设计</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">(二)&nbsp; &nbsp;&nbsp;&nbsp;DBG + 开包抽卡系统 + Roguelike</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">(三)&nbsp; &nbsp;&nbsp;&nbsp;当“大逃杀”遇上“小概率随机事件”</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">(四)&nbsp; &nbsp;&nbsp;&nbsp;让玩家更直观的感受到“风险和收益”</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">(五)&nbsp; &nbsp;&nbsp;&nbsp;经济系统、资源转化、升级贬值</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">(六)&nbsp; &nbsp;&nbsp;&nbsp;满足每一种玩家</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">(七)&nbsp; &nbsp;&nbsp;&nbsp;其它细节亮点</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;1)&nbsp;&nbsp;公共牌池博弈与自适应平衡</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;2)&nbsp;&nbsp;攻守机制的复用</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;3)&nbsp;&nbsp;节奏变化、爆点频发、张弛有度</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;4)&nbsp;&nbsp;将多种非强制性操作压缩在30秒之内</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;5)&nbsp;&nbsp;棋子在受击、攻击、释放技能时，会增长技能条进度</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;6)&nbsp;&nbsp;搜卡的高反馈强度</font></p><br>
+<br>
+<br>
+<div align="left"><font face="宋体"> </font></div><div align="left"><font face="宋体"> </font></div><strong><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="5">三、&nbsp; &nbsp; 逐条拆解与分析</font></font></p></strong><font style="font-size:14pt"><font face="宋体"><br>
+</font></font><br>
+<p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="4"><strong>(一)&nbsp; &nbsp; </strong><strong>分布式的细节规则设计</strong></font></font></p><font face="宋体"><br>
+</font><br>
+<table cellspacing="0" class="t_table"><tbody><tr><td colspan="2" width="497">&nbsp;&nbsp;<div align="center"><font face="宋体">“分布式的细节规则”设计思路的简要概括</font></div>&nbsp;&nbsp;</td></tr><tr><td width="94"><div align="left"><div align="left"><strong><font face="宋体">设计目标：</font></strong></div></div></td><td width="402"><div align="right"><div align="left"><font face="宋体">既能实现简单上手，又能保证策略深度。</font></div></div></td></tr><tr><td width="94"><div align="left"><div align="left"><strong><font face="宋体">实现方案：</font></strong></div></div></td><td width="402"><div align="right"><div align="left"><font face="宋体">将各项规则细节分布式的、并联的、松散的平铺在机制中。</font></div></div></td></tr><tr><td width="94"><div align="left"><div align="left"><strong><font face="宋体">备注解释：</font></strong></div></div></td><td width="402"><div align="right"><div align="left"><font face="宋体">种族和职业的羁绊是自走棋核心玩法中非常重要的一类细节规则设计，将所有该类规则组成一个“规则表格”（如下图）后，可以发现：棋子之间、羁绊之间是彼此平等的，互相之间没有前置关系，也没有意义轻重之分，呈现出一种分布式的关系。</font></div></div></td></tr><tr><td width="94"><div align="left"><div align="left"><strong><font face="宋体">实际效果：</font></strong></div></div></td><td width="402"><div align="right"><div align="left"><font face="宋体">1)&nbsp; &nbsp; <strong>上手简单：</strong>机制简约清晰，新玩家在几分钟内就能get到核心玩法，且只需选择其中几个棋子（对应几个职业和种族）即可切入游戏，而无需对整个表格上错综复杂的关系有整体认知。</font></div>&nbsp;&nbsp;<div align="left"><font face="宋体">2)&nbsp; &nbsp; <strong>策略深度和广度：</strong>随着段位的提高，影响玩家胜率的不再是玩家对单一套路的掌握程度，而是对所有套路的熟悉程度、转型时机的把握、随机应变的能力，考验玩家对整个系统的综合理解力，上手简单并未影响策略的深度和广度。</font></div>&nbsp;&nbsp;<div align="left"><font face="宋体">3)&nbsp; &nbsp; <strong>助力版本更新：</strong>该系统框架为高频率的版本更新提供了可能，一来不会显著增加新玩家的学习成本（仍然只需选择几个点切入即可），二来又能够给老玩家带来新的全局体验。</font></div></div></td></tr></tbody></table><br>
+<br>
+<div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">“分布式”一词可参考百度百科“分布式系统”，一般与集中式系统对比。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">在自走棋中，<strong>“分布式的细节规则设计”指的是，游戏中将各个棋子之间的职业羁绊和种族羁绊分布式的、并联的、松散的平铺在机制中</strong>（如下图所示），不在同一行或同一列的棋子之间没有直接的联系，各个棋子之间、各个羁绊之间都是平等的关系，玩家了解一项细节规则时不需要已知其它规则的前置知识，虽然每一项都有其各自的特殊设计，但任一项的改变都不会对其它项造成明显的影响，整个系统呈现出一种分布式的状态（与之相对的是集中式设计，大量的规则细节以分层的、串联的、有深度的方式呈现，比如天赋树/科技树、生存类游戏中的建造顺序，几乎每一项规则都被前置规则所约束）。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">在游戏过程中，<strong>玩家的游戏经验是分块积累的、随机积累的</strong>，没有固定的顺序和要求，有的玩家先接触的是“地精三法”阵容，有的玩家则先尝试了“骑士三龙”的套路，二者在对游戏深入理解的进程上没有优劣之分，且都是游戏核心玩法的重要组成部分。但若玩家想要全面提高技术水平，则需要将各个区块的经验进行融会贯通，尤其是涉及到玩家需要根据场上的对阵局势对自身阵容进行调整和转型等操作时。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">在近些年的一些爆款游戏中，有许多分布式设计的影子，比如皇室战争的各个卡牌、彩虹六号的各个探员、文明系列的各个国家、moba类游戏中各个英雄、大逃杀类游戏地图中的各个区域等等，他们均为新手玩家提供了简单易行的切入点，也为资深玩家提供了不错的策略深度。但<strong>自走棋的分布式设计与这些游戏体现出三点不同</strong>：</font></p><br>
+<br>
+<ul><li><font face="宋体"><strong>分布式设计的对象不同：</strong>在上述游戏中，分布式设计的对象往往是游戏实体或玩家可操控的对象，而在自走棋中，不仅是棋子，连棋子之间的羁绊关系都是分布式的。<i>（进一步凸显了分布式设计的优势上手易、精通难）</i></font></li><li><font face="宋体"><strong>对象之间的交互方式不同：</strong>在上述游戏中，玩家能够主动使用这些符合分布式设计的对象进行双方或多方之间的交互，但自走棋中，每回合的匹配过程和战斗过程都是自动进行的，玩家间主动进行的交互量很少。<i>（分布式与自动化的结合，使游戏过程呈现出“涌现式/浮现式”的玩法特点）</i></font></li><li><font face="宋体"><strong>随机性：</strong>在上述游戏中，玩家可以从多个分布式设计对象中自主选择一个或多个，但在自走棋中，玩家不拥有完全的自主权，而是需要从随机刷出棋子中进行有限的选择。<i>（随机性与分布式设计的结合，把分布式设计的对象类比为随机的房间，能为玩家提供类似“跑团”和Roguelike的冒险体验）</i></font><br>
+</li></ul><br>
+<div align="center"><font face="宋体"> 
+<img id="aimg_746471" aid="746471" zoomfile="https://di.gameres.com/attachment/forum/201903/31/190807ciqy9x9wxwoni0wy.png" data-original="https://di.gameres.com/attachment/forum/201903/31/190807ciqy9x9wxwoni0wy.png" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+</font></div><div align="center"><font face="宋体"><i><font style="font-size:9pt">棋子（卡牌）的种族、职业及其羁绊效果</font></i></font></div><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">以下是关于“分布式的细节规则设计”的三个优点（上手简单、策略复杂、易于更新）的详细分析：</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>1)&nbsp; &nbsp;</strong><strong>上手简单</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">“行为设计学”掌门人、斯坦福大学教授BJ Fogg提出了行为产生的“三个要素”（B=mat）：动机Motivation、能力Ability / 成本Simplicity、触发因素Trigger。同时他指出，其中最重要的因素是第二点，即“降低用户执行行为时所需具备的能力门槛、所需付出的使用成本”。在游戏设计中，即为<strong>降低游玩所需的操作和理解能力门槛、降低玩家的规则学习成本。</strong></font></p><div align="center"><font face="宋体"> 
+<img id="aimg_746472" aid="746472" zoomfile="https://di.gameres.com/attachment/forum/201903/31/191420bdsbb381sv8d155t.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/191420bdsbb381sv8d155t.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+</font></div><div align="center"><font face="宋体"><i>Fogg</i><i>的行为模型图（曲线左下方表示行为触发失败、右上方表示触发成功）</i></font></div><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>举个新手玩家初玩自走棋时的一般性例子</strong>，玩家只需从羁绊效果表格中选择1~2个格子，然后以此为基点进行展开，就可以自然的形成自己的阵容规划，进而指导后续的选牌策略。比如，假设某新手玩家随机抓到了先知或树精守卫，进而选择了对应的德鲁伊和精灵相交的格子（如图表所示），然后玩家从此点展开，继续寻找并购买其横行和纵列的其它棋子（精灵种族、德鲁伊职业），就能实现德鲁伊的职业羁绊（跳费合成）和精灵的种族羁绊（闪避加成），进而迅速提高自身的战力。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">在上述新手玩家熟悉游戏机制的例子中，<strong>分布式设计为玩家提供了可随机切入游戏的接口</strong>，玩家可以以任意一个随机购买到的棋子作为切入点，分区域的、逐步的了解核心机制中的各项规则细节，玩家可以在完全不了解其它羁绊效果的情况下，就能顺利的完成前几局游戏，在自动战斗和随机性的作用下，可能还会取得不错的成绩。甚至只知道一个套路的玩家，也有可能吃到鸡。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">从游戏反馈方面来说，分布式设计鼓励玩家进行探索、冒险和尝试，去了解平铺在游戏中的各项规则细节，玩家在探索过程中不会因尝试失败而得到明确的负反馈，但若尝试成功则会得到正反馈（羁绊效果激活）。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">在分布式设计的总体框架下，策划团队使用如下几项设计，<strong>进一步降低游戏的准入门槛和玩家学习成本：</strong></font></p><br>
+<br>
+<ul><li><font face="宋体"><strong>选牌、放置、合成：</strong>任何新手玩家都能快速理解这三步基础操作。</font></li><li><font face="宋体"><strong>将</strong><strong>规则隐藏机制中：</strong>自动战斗中，羁绊效果会自动触发，棋子会自动寻路走位、索敌、攻击，刺客会在开局后跳到敌方后排、释放技能时会自动选择最佳目标，游戏既没有将这些算法规则逐一解释给玩家，也无需玩家进行相关操作（理解这些规则的资深玩家可通过改变棋子的站位来获得阵型上的优势）。</font><br>
+</li></ul><br>
+<div align="center">
+<img id="aimg_746473" aid="746473" zoomfile="https://di.gameres.com/attachment/forum/201903/31/191538mwv33wppwxvig63c.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/191538mwv33wppwxvig63c.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+</div><div align="center"><i><font style="font-size:9pt"><font face="宋体">虽然各种羁绊效果是游戏的核心机制之一，但即便完全记不住，也不影响新手玩家愉快的玩耍</font></font></i></div><div align="left"><font face="宋体"> </font></div><br>
+<ul><li><font face="宋体"><strong>回合制的反馈模式：</strong>每个回合，玩家都能通过观察自动战斗的过程，来获得关于自己阵容安排和站位安排的反馈信息（如前排单位过少，后排单位没有良好的输出环境）。其中既包含定性的胜负结果、又包含定量的剩余敌方单位数量（影响玩家的血量），玩家可借此调整策略、优化阵容。尤其是在凑齐阵容并激活羁绊效果、升级关键棋子之后，玩家往往能够在下个回合感受到立竿见影的正反馈。</font></li><li><font face="宋体"><strong>关注自我、简化交互：</strong>新手玩家在游戏过程中，不需要关注其他玩家的操作与动作，而只需关注在防守端如何应对其他玩家的入侵即可，这一点很大程度上简化了玩家之间的交互复杂度、降低了玩家核心注意力的分散和损耗，但却又不会减弱真人交互的趣味性。而且，从游戏的规则设置上也鼓励玩家首先以自我为中心进行游玩，比如我方信使的血量是右侧即时排名和是否被淘汰的唯一判定标准（这一点会在后文中展开讨论）。</font></li><li><font face="宋体"> <strong>UI</strong><strong>界面与信使操作：</strong>UI界面简洁明确，除了可直观的看到回合数、人口、金钱、剩余血量和装备等自身信息之外，玩家还能通过血量排名、战果报告和弹幕系统来获知其他玩家的信息，也可以自由点选小地图观察对手的阵容。另外，所有的操作UI都集中在了信使上，虽然这是在dota2编辑器内的一种不得已的做法，但制作团队也确实将所有玩家可执行的操作都严格的收纳到信使身上，这对于集中新手玩家的注意力、降低理解成本都有极大意义。</font><br>
+</li></ul><div align="center"><font face="宋体"><br>
+</font></div><div align="center">
+<img id="aimg_746474" aid="746474" zoomfile="https://di.gameres.com/attachment/forum/201903/31/191644z8a0a3uyt3je4ye4.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/191644z8a0a3uyt3je4ye4.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+</div><div align="center"><i><font face="宋体">对战棋盘和UI界面</font></i></div><br>
+<ul><li><font face="宋体"><strong>棋盘格的引入：</strong>将传统RPG地图中的连续移动操作进行了离散化，一方面，方便玩家观察敌我双方的阵型对比、及各职业站位对战斗过程的影响，进而更好的调整站位策略；另一方面，降低了玩家的操作量和操作精准度要求，新手可快速上手，几次简单的点选即可排出阵型，让玩家把精力用在更重要的选牌决策上（二者都需要玩家在准备阶段的30s内完成）。</font><br>
+</li></ul><br>
+<div align="left"><font face="宋体"> </font></div><div align="left"><font face="宋体"><br>
+</font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>2)&nbsp; &nbsp;</strong><strong>策略的深度和广度</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">对一般的游戏设计来说，单纯的做到上手简单并不是难事，难的是同时还能做到不影响策略的深度和广度。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">分布式设计能够很好解决策略深度和广度的问题，在dota2本体中，随着英雄数量的逐渐增多，游戏的策略深度和广度以指数型提高。尽管目前自走棋中的英雄数量还不足60个、可用的成型套路也不超过10个，但在大量以“恰烂分”为主要目的的中高段位对局中，玩家的最终阵容大多是非完全体或者四不像阵容，可见分布式设计对自走棋策略性的贡献是相当可观的。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">结合游戏核心机制的各种设计，我们<strong>将策略维度划分为12个大项</strong>（其中有6项与分布式设计有关）：</font></p><br>
+<ul><li><font face="宋体">登场阵容的规划与演进；</font></li><li><font face="宋体">替补阵容（手牌听牌）的选择与保留；</font></li><li><font face="宋体">连胜或连负的规划；</font></li><li><font face="宋体">自身血量的控制；</font></li><li><font face="宋体">每回合的站位安排；</font></li><li><font face="宋体">装备物品的分配与合成；</font></li><li><font face="宋体">棋子的选择与购买；</font></li><li><font face="宋体">消费与利息的权衡；</font></li><li><font face="宋体">信使升级的时机；</font></li><li><font face="宋体">大量刷牌的时机；</font></li><li><font face="宋体">观察和针对对手；</font></li><li><font face="宋体">在有限时间内对各项操作进行主次划分。</font><br>
+</li></ul><br>
+<br>
+<p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">游戏的随机性和玩家间的制约关系，使得对局过程看似简单、实则充满了变化，玩家想要获得稳定的高胜率，需要熟悉各个套路的优势和弱点、对战局的整体把控能力、随机应变的能力。</font></p><div align="center"><font face="宋体"> 
+<img id="aimg_746475" aid="746475" zoomfile="https://di.gameres.com/attachment/forum/201903/31/191818aprr1k8cx2gk2c1r.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/191818aprr1k8cx2gk2c1r.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+</font></div><div align="center"><i><font face="宋体">装备合成是自走棋中为数不多的对新玩家不友好的系统，但却是一个很重要的策略维度</font></i></div><div align="center"><i><font face="宋体"><br>
+</font></i></div><div align="center"><i><font face="宋体"><br>
+</font></i></div><div align="left"><strong><font face="宋体"> </font></strong></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>3)&nbsp; &nbsp;</strong><strong>分布式设计框架与高频更新</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">高频率的迭代和更新，是卡牌类策略游戏的生命线，设计者需要不断的给玩家带来新鲜感、不断损耗玩家已经积累的游戏经验（要让玩家感受到自己还有可进步的空间、游戏还有可探索的内容）、不断修正游戏的平衡性问题（一方面是游戏本身数值导致的，一方面是玩家开发能力导致的），对“版本环境”的优化，不仅要考虑到平衡性、更要服务于玩家的游戏体验（比如初期的鱼人刺客就是一个典型）。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>在分布式设计的框架下，游戏能够很好的支持高频率的版本更新和内容扩充。</strong>一方面，随着英雄、种族、职业和羁绊的增多，游戏的复杂度不会显著的上升，新玩家依然只需选择几个切入点，然后进行展开即可；另一方面，老玩家也能敏锐的感觉到版本更新带来的环境变化，从而得到有新鲜感的游戏体验。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><strong><font face="宋体"> </font></strong></div><div align="left"><strong><font face="宋体"> </font></strong></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="4"><strong>(二)&nbsp; &nbsp; </strong><strong>DBG+ </strong><strong>开包抽卡系统 + Roguelike</strong></font></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">不管是有心还是无意，自走棋在设计上都从DBG和Roguelike类游戏中汲取了重要元素和核心机制，同时也自然的继承这两种玩法的优点和乐趣。另外，自走棋将卡牌类游戏中常见的“消费开包系统”与这二者的设计框架相融合，为玩家带来了集“抽卡、收集、构筑、冒险、对战”于一体的游戏体验。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="3"><strong>1)&nbsp; &nbsp;</strong><strong>DBG</strong><strong>（DeckBuilding Game，近期代表作为杀戮尖塔和月圆之夜）</strong></font></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">尽管不是原创玩法（继承自战三国），但自走棋在游戏流程上与DBG类卡牌游戏有非常多的共同点：</font></p><br>
+<ul><li><font face="宋体">玩家随着游戏进程逐渐收集卡牌，并构筑私有牌库，如添加新牌、淘汰旧牌、升级卡牌等；</font></li><li><font face="宋体">在卡牌的获取方式上既体现一定的随机性、又让玩家有一定的选择权；</font></li><li><font face="宋体">卡牌之间存在广泛的联动性。</font></li><li><font face="宋体">每当卡牌消耗完毕后，重洗回私有牌堆，对应自走棋每回合开始时所有棋子都会重新复活并归位；</font></li><li><font face="宋体">二者的区别是：传统DBG对战中，需要玩家从私有牌库先抓部分牌再打牌；而自走棋中，玩家是直接使用整个私有牌库进行对战。</font><br>
+</li></ul><br>
+<p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">DBG游戏的核心乐趣在于玩家能够在游戏进程中感受到自身的成长，而且成长中的每一个环节都体现着系统随机性与玩家选择权的互动；另外，每一次重新开始，都意味着玩家可以选择一个新的发展方向。</font></p><div align="center"><font face="宋体">
+<img id="aimg_746476" aid="746476" zoomfile="https://di.gameres.com/attachment/forum/201903/31/192200zwfc5f31ftwvt9ik.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/192200zwfc5f31ftwvt9ik.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+ </font></div><div align="center"><i><font face="宋体">杀戮尖塔游戏画面</font></i></div><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">自走棋通过“DBG收集+随机池选择”这一组合设计引导玩家产生“胜可骄但败不馁”的心理情绪。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">首先，玩家提升自身战力（卡组强度）最主要的两个途径为“单个棋子的升级”和“整体阵容的成型”，这两个途径都需要玩家从随机抽卡中进行一次次的选择。</font></p><br>
+<ul><li><font face="宋体">一方面，这种回合制的DBG集卡形式比较考验玩家的动态构筑能力，这项能力的高低主要决定了卡组强度的上限和下限。</font></li><li><font face="宋体">另一方面，在随机池中抽卡的随机性高低主要决定了卡组强度在上下限区间内浮动的方差。</font><br>
+</li></ul><br>
+<p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">综合这两方面因素，假设玩家位于符合自身水平的段位，则有以下推断：</font></p><br>
+<ul><li><font face="宋体">如果玩家吃鸡或以高排名结束比赛，那么其卡组的强度必然接近玩家构筑能力的上限（玩家更愿意相信自身实力对胜利的影响力），即胜利的结果凸显了玩家高超的技术水平；</font></li><li><font face="宋体">如果玩家以低排名结束比赛，那么这局游戏的抽卡过程必然与玩家预设的棋子阵容相差较远（没有玩家会故意不选自己预设阵容中的棋子），即失败的结果凸显了玩家糟糕的运气（甩锅）。</font><br>
+</li></ul><br>
+<p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>玩家会因自己的实力而产生荣耀感，却不会因为运气不佳而产生挫败感</strong>，这就是通过“DBG收集+随机池选择”的设计实现了“胜可骄但败不馁”。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">另外，在TCG/CCG类卡牌游戏中，是难以实现上述效果的。无论是万智、炉石还是昆特牌，套牌的构筑都是玩家在赛前自行完成的，所以比赛中的随机抽卡一旦出现不顺，玩家无法将局面的劣势与自身的静态构筑水平完全割裂开，即无法做到“完美甩锅”，自然会产生挫败感（昆特牌尤甚）。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>2)&nbsp; &nbsp;</strong><strong>对局内的开包抽卡</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">自走棋把卡牌游戏中常见的“消费开包系统”植入到每一回合的对战中，该系统自万智牌诞生的20年多来，一直经久不衰，在无数款游戏中持续刺激着一代代玩家的消费欲望。在炉石和刀牌等卡牌游戏的竞技场和轮抽模式中，大多数玩家认为最有乐趣的环节就是选牌的过程，自走棋将其植入对战并作为对战过程中收集卡牌的重要手段，既是对artifact的局间商店系统的一种延伸，也是与自身棋子系统完美融合后的一项创举。</font></p><div align="center"><font face="宋体">
+<img id="aimg_746477" aid="746477" zoomfile="https://di.gameres.com/attachment/forum/201903/31/192425mq00p0nu1fj11mjn.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/192425mq00p0nu1fj11mjn.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+&nbsp;&nbsp;
+<img id="aimg_746478" aid="746478" zoomfile="https://di.gameres.com/attachment/forum/201903/31/192435wbho9ojn9h9hhohn.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/192435wbho9ojn9h9hhohn.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+</font></div><div align="center"><i><font face="宋体">炉石传说与阴阳师的开包画面</font></i></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">第一，<strong>开包抽卡与羁绊系统的结合，能够让玩家自发的设立目标。</strong>当游戏进入中期阶段时，玩家的手牌一般已经初具雏形，这时玩家就会开始对阵容进行一定的规划和预设，同时自发的为接下来的开包抽卡设立明确的目标，比如“在第21回合时大量抽卡，争取刷出一张船长，将它升到2星或者凑出3战士的羁绊效果”。由于阵容总有进一步优化的方向，所以<strong>这种“自发设立目标”的行为，会贯穿整个游戏进程，玩家乐此不疲，这也是自走棋最主要的魅力之一。</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">第二，相对于传统的开包过程，<strong>自走棋的战场内开包更具有多样性和策略感。</strong>玩家抽到的卡牌的价值不仅取决于其自身的技能和数值，还取决于它对玩家既定阵容套路的贡献程度，这个特点降低了开包过程的同质化体验，玩家开包不是为了追求最强的牌，而是为了找到最合适的牌。实际开包过程中也的确不存在最优的选择策略，需要玩家根据自身阵容进行随机应变。另外，由于游戏中利息机制的存在，玩家也时刻要在开包和存钱赚取利息之间做出取舍，成为一个重要的策略维度</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">第三，<strong>各类棋子的出现概率设计合理。</strong>稀有度越高的棋子在公共牌池中总个数越少、出现概率越低、价格也越高，既符合开包的常见设定和趣味点，又能一定程度上限制战力高、资金多的玩家进入正反馈循环。</font></p><div align="center"><font face="宋体">
+<img id="aimg_746479" aid="746479" zoomfile="https://di.gameres.com/attachment/forum/201903/31/192547pe4zkkyyykkjlytl.png" data-original="https://di.gameres.com/attachment/forum/201903/31/192547pe4zkkyyykkjlytl.png" width="481" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+ </font></div><div align="center"><i><font face="宋体">信使等级与各价位棋子的刷出概率</font></i></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">第四，<strong>玩家合成3星棋子时兴奋度和满足感较强。</strong>由于公共牌池的存在，玩家凑齐并合成3星棋子的概率非常低，而且在合成过程中需要长时间占用至少3个手牌位，另外，3星棋子还拥有强力的数值属性和炫酷皮肤。所以，玩家在开包得到关键牌并合成3星棋子时的快感并不低于获得一回合小局胜利的喜悦。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">第五，<strong>正反馈总和远远大于负反馈总和。</strong>如果把小局的输赢当做是概率各占50%的正负反馈的话，那么除此之外，每位玩家在合成棋子和凑齐阵容时都享受到了额外的正反馈，也即：所有玩家的正反馈总和远远大于负反馈总和。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="3"><strong>3)&nbsp;&nbsp;</strong><strong>Roguelike</strong><strong>（近期代表作为以撒的结合和元气骑士）</strong></font></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">如果说自走棋穿着名为DBG的外套，那么在它身体里装着的一定是一颗名为Roguelike的心。我们先来看一下2008年的国际Roguelike发展会议对Roguelike类型游戏下的定义（著名的“柏林诠释”，见百度百科）与自走棋的相似之处：</font></p><br>
+<ul><li><font face="宋体"><strong>生成随机性。</strong>自走棋中，随机匹配对手、随机生成可选的棋子。</font></li><li><font face="宋体"><strong>进程单向性。</strong>所有玩家都只能向前推进流程，不能查看或选择过去刷出来的棋子，不能拆分已经升级的棋子，不能拆卸装备，不能重新进行或体验某一回合的对战，不能回购卖出的棋子。</font></li><li><font face="宋体"><strong>不可挽回性。</strong>这里不可挽回一般指玩家的生命不可挽回，玩家不可复活，死亡就意味着游戏的结束，包括之前所有的经营、决策和积累。甚至在自走棋中，连恢复信使的生命值都不被允许。Roguelike的魅力之一就在于体验每一次不同的死亡与失败，并尽最大努力的做好当下的自己。</font></li><li><font face="宋体"><strong>游戏非线性。</strong>这一点体现在玩家的自由度上，玩家可以随时选择更换成任何一种套路和阵容，可以自由选择刷牌的时间点和数量。</font></li><li><font face="宋体"><strong>画面朴素性。</strong>不展开讨论，但画面也确实没有任何优势可言。</font></li><li><font face="宋体"><strong>系统复杂性。</strong>所有玩家共有牌池、棋子之间的联动加成、每个棋子的技能、属性数值差异、棋子站位的影响等因素，共同构成了自走棋的复杂性。</font><br>
+</li></ul><br>
+<div align="center"><font face="宋体">
+<img id="aimg_746481" aid="746481" zoomfile="https://di.gameres.com/attachment/forum/201903/31/192724wnrhefe16fel1e6q.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/192724wnrhefe16fel1e6q.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+ </font></div><div align="center"><i><font face="宋体">以撒的结合游戏画面</font></i></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">自然的，自走棋也继承了Roguelike类游戏的乐趣和可玩性：玩家在每一局的经历都与众不同、不可复制、不可重温；玩家能够在一次次的失败中学习到提高胜率的技巧，同时也在一次次尝试中通过各种选择表达了自我风格。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">最重要的是，每一次游戏开始时，玩家都不知道将会遇到什么样的敌人、自己将会使用什么套路、套路是否能成型，一切对玩家来说都是未知的，但又都是玩家熟悉的，而且每一个从未知到实现的过程，又都是玩家通过自己的选择一点一点积累起来的。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="4"><strong>(三)&nbsp; &nbsp; </strong><strong>当“大逃杀”遇上“小概率随机事件”</strong></font></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">大逃杀类游戏的一大重要特点，就是最终赢家的成就感和体验要超出一般游戏很多倍，这种独一无二的魅力成就了绝地求生、堡垒之夜和APEX。市场的认可度说明了当代玩家对游戏类型的选择倾向性，这种倾向性也再一次在自走棋上得到验证。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">不过，单单一个嵌套在卡牌/棋类对战游戏中的大逃杀玩法，远远不足以吸引玩家的眼球和兴趣，这背后一个更重要的创举是将大逃杀与随机性紧密的结合在一起。同样，这也是设计团队所说的灵感来源——麻将的精髓：<strong>在一定规则之下，对具有特定形式的小概率事件的发生进行奖励。</strong></font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>1)&nbsp; &nbsp;</strong><strong>大逃杀玩法</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">虽然继承自战三国（战三国的作者在2014年就将大逃杀的玩法融合到RPG地图中），但自走棋非常完整的保留了这一套车轮对战系统。我们可以说这是一种借鉴，但是以巨鸟工作室多年的RPG地图开发经验来说，我们完全有理由相信他们有能力对这套系统进行完善和改进，但是他们并没有这么做，说明在项目进行过程中，团队就已精准的把握到了玩家对大逃杀玩法的喜爱程度并未降低。大逃杀玩法的优势和特色，这里不做赘述。</font></p><div align="center"><font face="宋体">
+<img id="aimg_746482" aid="746482" zoomfile="https://di.gameres.com/attachment/forum/201903/31/192826smv5lrgam4yrz52f.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/192826smv5lrgam4yrz52f.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+ </font></div><div align="center"><i><font face="宋体">大逃杀玩法的两位大赢家</font></i></div><div align="center"><i><font face="宋体"><br>
+</font></i></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>2)&nbsp; &nbsp;</strong><strong>小概率随机事件</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">自走棋设计的一大创举，就是<strong>把小概率事件的发生作为玩家获得胜利的一个必要条件</strong>（如同目前主流普通玩家口中流行的一句话“天胡才配吃鸡”），虽然这种设计的原型思想依然来自战三国，但自走棋团队对其进行了较大幅度的改进，<strong>重点突出了“玩家的选择”在促进小概率事件发生上的作用。</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">战三国中，玩家在花费资源购买武将时，无法获知购买的对象具体是谁，只能等到扭蛋被打开时才能知晓是否是需要的武将（能够激活现有武将的羁绊技能加成），进而决定是否要保留该武将。这种小概率事件的发生是该游戏可玩性的重要来源，但<strong>战三国中这种被动的观察者视角、“先付款后看货”的消费模式，很大程度上降低了玩家的参与感。</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">而<strong>在自走棋中，消费模式变成了“先挑货后付款”，</strong>玩家的角色也从被动的观察者变成了主动的选择者。想要凑齐一套阵容，依然是小概率事件，但是一次性从5张牌中做选择，很容易让玩家产生这样一种心理暗示：如果阵容凑不齐，就是发牌员的问题，但是如果阵容凑齐了，那就是自己规划和选牌的功劳。这就好比刺客信条系列中，每个boss都需要玩家亲手按下最后的击杀键之后主角才会下手，尽管玩家清楚的知道如果不这么做游戏就无法继续（玩家实际上别无选择），但这种做法的确让玩家能更专注的聆听和思考boss 的遗言。<strong>因为，最终做出选择的人毕竟是玩家自己，而不是游戏系统或发牌员。</strong></font></p><div align="center"><font face="宋体">
+<img id="aimg_746483" aid="746483" zoomfile="https://di.gameres.com/attachment/forum/201903/31/192912mngut7du5gt77ukp.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/192912mngut7du5gt77ukp.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+ </font></div><div align="center"><i><font face="宋体">自走棋选牌界面</font></i></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">另外，在自走棋与麻将的设计理念中，有一点是不同的：</font></p><br>
+<ul><li><font face="宋体">麻将奖励的是“最先”促成小概率事件发生的玩家，该事件需符合特定的规则（胡牌牌型），即<strong>谁先胡、谁获胜</strong>。</font></li><li><font face="宋体">而自走棋则是从所有已促成小概率事件发生的玩家中，选择那个发生概率接近最小的事件所对应的玩家给与奖励。这里的“概率接近最小”可以是游戏进程中连续发生小概率事件（天胡吃鸡）、也可能是游戏后期发生了极小概率的事件（转型锁血），即<strong>谁胡的大、谁获胜</strong>。</font><br>
+</li></ul><font face="宋体"><br>
+</font><br>
+<div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>3)&nbsp; &nbsp;</strong><strong>小概率随机事件与大逃杀玩法的结合的3个设计优点</strong></font></p><div align="left"><strong><font face="宋体"> </font></strong></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">&nbsp; &nbsp; a)&nbsp;&nbsp;<strong>小概率事件可以在任何时候发生（戏剧化的游戏体验）</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">大逃杀玩法的核心是生存，活到最后才是胜利者，游戏的结果并不关注过程是怎样的。所以，当玩家在极低的血线位置上凑齐了阵容羁绊之后，瞬间咸鱼翻身、击杀榜首的对手，这种戏剧化的游戏体验和成就感，能够给大多数玩家留下深刻的印象（当然也得益于设计者对正负反馈循环的精确控制）。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">另外，这种现象对玩家来说是一种希望的象征，体现在玩家处于绝境时仍然不会失去信心（APEX的双重复活机制也起到了类似的作用），这对于维持玩家的游玩兴趣起到了至关重要的作用：在玩家彻底认识到这种希望的低成功率之前，降低玩家退坑的概率。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">&nbsp; &nbsp; b)&nbsp;&nbsp;<strong>技术上的差距被概率模糊了（用户粘性）</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">对于中低段位的新手玩家而言，初上手这款游戏之后的感觉往往是“运气大于技术”（这种感觉也体现在炉石的竞技场模式中，位于“纺锤体”两端的新手玩家和老玩家的比例很大，位于中间水平的玩家反而较少），玩家在一次次失败的尝试之后，仍然能够保持游玩下去的动力。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">传统吃鸡类游戏一般对于技术性的要求较高，玩家的挫败感较强，而在自走棋的低段位对局中，运气成分的确占较大的比例，这会让新手玩家可以在很长一段时间之内靠着侥幸心理维持对游戏的兴趣。而当玩家深入理解到技术的重要性时，也早已不再是新手而是正式入坑了，用户粘性已经形成。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">&nbsp; &nbsp; c)&nbsp;&nbsp;<strong>一旦吃鸡，概率的重要性就会被选择性忽视（用户粘性）</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">这一条看上去似乎与上一条是矛盾的，但事实确实如此。通过观察众多主播和笔者自己吃鸡后的心态可以发现，60%以上的情况下，吃鸡者会第一时间分析早期方向规划的正确性、关键时间点转型的正确性或者是在关键轮次抽牌时的极限操作等，只有20%的人会先谈论随机性的问题。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">理性的分析，任何一次吃鸡都不可能仅靠规划达成，必然是有极大的随机性成分，但联系前面的分析，设计者突出了“玩家的选择”在促进小概率事件发生上的作用，这就使得玩家更愿意相信自己的技术是在这个段位之上的。信心的建立，自然提高了用户的粘性。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="4"><strong>(四)&nbsp; &nbsp; </strong><strong>让玩家更直观的感受到“风险和收益”</strong></font></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">任何游戏都会让玩家做出关乎风险和收益的抉择，但自走棋这方面的设计上，显然更想让玩家切实的感受到“他的这次选择”可能产生什么风险、可能带来什么收益，<strong>正是这种直观感才让每个新手玩家能够在短时间内迅速把握到游戏的内核</strong>，形成用户粘性和高留存度。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">为了达到这一效果，游戏设计重点突出了以下几个设计理念：<strong>简洁的规则、明确的反馈、平衡的数值、高度自由的选择权、可控的随机性。</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">拿游戏中一个比较重要且每回合都要面对的抉择举例：<strong>花费2元来刷牌。</strong></font></p><br>
+<br>
+<ul><li><font face="宋体">风险：花费资金却毫无收获，未来利息减少、信使升级变慢、资金爆发力降低。</font></li><li><font face="宋体">收益：先人一步拿到关键牌、提前规划，提高战力、保住血线、获取连胜奖励。</font><br>
+</li></ul><br>
+<p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">几个设计理念在此机制的实际应用：</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">1)&nbsp;&nbsp;<strong>简洁的规则：</strong>2元刷牌+看牌+选牌，删减并简化了战三国中升级农民、攀升各种科技、购买装备的过程。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">2)&nbsp;&nbsp;<strong>明确的反馈：</strong>选到牌时，可直接用于合成升级、触发羁绊特效；未选到牌，则进入利息少的恶性循环，资金难以再次积累起来。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">3)&nbsp;&nbsp;<strong>平衡的数值：</strong>合理的数值设定，能让玩家无法轻易的找到全局最优的搜卡策略（用最小的风险换取最大的收益），进而在游戏中体会到左右权衡的乐趣。主要体现在，随着信使经验等级的提高，刷到高等级棋子的概率也逐渐提高，各等级棋子之间的战力梯度设置相对合理。但也有文章分析了理想情况下，各个阵容局部最优的搜卡策略，详见参考文献《从概率的角度解析搜卡时机与搜卡策略》。下图是信使升级所需经验、各等级下搜到各价位棋子的概率。</font></p><div align="center"><font face="宋体">&nbsp; &nbsp;&nbsp;&nbsp;
+<img id="aimg_746484" aid="746484" zoomfile="https://di.gameres.com/attachment/forum/201903/31/193340zpi3w4uh0794vp1h.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/193340zpi3w4uh0794vp1h.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+&nbsp; &nbsp; </font></div><div align="center"><font face="宋体">
+<img id="aimg_746485" aid="746485" zoomfile="https://di.gameres.com/attachment/forum/201903/31/193405cc6q60sshbksgqsh.png" data-original="https://di.gameres.com/attachment/forum/201903/31/193405cc6q60sshbksgqsh.png" width="481" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+&nbsp;&nbsp;</font></div><div align="center"><i><font face="宋体">信使升级至对应等级所需的累计总经验（每4点经验对应5块钱）</font></i></div><div align="center"><font face="宋体">
+<img id="aimg_746486" aid="746486" zoomfile="https://di.gameres.com/attachment/forum/201903/31/193607qjmrarriuitesouz.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/193607qjmrarriuitesouz.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+</font></div><div align="center"><font face="宋体">
+<img id="aimg_746487" aid="746487" zoomfile="https://di.gameres.com/attachment/forum/201903/31/193625j26kd0ftvqkrbd0l.png" data-original="https://di.gameres.com/attachment/forum/201903/31/193625j26kd0ftvqkrbd0l.png" width="481" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+ </font></div><div align="center"><i><font face="宋体">信使等级与各价位棋子的刷出概率（各棋子独立计算）</font></i></div><div align="center"><i><font face="宋体"><br>
+</font></i></div><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">4)&nbsp;&nbsp;<strong>高度自由的选择权：</strong>高度自由的选择权能让玩家在自己的游戏风格中体会“风险和收益”，比如关于“刷牌”机制就至少能引申出以下多个选择题（实战中每个回合都要面对这些选择题，且种类可能更多，关于游戏策略维度的问题会在其它部分讨论）：</font></p><br>
+<ul><li><font face="宋体">选择连败还是连胜？（对血量资源的利用和控制）</font></li><li><font face="宋体">选择热门套路还是冷门套路？（对有限棋子的争夺）</font></li><li><font face="宋体">与对手套路相似，是否转型？（对沉默成本的控制）</font></li><li><font face="宋体">刷到强势卡棋子，是否转型？（对稀有棋子资源的利用）</font></li><li><font face="宋体">是否要把钱留着升级信使or吃利息？（对局势的长远规划）</font><br>
+</li></ul><br>
+<p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">每个问题都涉及到风险和收益的抉择，同时提供了多个分支选项，当玩家在瞬息万变的实战对局中对这些分支选项的答案进行排列组合时，就形成了自己独特的游戏风格，进而更容易接受这些“风险收益选择题”所带来的结果。（与之形成对比的战三国中，面对一个扭蛋里随机出现的武将，玩家只能被动的选择留下还是卖掉他）</font></p><div align="center"><font face="宋体">&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 
+<img id="aimg_746488" aid="746488" zoomfile="https://di.gameres.com/attachment/forum/201903/31/193730fzxi8q3b1dko6kdb.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/193730fzxi8q3b1dko6kdb.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+&nbsp; &nbsp;&nbsp;&nbsp;</font></div><div align="center"><i><font style="font-size:9pt"><font face="宋体">头文字D：秋名山赌神</font></font></i></div><div align="center"><i><font style="font-size:9pt"><font face="宋体"><br>
+</font></font></i></div><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">5)&nbsp;&nbsp;<strong>可控的随机性：</strong>在随机性可控的情况下，玩家会对风险和收益建立更直观、更可信的认知，同时更容易认可结果的合理性。在这方面的设计上，设计者有意让玩家可以清晰的看到所有对手已拥有的棋子，进而能对“刷牌”的风险和收益有一个“能令自己信服”的预估判断，所有的随机结果都不会超出这个预测范围，即建立了可控的随机性。（与之形成对比的炉石中，就存在一些随机性过于强的卡牌，难以让玩家对风险和收益做出可信的预估）</font></p><div align="center"><font face="宋体">
+<img id="aimg_746489" aid="746489" zoomfile="https://di.gameres.com/attachment/forum/201903/31/193800njss7n6jfdnsne2w.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/193800njss7n6jfdnsne2w.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+ </font></div><div align="center"><i><font face="宋体">不可控随机性的典型：炉石卡牌尤格萨隆</font></i></div><div align="center"><i><font face="宋体"><br>
+</font></i></div><div align="center"><i><font face="宋体"><br>
+</font></i></div><div align="left"><font face="宋体"> </font></div><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="4"><strong>(五)&nbsp; &nbsp; </strong><strong>经济系统、资源转化、升级贬值</strong></font></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>1)&nbsp; &nbsp;</strong><strong>经济系统简述：</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">自走棋的内部货币可用于购买棋子、支付刷牌的费用、锁定商店、升级信使、产生利息。收入来源如下。：</font></p><br>
+<ul><li><font face="宋体">a)&nbsp;&nbsp;基础收入：第一波基础收入是1块钱，第二波基础收入是2块钱，以此类推，第五波基础收入是5块钱，之后的每波收入都是5块钱。</font></li><li><font face="宋体">b)&nbsp;&nbsp;利息收入：玩家在上个回合结束时金钱的10%（向下取整），最高5元。</font></li><li><font face="宋体">c)&nbsp;&nbsp;胜利奖励：每次1块钱，战胜野怪没有胜利奖励。</font></li><li><font face="宋体">d)&nbsp;&nbsp;连胜奖励、连负补偿：当玩家连续第三次胜利或失败时，就进入连胜或连负状态，并获得连胜奖励或连负补偿，最多3块钱。与野怪的胜负关系不计入连胜或连负计数器中，也不会获得奖励或补偿。</font><br>
+</li></ul><br>
+<div align="center"><font face="宋体">
+<img id="aimg_746490" aid="746490" zoomfile="https://di.gameres.com/attachment/forum/201903/31/193931wv3337hq2hnqzoor.png" data-original="https://di.gameres.com/attachment/forum/201903/31/193931wv3337hq2hnqzoor.png" width="481" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+ </font></div><div align="center"><i><font face="宋体">由上至下3条曲线分别表示：连胜、连负、胜负交替。</font></i></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">上图在理想情况下（玩家不进行任何消费），展示了50回合内的连胜、连负和胜负交替这三种情形的经济曲线（横坐标为回合数、纵坐标为总资产）。在实际的游戏中，玩家将根据不同策略将金钱转化成战力，利息收入难以维持在上限值（5/每回合），所以上述三种情形的实际总资产曲线均会低于理想总资产曲线。<strong>如图所示，连胜与连负的经济增长速度相近，并与胜负交替拉开一定的差距。</strong></font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>2)&nbsp; &nbsp;</strong><strong>战力与财力转化：</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">游戏中，金钱不能直接转化成战斗力（RPG地图的常用手段），需要经过抽卡这一中间环节；战斗力也不能直接转化成金钱，需要连胜或连负（需要额外金钱投资或以血量为代价）。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">这种设计的目的之一是为了<strong>打破正反馈循环和负反馈循环</strong>，至少从玩家的体验和感觉上，金钱和战力二者没有直接的关联在一起。特别是对于经常处于劣势的新手玩家而言，<strong>这种感觉对于维持游戏动力和提高留存有积极作用。</strong></font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>3)&nbsp; &nbsp;</strong><strong>血量与财力的转化、实时排名系统</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">在游戏中，信使的血量是一种不可再生的资源，玩家无法将血量资源直接兑换成金币，但是通过“连负补偿”和“低消费吃利息”等方式，玩家可选择冒着消耗血量资源的风险来获取更多金币资源（甚至出现“空城计”这种极端策略）。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">与之对应的是，随着决赛阶段的临近，玩家的剩余血量会逐渐转变成一种可提高容错率的保障型资源（高级棋子的伤害较高，稍有不慎就会被入很多血）。</font></p><div align="center"><font face="宋体">
+<img id="aimg_746491" aid="746491" zoomfile="https://di.gameres.com/attachment/forum/201903/31/194031i6pn5vzbnkbg5g3b.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/194031i6pn5vzbnkbg5g3b.jpg" width="581" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+ </font></div><div align="center"><i><font face="宋体">各棋子等级及其可对信使造成的伤害值（另：棋子卖价与等级数值相等）</font></i></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">一方面，血量资源的兑换功能增加了游戏的策略维度；另一方面，血量资源也是玩家实时排名的唯一依据。实时排名系统为玩家提供战局信息参考、方便玩家优化策略，同时起到了激发荣耀感、建立目标等作用。非常重要的一点是，血量的实时排名并不完全代表8名玩家的当前战斗力排名，这二者的差异性为玩家带来了惊喜和反转，排名的实时变动也激发了玩家好胜心。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>4)&nbsp; &nbsp;</strong><strong>棋子升级的价值损失：</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">棋子3合1升级后的攻防属性成长基本为1倍/2倍/4倍的关系，以斧王为例，血量为700/1400/2800，攻击力为52.5/105/210，其它数值不变（也有特例，如敌法师的魔抗属性会随等级提升10/20/30）。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">游戏中，1元区棋子升级为2星时卖价维持不变。除此之外，其它任何棋子在升级之后，都会有一定的价值损失，<strong>原始售价越高的棋子贬值越多</strong>。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">这两种情况的设计意图：</font></p><br>
+<ul><li><font face="宋体"><strong>1</strong><strong>元区棋子升级无损失：</strong>让玩家在前期选择更自由，降低前中期转型的成本（鼓励随机应变），防止前期对局同质化、避免出现所有玩家均只选择高质量单卡的现象（例如炉石/昆特的竞技场），淡化随机性在前期造成的滚雪球效应。</font></li><li><font face="宋体"><strong>其它棋子升级有损失：</strong>提高玩家在中后期转型的成本、鼓励玩家优化已半成型的阵容，防止后期对局同质化（即所有玩家都向环境中最强势的阵容转型）。</font><br>
+</li></ul><br>
+<br>
+<div align="left"><font face="宋体"> </font></div><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="4"><strong>(六)&nbsp; &nbsp; </strong><strong>满足每一种玩家</strong></font></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">Richard A. Bartle在其发表的《牌上的花色 – MUD中的玩家》一文中提出了“巴图玩家分类模型”，将玩家分为四大类：Killer（杀手型玩家）、Achiever（成就型玩家）、Explorer（探索型玩家）、Socialiser（社交型玩家）。如下图所示：</font></p><div align="center"><font face="宋体"> 
+<img id="aimg_746492" aid="746492" zoomfile="https://di.gameres.com/attachment/forum/201903/31/194300ctct9k3v3197954d.jpg" data-original="https://di.gameres.com/attachment/forum/201903/31/194300ctct9k3v3197954d.jpg" width="600" inpost="1" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+</font></div><div align="center"><i><font face="宋体">巴图玩家分类模型</font></i></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>自走棋是如何满足每一类玩家的呢？</strong></font></p><br>
+<ul><li><font face="宋体"><strong>Killer</strong><strong>（杀手型玩家）：</strong>与常见的MOBA和FPS游戏中玩家的直接对抗不同，在阵容规划和自动战斗的共同作用下，自走棋的对战被扩展成了防守和入侵两部分，杀手型玩家也因此获得了两倍的满足感。在一回合中，如果防守和入侵都成功，即为双倍正反馈；哪怕有一端失败，该类玩家也会更关注成功的那一部分，总的来说是获得了正反馈；只有在两端都失败时，才会获得负反馈。从平均概率上说，杀手型玩家群体能从自走棋中获得比普通多人对抗类游戏中更多的满足感。他们对每个小局的胜利有着额外的渴求，因此，连胜奖励和连杀通告为他们提供了额外的正反馈。</font></li><li><font face="宋体"><strong>Achiever</strong><strong>（成就型玩家）：</strong>相比于其他三类玩家，成就型玩家更关注整场大局比赛的胜利，他们会倾向于使用胜率最高的阵容套路、研究最新的环境变化、获得更高的段位，这几项核心系统为该类型玩家提供了可供其征服的疆土，也促使他们提高自身技术水平（使用概率理论进行决策）。另外，游戏过程中的血量排名、棋子的升级、装备的合成都为他们提供了额外的正反馈。</font></li><li><font face="宋体"><strong>Explorer</strong><strong>（探索型玩家）：</strong>大量的随机性抽卡是探索型玩家的终极快乐源泉，近60个棋子在种族和职业上的羁绊组合、自由的站位、12种策略维度、低同质化的对局体验，也都为该类型玩家提供了巨大的创作空间和自由度，不断更新的游戏内容也维持着他们的兴趣。而最吸引该类型玩家的游戏特色，是每一局的开始都是一场未知的、Roguelike式的冒险。</font></li><li><font face="宋体"><strong>Socialiser</strong><strong>（社交型玩家）：</strong>不管是steam平台上的好友、现实生活中的同伴、对局中对手，在游戏社交手段如此纷繁而精美的今天，一个完善的社交系统已经不再能赋予一款游戏社交属性了，真正能吸引当代社交型玩家的最重要的数据就是玩家数量。也就是说，一个爆款游戏本身就自动具有了极强的社交属性。这也许不是自走棋设计者所预料到的，但确实是它已经提供给玩家的功能了。</font><br>
+</li></ul><br>
+<br>
+<div align="left"><font face="宋体"> </font></div><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="4"><strong>(七)&nbsp; &nbsp; </strong><strong>其它细节亮点</strong></font></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">另外，自走棋还有几个细节亮点，从游戏设计和系统策划的角度来说，框架搭建和机制实现都不难，甚至创新点也比较细微，但是却对系统某些方面的游戏性带来了重大的突破。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="center"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">1)&nbsp;&nbsp;<strong>公共牌池博弈与自适应平衡：</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">所有牌都来自同一个牌池，且每种牌的总张数固定（如1费牌“斧王”在牌池中共有44张，同理2费牌30张、3费25张、4费15张、5费10张），各玩家选牌时是此消彼长的博弈过程，如扑克、麻将、moba类游戏的ban选过程。</font></p><br>
+<ul><li><font face="宋体">相比于以集换卡牌为内核的CCG/TCG游戏（如万智牌、炉石传说、皇室战争、战争艺术：赤潮、战就战）、以牌库构筑为内核的DBG游戏（如杀戮尖塔、战三国、忍法战场），公共牌池类游戏更强调玩家之间在选牌层面上的实时互动，玩家A的抓牌结果能通过卡牌出现概率这一指标实时的反馈给玩家B，<strong>多个玩家对于有限牌池资源的抢夺形成了新的策略维度。</strong></font></li><li><font face="宋体">另外，<strong>这种互动形式是暂时隐秘的、半公开的</strong>，比如玩家A为了限制玩家B的发展而故意选择抓取玩家B想要的棋子（俗称“卡关键牌”），但此时玩家B对此是不知情的（除非主动去观察玩家A的手牌区），这种“偷偷摸摸”的“潜入暗杀式”的体验是游戏可玩性的一笔“增色”。</font></li><li><font face="宋体">进一步的，<strong>通过公共牌池机制，游戏自身可以实现自适应的动态平衡性调整</strong>：由于每一种套路的可用棋子数量都是有限的，所以在8人同时选牌的情况下，热门套路成型的概率更低（变相降低了热门套路的强度）、冷门套路成型的概率更高（变相提高了热门套路的强度）。因此，玩家会综合权衡套路的强度、成型概率、其他玩家的选牌思路等因素，来规划自己的选牌方向。这样一来，游戏的环境就有了在一定范围内进行“自我调节”的能力，无论环境和版本如何更迭，强势套牌和弱势套牌都能有比较均衡的出场率和胜率。</font><br>
+</li></ul><br>
+<div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>2)&nbsp; &nbsp;</strong><strong>攻守机制的复用</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">在自走棋的对战规则中，<strong>玩家自己的防守阵容，对其他玩家而言则是入侵时的进攻阵容，这是一种机制的复用手段</strong>。这样做的好处是，<strong>能用一半的复杂度，提供完整游戏体验。</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">在具体的游玩过程中，系统允许玩家把90%以上的注意力都集中在防守端，玩家不用去思考和策划如何对其它玩家展开进攻，只需做好防守、保护好信使的血量，即有可能取得最后的胜利。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">另外，在常见的对抗类游戏中，系统一般会要求玩家在与对手的交互过程中进行大量主动式操作（如皇室战争、moba类、FPS类等等），进而会要求玩家对对手的技能、属性和特性都需要有所了解。但在自走棋中，由于战斗过程是自动发生的，所以玩家（尤其是新手）不需要关心我的对手对我做了什么，而只需要关心我需要什么才能尽快的升级棋子、尽快的完善阵容、触发更多更强力的羁绊。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>3)&nbsp; &nbsp;</strong><strong>节奏变化、爆点频发、张弛有度：</strong></font></p><ul><li><font face="宋体"><strong>回合内的节奏变化：</strong>在游戏中后期的一回合内，准备阶段相对比较紧张，需要进行多项操作，30s经常不够用；而自动战斗阶段则相对比较松弛，比如欣赏战斗的过程、思考阵容的优化方向、观察其他对手阵容。</font></li><li><font face="宋体"><strong>“刷牌”的节奏变化：</strong>大量刷牌通常集中在某几个回合，其它时候相对平静（具体与游戏进行轮次、剩余玩家数、敌我实力差距、牌库更新情况、资金持有量、利息量和血线安全度等因素有关）。</font></li><li><font face="宋体"><strong>“爆点”的节奏变化：</strong>游戏中有各种各样的爆点随机散布在流程中，连胜、连负、抽到核心卡、阵容成型、反杀榜首、被榜尾反杀等等，这些爆点往往与随机性相关，让玩家难以预测，反而成了惊喜的来源。</font><br>
+</li></ul><br>
+<div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>4)&nbsp; &nbsp;</strong><strong>将多种非强制性操作压缩在30秒之内</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">这种压缩体现在战斗间歇的准备阶段中：玩家可以在30秒的时间内进行刷棋子、合成棋子和安排站位等操作，设计者并未给这个过程添加额外的限制条件，即理论上只要手速够快且资金充裕，玩家可以选择进行无限次操作。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">这一点继承自战三国的玩法（战三国中，每回合只刷免费新5个农民，之后需手动花费高成本购买单个扭蛋来开武将，整个操作流程比较机械化），但做出了改进：自走棋降低了手动刷牌的成本（只需2块钱），让玩家有更多次5开扭蛋的机会、有更多的选择决策权，将更多的操作机会压缩到这30秒内。这个改进为游戏中后期的体验带来了4个优点：</font></p><br>
+<ul><li><font face="宋体"><strong>高玩操作：</strong>高玩可通过熟练度、手速和反应，拉开与新手的实力差距。</font></li><li><font face="宋体"><strong>高光时刻：</strong>普通玩家也可在30秒内实现刷棋子和极限合成的高光时刻。</font></li><li><font face="宋体"><strong>高自由度：</strong>玩家可自由选择是否刷牌、刷多少牌、是否极限刷牌、是否锁牌，每一种选择都有对应的风险和收益，并影响着玩家的发展节奏。</font></li><li><font face="宋体"><strong>高度紧张：</strong>在有限时间内要求玩家进行大量的识别和决策，会让玩家一直处在高度紧张的状态中，此时无论是否刷出关键棋子，情绪的起伏都会更显著。</font><br>
+</li></ul><br>
+<div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>5)&nbsp; &nbsp;</strong><strong>棋子在受击、攻击、释放技能时，会增长技能条进度</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">这三个设计均是正反馈设计，让攻击和挨打都能触发技能，鼓励玩家实行更激进的战斗策略。特别是受击一方，给与一定补偿性正反馈，避免形成负反馈循环，尽量使双方技能释放的频率相近。但也因此形成一种特殊战术，如把美杜莎和潮汐等强控单位放在最前排拉仇恨，更早触发技能。下面分析一下这三个设计必要性：</font></p><br>
+<ul><li><font face="宋体"><strong>如果攻击不增加进度条：</strong>后排单位就很难触发技能、对战激烈感下降。迫使所有玩家都把后排脆皮放置在前排，对局阵型单调、与职业特色违和，甚至会导致玩家不愿意选择后排棋子，造成所有人都在抢前排，对局体验下降。</font></li><li><font face="宋体"><strong>如果受击不增加进度条：</strong>对局不够激烈，没有你来我往，经常会出现单位都死了技能条还不满的情况，先放出技能的一方优势较大，形成正反馈循环。进而，玩家会倾向于选择高攻速单位，低攻速的单位会成为鸡肋。</font></li><li><font face="宋体"><strong>如果释放技能不增加进度条：</strong>降低对局激烈度。在双方互放一波技能之后，需要较长时间再次积攒魔法，此时已经各自残血，与其普攻互怼，不如快速回复技能来的更刺激、更有戏剧效果。</font><br>
+</li></ul><br>
+<div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>6)&nbsp; &nbsp;</strong><strong>搜卡的高反馈强度：</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">一旦玩家抽到了想要的关键卡牌并使自身阵容成型后，就很有可能实现锁血翻盘，这种收益趋近于无限大的设定，反过来又提高了玩家搜卡的意愿和搜卡过程的乐趣，提高了游戏的沉迷度。这种设计给玩家带来的体验，与暗黑3中的套装加成设计非常相似，玩家在暗黑3中凑齐套装组件后，其套装加成效果可使某个技能的数值翻数十倍之多，允许玩家完全围绕新技能重新规划perk点和输出手法，游戏体验和战斗力均有质的飞跃。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><div align="left"><font face="宋体"> </font></div><strong><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="5">四、&nbsp; &nbsp; 附录：几种玩法相近的游戏及特色简介</font></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="5"><br>
+</font></font></p></strong><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>(一)&nbsp; &nbsp; </strong><strong>战三国（war3地图）</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">大逃杀式的8玩家车轮对阵机制：回合制的1v1自动兵战，攻守模式与自走棋相同。前3回合与5的倍数回合为抵御AI的进攻，其余回合为抵御来自其它玩家的进攻，剩余的敌方单位会按人头数对本方基地造成伤害，基地血量降为0的玩家失败并退出比赛，剩余的唯一玩家为胜者（自走棋的车轮对阵规则与其完全相同，仅在表现形式上有细微区别）。游戏的核心玩法是随机刷将搜将、实现武将和小兵的特殊阵容搭配，提高总战力。下面，主要介绍战三国中被自走棋舍弃或进行了改进的部分设计。</font></p><div align="left"><ul><li><font face="宋体">在防守和入侵时，击杀敌方单位也可获得额外收入，即鼓励玩家将资源及时转化成战斗力，以获取更多的资源，进入正反馈循环。</font></li><li><font face="宋体">战斗场地是一块连续的战场，玩家可以自由移动单位的位置，对战过程对单位的站位有更精确的要求，操作量和精度要求较大。</font></li><li><font face="宋体">小兵分为7种属性、共30余种，武将分为4个势力、共50个左右，技能各不相同。系统每轮刷出5个农民，商店下方共有10个农民存放位，存满后系统不刷出新的农民；另有6个点将台暂存位，可用于临时存放任何单位。玩家使用货币将农民升级至5级时，农民会随机变成一个小兵兵种或武将，玩家可选择保留或变卖小兵和武将。</font></li><li><font face="宋体">大多数情况下，变卖小兵和武将回收的货币数量均大于升级消耗的货币数量，收益的具体大小取决于兵种的种类和变卖的时机。玩家可通过升级并变卖每轮刷新出来的农民来获得额外收入（可将农民视为每轮的工资收入和工资扭蛋，俗称“做生意”）。武将的变卖的价格会随时浮动，玩家可伺机在高价卖出。</font></li><li><font face="宋体">武将与武将之间、武将与小兵之间的特殊搭配可触发额外属性或技能效果，小兵自身的数量和种类的搭配也可触发额外效果。单位的阵容组合形成了不同玩法流派，比如凑齐蜀国的五虎上将可同时提高5个人的技能数值。（自走棋也从中吸取了游戏核心策略性的精华部分）。</font></li><li><font face="宋体">玩家可为武将装备宝物（武器/防具/坐骑/饰品/书籍），特定宝物与武将的组合也可触发额外效果（如关羽装备青龙偃月刀后会触发技能的额外效果）。</font></li><li><font face="宋体">玩家可使用货币兑换随机宝物和武将（即扭蛋，俗称“刷宝”和“刷将”）；刷将时大概率获得货币或普通武将，小概率获得强力的神将。</font></li><li><font face="宋体">玩家可根据本方和敌方的阵容选择不同的阵法（一种随时可以更改的群体buff）。</font></li><li><font face="宋体">主公技能：玩家每击杀一个AI的Boss，均会获得一个特殊的主公技能。</font></li><li><font face="宋体">玩家可使用货币升级科技，增加单位的基础属性、人口上限、基地自动回复的血量数值和经济自动增长的速度。</font></li><li><font face="宋体">游戏过程中，击杀次数越多、额外奖励的资源就越多，开局顺利的玩家比较容易形成正反馈循环，获取更多的资源、更容易凑齐并激活武将之间的联动效果。</font></li><li><font face="宋体"><br>
+</font><br>
+</li></ul></div><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>(二)&nbsp; &nbsp; </strong><strong>忍法战场（war3地图）</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">定期生成公共boss，所有玩家到同一块场地一起攻击该boss，而不是各自应对。漫画角色之间的羁绊，能够激活该角色的额外强力技能（而非增加技能的数值强度）。棋子在手牌区无法参加战斗，但是能与战斗区的棋子联动，触发羁绊效果。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>(三)&nbsp; &nbsp; </strong><strong>战就战（war3地图）</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">玩家可选择种族、构筑出战部队的兵种组成，战斗中的兵种获取没有随机性，但可对定期产出单位的雕像进行升级；进行1v1对战，目标是穿过对方雕像身后的传送门、摧毁对方“战神”。核心策略性来源于兵种搭配与克制，。设计者为了避免形成正/负反馈循环，设置了“传送门”将雕像和战神在战场上的位置切割开。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>(四)&nbsp; &nbsp; </strong><strong>Riseof Legions</strong><strong>（2019年，评测385份，多半好评75%）</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">Steam游戏，玩家构筑双色套牌进行类似皇室战争的1v1对战，目标是占领防卫塔、扩大召唤范围、进攻基地；定期产出单位的雕像和一次性召唤的单位分别使用不同的费用资源，每一个费用点数均可进行两次循环再利用；单位自动战斗，战斗中不可升级或合成单位；目前版本中的正/负反馈循环均较容易形成（容易滚雪球）。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><strong>(五)&nbsp; &nbsp; </strong><strong>Artof War: Red Tides</strong><strong>（2016年，评测6000份，特别好评80%）</strong></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体">国产，战争艺术赤潮steam版。玩法起源于星际争霸中的“沙漠风暴”地图，玩家可选择种族、构筑出战部队的兵种组成，战斗中的兵种获取没有随机性；进行1v1或3v3对战（3人小队轮流出兵），目标是摧毁对方防卫塔和基地；可对定期产出的单位进行升级，也可随时调整每个兵种的出兵数量，兵力总人口数有限制。核心策略性来源于兵种搭配与克制，但正/负反馈循环均较容易形成（容易滚雪球）。</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><br>
+</font></p><div align="left"><font face="宋体"> </font></div><strong><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="5">五、&nbsp; &nbsp; 参考文献</font></font></p><p style="line-height:30px;text-indent:2em;text-align:left"><font face="宋体"><font size="5"><br>
+</font></font></p></strong><div align="left"><font face="宋体">1.&nbsp;&nbsp;庖丁解牛：对刀塔自走棋的最详细剖析。作者、平台及日期：何北航，游资网，2019-02-18。地址：<a href="https://www.gameres.com/837393.html" target="_blank">https://www.gameres.com/837393.html</a></font></div><div align="left"><font face="宋体">2.&nbsp;&nbsp;知乎用户“eggache”在问题“如何评价刀塔自走棋2月26日更新兽人法亡灵猎萨尔均被削弱？”中的回答。作者、平台及日期：eggache，知乎，2019-02-27。地址：<a href="https://www.zhihu.com/question/313698471/answer/609411946" target="_blank">https://www.zhihu.com/question/313698471/answer/609411946</a></font></div><div align="left"><font face="宋体">3.&nbsp;&nbsp;dota自走棋 棋子全资料 2019.01.26版本。作者、平台及日期：浅无意，dota自走棋吧，2019-01-27。地址：<a href="http://tieba.baidu.com/p/6019424110" target="_blank">http://tieba.baidu.com/p/6019424110</a></font></div><div align="left"><font face="宋体">4.&nbsp;&nbsp;全英雄图鉴+职业&amp;种族速查表。作者、平台及日期：UID14406396，NGA DotA自走棋，2019-02-26。地址：<a href="http://nga.178.com/read.php?tid=16502979" target="_blank">http://nga.178.com/read.php?tid=16502979</a></font></div><div align="left"><font face="宋体">5.&nbsp;&nbsp;从概率的角度解析搜卡时机与搜卡策略。作者、平台及日期：UID41663697，NGA DotA自走棋，2019-03-12。地址：<a href="http://nga.178.com/read.php?tid=16633151" target="_blank">http://nga.178.com/read.php?tid=16633151</a></font></div><div align="left"><font face="宋体">6.&nbsp;&nbsp;刀塔自走棋简单分析。作者、平台及日期：我是来造谣的，游资网-游戏策划版，2019-02-20。地址：<a href="https://bbs.gameres.com/thread_837689_1_1.html" target="_blank">https://bbs.gameres.com/thread_837689_1_1.html</a></font></div><div align="left"><font face="宋体">7.&nbsp;&nbsp;没玩过也能看懂的刀塔自走棋攻略。作者、平台及日期：电竞GO，知乎问答，2019-03-31。地址：<a href="https://www.zhihu.com/question/308229866/answer/568977238" target="_blank">https://www.zhihu.com/question/308229866/answer/568977238</a></font></div><div align="left"><font face="宋体">8.&nbsp;&nbsp;什么时候存钱和花钱？作者、平台及日期：电竞GO，知乎问答，2019-02-18。地址：<a href="https://www.zhihu.com/question/310409346/answer/583037183" target="_blank">https://www.zhihu.com/question/310409346/answer/583037183</a></font></div><div align="left"><font face="宋体">9.&nbsp;&nbsp;阵容站位有什么技巧？作者、平台及日期：电竞GO，知乎问答，2019-02-18。地址：<a href="https://www.zhihu.com/question/310110208/answer/580746804" target="_blank">https://www.zhihu.com/question/310110208/answer/580746804</a></font></div><div align="left"><font face="宋体">10.&nbsp;&nbsp;21只谜团置疑自走棋卡池规则。作者、平台及日期：零的祝福，旅法师营地，2019-03-25。地址：<a href="https://www.iyingdi.com/web/bbspost/detail/1868851" target="_blank">https://www.iyingdi.com/web/bbspost/detail/1868851</a></font></div><div align="left"><font face="宋体">11.&nbsp;&nbsp;浅谈扣血量。作者、平台及日期：浮生不偷闲，旅法师营地，2019-03-24。地址：<a href="https://www.iyingdi.com/web/bbspost/detail/1868041" target="_blank">https://www.iyingdi.com/web/bbspost/detail/1868041</a></font></div><div align="left"><font face="宋体">12.&nbsp;&nbsp;牌上的花色 – MUD中的玩家。作者、平台及日期：原作Richard A. Bartle，译者韦易笑，游资网，2016-09-28。地址：<a href="https://www.gameres.com/684100.html" target="_blank">https://www.gameres.com/684100.html</a></font></div><div align="left"><font face="宋体">13.&nbsp;&nbsp;数说自走棋。作者、平台及日期：旅法师营地王益，旅法师营地，2019-03-26。地址：<a href="https://www.iyingdi.com/web/article/search/73005" target="_blank">https://www.iyingdi.com/web/article/search/73005</a></font></div><div align="left"><font face="宋体">14.&nbsp;&nbsp;刀塔自走棋全棋子各等级属性成长数据一览。作者、平台及日期：NGA/哈酷那马獭獭，游迅网，2019-01-29。地址：<a href="http://www.yxdown.com/gonglue/442733.html" target="_blank">http://www.yxdown.com/gonglue/442733.html</a></font></div><div align="left"><font face="宋体"> </font></div><div align="left"><font face="宋体"> </font></div><div align="left"><font face="宋体"> </font></div><div align="left"><font face="宋体"> </font></div><br>
+<br>
+<br>
+<br>
+<br>
+<div align="left"><font face="宋体"> </font></div></td></tr></tbody></table>
+
+
+
+</div><!--maincontentend-->
+</div>
+<!--<div class="ad-in-article-1" style="text-align: center;margin-bottom: 15px;">
+<script type="text/javascript">
+    (function() {
+        var s = "_" + Math.random().toString(36).slice(2);
+        document.write('<div style="" id="' + s + '"></div>');
+        (window.slotbydup = window.slotbydup || []).push({
+            id: "u3668379",
+            container:  s
+        });
+    })();
+</script>
+</div>
+<div class="ad-in-article-2" style="text-align: center;margin-bottom: 15px;">
+<script type="text/javascript">
+    (function() {
+        var s = "_" + Math.random().toString(36).slice(2);
+        document.write('<div style="" id="' + s + '"></div>');
+        (window.slotbydup = window.slotbydup || []).push({
+            id: "u3668820",
+            container:  s
+        });
+    })();
+</script>
+</div>
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/c.js" async="async" defer="defer" ></script>
+-->
+<section class="article-recommend">
+
+    <h2 class="article-main-title">相关推荐</h2>
+      <div class="article-recommend-wrap">
+        <article class="hot-item" style="float: left;">
+        <a style="background: #eee no-repeat scroll center/cover;background-image:url(&#39;https://di.gameres.com/attachment/forum/201909/12/101429e6j9qwjqxq8ujqpq.gif&#39;);" target="_blank" href="https://www.gameres.com/853270.html" class="thumb"></a>
+        <h3 class="caption">
+            <a target="_blank" href="https://www.gameres.com/853270.html">《Exploring in UE4》游戏角色的移动原理（下）</a>
+        </h3>
+      </article>
+        <article class="hot-item" style="float: left;">
+        <a style="background: #eee no-repeat scroll center/cover;background-image:url(&#39;https://di.gameres.com/attachment/forum/201909/17/133756es8edsaa2qfata8s.jpg&#39;);" target="_blank" href="https://www.gameres.com/853507.html" class="thumb"></a>
+        <h3 class="caption">
+            <a target="_blank" href="https://www.gameres.com/853507.html">高级动画绑定功能：角色与物品的交互</a>
+        </h3>
+      </article>
+        <article class="hot-item" style="float: left;">
+        <a style="background: #eee no-repeat scroll center/cover;background-image:url(&#39;https://di.gameres.com/attachment/forum/201909/18/091747y0d09o6q11wm7bww.jpg&#39;);" target="_blank" href="https://www.gameres.com/853550.html" class="thumb"></a>
+        <h3 class="caption">
+            <a target="_blank" href="https://www.gameres.com/853550.html">《明日方舟》：花了一百五后，我找不到下一个付费点了</a>
+        </h3>
+      </article>
+        <article class="hot-item" style="float: left;">
+        <a style="background: #eee no-repeat scroll center/cover;background-image:url(&#39;https://di.gameres.com/attachment/forum/201909/11/093822h4ob8xxunu1xikzs.jpg&#39;);" target="_blank" href="https://www.gameres.com/853149.html" class="thumb"></a>
+        <h3 class="caption">
+            <a target="_blank" href="https://www.gameres.com/853149.html">炉石设计漫谈：不完美的达拉然大劫案</a>
+        </h3>
+      </article>
+         
+    </div>
+  </section>
+<div>
+    <div class="article-main-title">最新评论</div>
+    <div>
+       <div style="display: flex;margin: 10px 0;">
+        <div>
+            <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/avatar.php" style=" border-radius: 50%;">
+        </div>
+        <div style="margin:0px 10px;border-bottom: 1px solid #eee;flex:auto;">
+            <h3 style=" font-size: 14px;"><span style="color:#0b6ab1;">wyxz1121</span>发表于<span style="color:#aaa;margin:0 5px;">2019-4-4 16:14:03</span></h3>
+            <div style="margin: 5px 0 20px 0;font-size: 16px; word-break: break-all; 
+    text-align: justify;
+    text-justify:inter-ideograph;">
+             我认为这游戏应该不属于DBG、Rougelite。首先DBG通常认为还是卡牌游戏，牌与棋的最大区别就在于随机性，自走棋棋子购买到手上后基本不存在随机性，我想让他在哪里就在哪里。Rougelite方面，随机的对手和阵容有点牵强，因为这是网络游戏不是单机，Rougelite的乐趣正是在单机中模拟多人游戏中出现的同一框架下的不同局面。总的来说，局内开包+共用卡池是自走棋的棋子获得机制的特点。
+自走棋初期的羁绊效果我觉得是不太有趣的，大部分是属性增加这类比较直白的效果。最近出的“神”羁绊应该会是以后的一个方向，玩家会更需要这种更具战略性的效果。            </div>
+        </div>
+    </div> 
+        <div style="display: flex;margin: 10px 0;">
+        <div>
+            <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/avatar(1).php" style=" border-radius: 50%;">
+        </div>
+        <div style="margin:0px 10px;border-bottom: 1px solid #eee;flex:auto;">
+            <h3 style=" font-size: 14px;"><span style="color:#0b6ab1;">fenglinguhuo</span>发表于<span style="color:#aaa;margin:0 5px;">2019-4-1 15:22:59</span></h3>
+            <div style="margin: 5px 0 20px 0;font-size: 16px; word-break: break-all; 
+    text-align: justify;
+    text-justify:inter-ideograph;">
+             &nbsp; &nbsp; 大家好！我是本文作者/楼主，是一名正在参加系统策划春招（笔试面试中。。。）的在读研究生（北京高校），非常希望能够进入到游戏行业中，实现设计游戏的人生梦想！
+&nbsp; &nbsp; 这篇文章首发于游资网游戏策划版（感谢版主和这里的所有大大，让我学到了非常非常非常多的策划知识，鞠躬！），作为弟弟，肯定有很多分析思路不准确的敌方，希望各位大大在百忙之中给与指正，谢谢！
+
+&nbsp; &nbsp; 也欢迎大家在这里随意留言讨论，与本文相不相关都可以~~~
+
+&nbsp; &nbsp; 最后一句话共勉：正因为不甘于游戏人生，才愿意把人生献给游戏！
+
+&nbsp; &nbsp; 风林孤火，150092480@qq.com            </div>
+        </div>
+    </div> 
+        <div style="display: flex;margin: 10px 0;">
+        <div>
+            <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/avatar(1).php" style=" border-radius: 50%;">
+        </div>
+        <div style="margin:0px 10px;border-bottom: 1px solid #eee;flex:auto;">
+            <h3 style=" font-size: 14px;"><span style="color:#0b6ab1;">fenglinguhuo</span>发表于<span style="color:#aaa;margin:0 5px;">2019-4-2 15:33:45</span></h3>
+            <div style="margin: 5px 0 20px 0;font-size: 16px; word-break: break-all; 
+    text-align: justify;
+    text-justify:inter-ideograph;">
+             大家好！我是本文作者，是一名正在参加系统策划春招（笔试面试中。。。）的在读研究生（北京高校），非常希望能够进入到游戏行业中，实现设计游戏的人生梦想！&nbsp; &nbsp;&nbsp;&nbsp;这篇文章首发于游资网游戏策划版（感谢版主和这里的所有大大，让我学到了非常非常非常多的策划知识，鞠躬！），作为弟弟，肯定有很多分析思路不准确的敌方，希望各位大大在百忙之中给与指正，谢谢！&nbsp; &nbsp;&nbsp; &nbsp;也欢迎大家在这里随意留言讨论，与本文相不相关都可以~~~&nbsp; &nbsp;&nbsp; &nbsp;最后一句话共勉：正因为不甘于游戏人生，才愿意把人生献给游戏！&nbsp; &nbsp;&nbsp; &nbsp;风林孤火/王一搏，150092480@qq.com            </div>
+        </div>
+    </div> 
+        <div style="display: flex;margin: 10px 0;">
+        <div>
+            <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/avatar(2).php" style=" border-radius: 50%;">
+        </div>
+        <div style="margin:0px 10px;border-bottom: 1px solid #eee;flex:auto;">
+            <h3 style=" font-size: 14px;"><span style="color:#0b6ab1;">马揩要</span>发表于<span style="color:#aaa;margin:0 5px;">2019-4-2 19:26:57</span></h3>
+            <div style="margin: 5px 0 20px 0;font-size: 16px; word-break: break-all; 
+    text-align: justify;
+    text-justify:inter-ideograph;">
+             刚入行，同作为弟弟，支持一下，楼主写的不错！            </div>
+        </div>
+    </div> 
+        <div style="display: flex;margin: 10px 0;">
+        <div>
+            <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/avatar(3).php" style=" border-radius: 50%;">
+        </div>
+        <div style="margin:0px 10px;border-bottom: 1px solid #eee;flex:auto;">
+            <h3 style=" font-size: 14px;"><span style="color:#0b6ab1;">Tech宇</span>发表于<span style="color:#aaa;margin:0 5px;">2019-4-4 14:33:15</span></h3>
+            <div style="margin: 5px 0 20px 0;font-size: 16px; word-break: break-all; 
+    text-align: justify;
+    text-justify:inter-ideograph;">
+             把我想说的整理了，写的不错，但入行后你天天加班可能就没空写出这样的文章了            </div>
+        </div>
+    </div> 
+       
+    <a target="_blank" href="https://bbs.gameres.com/thread_841302_1_1.html">
+    <div class="post-message">
+        <div class="zdy-btn">参与评论<i class="layui-icon layui-icon-reply-fill"></i>   </div>
+    </div>
+    </a>
+</div>
+</div>
+
+<br> 
+</div>
+
+
+                    </div></section>
+                    <section class="hide-width-800 index-page-right">
+                       <div style=" margin: 23px 0;margin-bottom: 0">
+<!--
+<a target="_blank" title="阿伯泰大学 在职游戏开发专业硕士" href="https://www.gameres.com/zt/jump_pixseedschool.htm" rel="nofollow">
+<div data-original="https://img.gameres.com/thome/2019/05/13/ee14a6.jpg" class="lazy tuiguang_flag_img">
+-->
+<a target="_blank" title="游戏解决方案 - 腾讯云" href="https://www.gameres.com/853372.html">
+<div data-original="https://di.gameres.com/attachment/forum/201909/16/094332wteuaet36aqhju6d.jpg" class="lazy tuiguang_flag_img" style="background-image: url(&quot;https://di.gameres.com/attachment/forum/201909/16/094332wteuaet36aqhju6d.jpg&quot;);">
+<img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/B22842688.249070534" border="0" height="1" width="1" alt="Advertisement">
+<object><a target="_blank" href="https://www.gameres.com/ad.html"><div class="tuiguang_flag">推广</div></a></object>
+</div>
+</a>
+</div>
+<div class="listPanel">
+    <div class="listHeader">
+        <span>开测游戏</span>
+        <a href="https://www.gameres.com/newgame" target="_blank">查看更多</a>
+    </div>
+                 <a class="gamepanel" href="http://www.16p.com/1733456.html" target="_blank">
+            <div class="item">
+                <div class="subdiv leftside">
+                    <img style="height: 50px; margin: 10px 0px; display: inline;" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/c0129eb3.jpg">
+                </div><div class="subdiv rightside">
+                    <div class="info_title">
+                        <span class="titlename">花儿爱消除</span>
+                        <em style="color: #aaa;
+                            font-size: 12px;
+                            font-weight: normal;
+                            padding:3px 5px;display:inline;
+                            ">三消</em>
+                        <span class="mark_tag">上线</span>	</div>
+                    <div class="info_mark">
+                        <span class="plat_icon" style="">
+                                                       <img class="platform_icon" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/ios.png">
+                                                      
+                        </span>
+                        <div style="display:block;vertical-align:middle;text-align:left;">
+                            
+                                                        <span class="">发行&nbsp;:&nbsp;英雄互娱&nbsp;&nbsp;&nbsp;</span>
+                                                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+                 <a class="gamepanel" href="http://www.16p.com/1286999.html" target="_blank">
+            <div class="item">
+                <div class="subdiv leftside">
+                    <img style="height: 50px; margin: 10px 0px; display: inline;" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/c3ee84.jpg">
+                </div><div class="subdiv rightside">
+                    <div class="info_title">
+                        <span class="titlename">犬夜叉奈落之战</span>
+                        <em style="color: #aaa;
+                            font-size: 12px;
+                            font-weight: normal;
+                            padding:3px 5px;display:inline;
+                            ">MMOARPG</em>
+                        <span class="mark_tag">上线</span>	</div>
+                    <div class="info_mark">
+                        <span class="plat_icon" style="">
+                                                       <img class="platform_icon" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/ios.png">
+                                                        <img class="platform_icon" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/android.png">
+                                                      
+                        </span>
+                        <div style="display:block;vertical-align:middle;text-align:left;">
+                            
+                                                        <span class="">发行&nbsp;:&nbsp;巨人网络&nbsp;&nbsp;&nbsp;</span>
+                                                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+                 <a class="gamepanel" href="http://www.16p.com/1736842.html" target="_blank">
+            <div class="item">
+                <div class="subdiv leftside">
+                    <img style="height: 50px; margin: 10px 0px; display: inline;" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/c2a82b.jpg">
+                </div><div class="subdiv rightside">
+                    <div class="info_title">
+                        <span class="titlename">决胜足球</span>
+                        <em style="color: #aaa;
+                            font-size: 12px;
+                            font-weight: normal;
+                            padding:3px 5px;display:inline;
+                            ">体育</em>
+                        <span class="mark_tag">不删档测试</span>	</div>
+                    <div class="info_mark">
+                        <span class="plat_icon" style="">
+                                                       <img class="platform_icon" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/android.png">
+                                                      
+                        </span>
+                        <div style="display:block;vertical-align:middle;text-align:left;">
+                            
+                                                        <span class="">发行&nbsp;:&nbsp;咸鱼游戏&nbsp;&nbsp;&nbsp;</span>
+                                                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+                 <a class="gamepanel" href="http://www.16p.com/1293918.html" target="_blank">
+            <div class="item">
+                <div class="subdiv leftside">
+                    <img style="height: 50px; margin: 10px 0px; display: inline;" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/821e44.jpg">
+                </div><div class="subdiv rightside">
+                    <div class="info_title">
+                        <span class="titlename">奥拉星</span>
+                        <em style="color: #aaa;
+                            font-size: 12px;
+                            font-weight: normal;
+                            padding:3px 5px;display:inline;
+                            ">RPG</em>
+                        <span class="mark_tag">首发</span>	</div>
+                    <div class="info_mark">
+                        <span class="plat_icon" style="">
+                                                       <img class="platform_icon" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/android.png">
+                                                      
+                        </span>
+                        <div style="display:block;vertical-align:middle;text-align:left;">
+                            
+                                                        <span class="">研发&nbsp;:&nbsp;百田信息&nbsp;&nbsp;&nbsp;</span>
+                                                        <span class="">发行&nbsp;:&nbsp;天梯网络&nbsp;&nbsp;&nbsp;</span>
+                                                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+                 <a class="gamepanel" href="http://www.16p.com/1726016.html" target="_blank">
+            <div class="item">
+                <div class="subdiv leftside">
+                    <img style="height: 50px; margin: 10px 0px; display: inline;" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/e5f9f6.jpg">
+                </div><div class="subdiv rightside">
+                    <div class="info_title">
+                        <span class="titlename">世界争霸</span>
+                        <em style="color: #aaa;
+                            font-size: 12px;
+                            font-weight: normal;
+                            padding:3px 5px;display:inline;
+                            ">SLG</em>
+                        <span class="mark_tag">不删档内测</span>	</div>
+                    <div class="info_mark">
+                        <span class="plat_icon" style="">
+                                                       <img class="platform_icon" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/android.png">
+                                                      
+                        </span>
+                        <div style="display:block;vertical-align:middle;text-align:left;">
+                            
+                                                        <span class="">研发&nbsp;:&nbsp;江娱互动&nbsp;&nbsp;&nbsp;</span>
+                                                        <span class="">发行&nbsp;:&nbsp;天赐游戏&nbsp;&nbsp;&nbsp;</span>
+                                                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+                 <a class="gamepanel" href="http://www.16p.com/1442067.html" target="_blank">
+            <div class="item">
+                <div class="subdiv leftside">
+                    <img style="height: 50px; margin: 10px 0px; display: inline;" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/142cf0ed9b7d0568de67687339a5b7cc.jpg">
+                </div><div class="subdiv rightside">
+                    <div class="info_title">
+                        <span class="titlename">力量与荣耀</span>
+                        <em style="color: #aaa;
+                            font-size: 12px;
+                            font-weight: normal;
+                            padding:3px 5px;display:inline;
+                            ">SLG</em>
+                        <span class="mark_tag">不删档内测</span>	</div>
+                    <div class="info_mark">
+                        <span class="plat_icon" style="">
+                                                       <img class="platform_icon" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/android.png">
+                                                      
+                        </span>
+                        <div style="display:block;vertical-align:middle;text-align:left;">
+                            
+                                                        <span class="">研发&nbsp;:&nbsp;乐麦互娱&nbsp;&nbsp;&nbsp;</span>
+                                                        <span class="">发行&nbsp;:&nbsp;探娱互动&nbsp;&nbsp;&nbsp;</span>
+                                                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        </div>
+ <section class="item">
+    <div style=" margin: 10px 0;">
+      <div style="padding:8px 0px;position: relative;">
+        <span style="font-size:18px;">商务合作</span>
+        <a href="http://www.16p.com/gamecenter/custom_type?custom_id=1" target="_blank" style="float:right;line-height: 26px;color: rgb(0, 131, 195);">查看更多</a>
+      </div>
+        <div class="custom_item" style="">
+           
+                     <a href="http://www.16p.com/1732457.html" target="_blank">
+                <div class="custom-game-item">
+                    <div class="custom-mianimg lazy" style="background-image: url(http://www.16p.com/gamecenter/Uploads/screenshot/2019/05/16/2b8167bc.jpg)"></div>
+                    <div class="custom-title">
+                                                <span>
+                           三国战云                        </span>
+                    </div>
+                </div>
+            </a>
+                   <a href="http://www.16p.com/1651516.html" target="_blank">
+                <div class="custom-game-item">
+                    <div class="custom-mianimg lazy" style="background-image: url(http://www.16p.com/gamecenter/Uploads/screenshot/2019/03/18/ba9d2078.jpg)"></div>
+                    <div class="custom-title">
+                                                <span>
+                           After School                        </span>
+                    </div>
+                </div>
+            </a>
+                   <a href="http://www.16p.com/1286045.html" target="_blank">
+                <div class="custom-game-item">
+                    <div class="custom-mianimg lazy" style="background-image: url(http://img.16p.com/auto/8e/e2/8ee2821ed853ffac33cd60c78adf69b4.jpg)"></div>
+                    <div class="custom-title">
+                                                <span>
+                           富甲封神传                        </span>
+                    </div>
+                </div>
+            </a>
+                   <a href="http://www.16p.com/1736942.html" target="_blank">
+                <div class="custom-game-item">
+                    <div class="custom-mianimg lazy" style="background-image: url(http://www.16p.com/gamecenter/Uploads/screenshot/2019/09/17/328cb63e.jpg)"></div>
+                    <div class="custom-title">
+                                                <span>
+                           恶魔秘境                        </span>
+                    </div>
+                </div>
+            </a>
+                </div>
+    </div>
+  </section><hr style=" margin: 10px 0;">
+ <section class="item">
+    <div style=" margin: 10px 0;">
+      <div style="padding:8px 0px;position: relative;">
+        <span style="font-size:18px;">编辑推荐</span>
+        <a href="http://www.16p.com/gamecenter/custom_type?custom_id=11" target="_blank" style="float:right;line-height: 26px;color: rgb(0, 131, 195);">查看更多</a>
+      </div>
+        <div class="custom_item" style="">
+           
+                     <a href="http://www.16p.com/1336195.html" target="_blank">
+                <div class="custom-game-item">
+                    <div class="custom-mianimg lazy" style="background-image: url(https://is5-ssl.mzstatic.com/image/thumb/Purple118/v4/c2/4e/83/c24e837a-e047-3e55-1c04-7f2ad86a594c/mzl.njjqpdvu.png/392x696bb.png)"></div>
+                    <div class="custom-title">
+                                                <span>
+                           隐匿行动                        </span>
+                    </div>
+                </div>
+            </a>
+                   <a href="http://www.16p.com/1346651.html" target="_blank">
+                <div class="custom-game-item">
+                    <div class="custom-mianimg lazy" style="background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Purple125/v4/dd/ae/c8/ddaec866-b8ba-d0c7-ffb5-4e119b032856/source/406x228bb.jpg)"></div>
+                    <div class="custom-title">
+                                                <span>
+                           雷霆战狗                        </span>
+                    </div>
+                </div>
+            </a>
+                   <a href="http://www.16p.com/1735112.html" target="_blank">
+                <div class="custom-game-item">
+                    <div class="custom-mianimg lazy" style="background-image: url(https://is3-ssl.mzstatic.com/image/thumb/Purple113/v4/c6/a2/00/c6a200ef-3ced-1890-39d3-03f7b0e38ea7/pr_source.jpg/406x722bb.jpg)"></div>
+                    <div class="custom-title">
+                                                <span>
+                           实况球会经理人                        </span>
+                    </div>
+                </div>
+            </a>
+                   <a href="http://www.16p.com/1583291.html" target="_blank">
+                <div class="custom-game-item">
+                    <div class="custom-mianimg lazy" style="background-image: url(https://is3-ssl.mzstatic.com/image/thumb/Purple123/v4/95/d9/69/95d9691a-8df3-478f-2e19-8d15a5244822/mzl.cfhrlhsd.jpg/392x696bb.jpg)"></div>
+                    <div class="custom-title">
+                                                <span>
+                           滚动的天空2                        </span>
+                    </div>
+                </div>
+            </a>
+                </div>
+    </div>
+  </section><div style=" margin: 10px 0;">
+    <a target="_blank" title="绯雨音乐" href="https://www.gameres.com/zt/jump_lightrain.htm" rel="nofollow">
+        <div data-original="https://img.gameres.com/thome/2019/01/15/9ecb0c.gif" class="lazy tuiguang_flag_img" style="background-image: url(&quot;https://img.gameres.com/thome/2019/01/15/9ecb0c.gif&quot;);">
+                        <object><a target="_blank" href="https://www.gameres.com/ad.html"><div class="tuiguang_flag">推广</div></a></object>
+
+        </div>
+    </a>
+</div>
+<div style=" margin: 10px 0;">
+    <a target="_blank" title="" href="https://www.gameres.com/zt/jump_52xinyou.htm" rel="nofollow">
+        <div data-original="https://img.gameres.com/thome/2019/08/03/f839e5.jpeg" class="lazy tuiguang_flag_img" style="background-image: url(&quot;https://img.gameres.com/thome/2019/08/03/f839e5.jpeg&quot;);">
+                        <object><a target="_blank" href="https://www.gameres.com/ad.html"><div class="tuiguang_flag">推广</div></a></object>
+
+        </div>
+    </a>
+</div>
+<div style=" margin: 10px 0;">
+    <a target="_blank" title="ChinaJoy" href="https://www.gameres.com/zt/jump_cj.htm" rel="nofollow">
+        <div data-original="https://img.gameres.com/thome/2019/08/30/f13f28.jpg" class="lazy tuiguang_flag_img" style="background-image: url(&quot;https://img.gameres.com/thome/2019/08/30/f13f28.jpg&quot;);">
+                        <object><a target="_blank" href="https://www.gameres.com/ad.html"><div class="tuiguang_flag">推广</div></a></object>
+
+        </div>
+    </a>
+</div>
+<div style=" margin: 10px 0;">
+    <a target="_blank" title="Facebook" href="https://ad.doubleclick.net/ddm/trackclk/N7062.3590938GAMERES/B22842688.249070534;dc_trk_aid=445391701;dc_trk_cid=117545351;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=" rel="nofollow">
+        <div data-original="https://img.gameres.com/thome/2019/06/25/c447be.jpg" class="lazy tuiguang_flag_img" style="background-image: url(&quot;https://img.gameres.com/thome/2019/06/25/c447be.jpg&quot;);">
+                        <object><a target="_blank" href="https://www.gameres.com/ad.html"><div class="tuiguang_flag">推广</div></a></object>
+
+        </div>
+    </a>
+</div>
+
+
+
+<div style=" margin: 10px 0;">
+    <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/cl_weixin.jpg" class="lazy" style="width: 100%;">
+</div>
+
+
+                    </section>
+             
+        </div>
+                <div class="footerdiv">       
+            <div style="background-color: #de5650;padding-bottom: 30px;">
+    <div class="footer-content">
+      <div class="logo" title="GameRes游资网">
+             <a target="_blank" href="https://www.gameres.com/">
+                 <img style="height: 38px;" src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/logo.png">
+                 <div style="text-align: center;font-size: 20px;"><span>www.GameRes.com</span></div>
+             </a>
+         </div>
+      <div class="footer-meitihao" style="float: left;width:35%">
+        <div class="gameres-qrcode">
+          <h3>微信公众号</h3>
+          <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/d0cd41.jpg">
+        </div>
+        <div class="gameres-qrcode">
+          <h3>微博<a href="https://weibo.com/gamerescom" target="_blank" rel="nofollow">&nbsp;<i class="layui-icon layui-icon-link" style="color: #fff;"></i></a></h3>
+          <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/489313.png">
+        </div>
+        <div class="gameres-qrcode">
+          <h3>头条号</h3>
+          <img src="./《自走棋》设计拆解：真正的爆款，靠的不只是“随机性” - GameRes游资网_files/a55d2d.jpeg">
+        </div>
+      </div>
+      <div class="footer-web-info">
+          <div class="footer-email">
+              <div>新闻、投稿邮箱：news@gameres.com</div>
+              <div>产品、开测信息邮箱：cp@gameres.com</div>
+          </div>
+              <div style="margin-top: 30px;">
+                  <a href="https://www.gameres.com/about.html" target="_blank">关于本站</a> |
+                  <a href="https://www.gameres.com/fabu.html" target="_blank">投稿发布</a> |
+                  <a href="https://www.gameres.com/cp.html" target="_blank">产品发布</a> |
+                  <a href="https://www.gameres.com/ad.html" target="_blank">广告投放</a>
+                  <br> © 2001-2019 <a style="color:#ffffff" href="https://www.gameres.com/" target="_blank">GameRes游资网</a>
+                  <a style="color:#ffffff" href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow">闽ICP备05005107号</a>
+              </div>
+       
+      </div>
+    </div>
+
+  </div>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?da15d801c31af4462f4da256d5cf95e8";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+        </div>
+           
+   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+</body></html>

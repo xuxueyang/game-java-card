@@ -1,0 +1,140 @@
+var jq = jQuery.noConflict();
+jq(function(){
+    jq('#qrcode').qrcode({ render: "canvas", //也可以替换为table
+    width: 150,
+    height: 150,
+    text: location.href});
+   jq(window).scroll(function(){
+			if(jq(window).scrollTop() > 300){
+				jq("#scrolltop").attr("display","block").fadeIn(600,0);
+			}
+			else{
+				jq("#scrolltop").attr("display","none").fadeOut(600,0);
+			}
+		});
+
+	//回顶部动画实现jq("body,html").animate({scrollTop:0},1000);toucheend
+	jq("#top").on("click toucheend",function()
+			{
+				jq("body,html").animate({scrollTop:0},500);
+			});
+
+
+jq(".index-lunbo").slide({
+    mainCell:".bd",autoPlay:true,
+    delayTime:'900',
+    effect:"fold",
+    interTime:"5000"
+    });
+    jq(".close-spread-nav-btn").on("click toucheend",function(){
+      event.stopPropagation();
+     jq(".spread-nav").hide();
+});
+jq(".spread-side-btn").on("click toucheend",function(){
+      event.stopPropagation();
+     jq(".spread-nav").toggle();
+});
+jq(".more_menu_btn").on("click toucheend",function(event){
+     event.stopPropagation();
+   jq(".more_menu_pane").not(jq(jq(this).attr("data-target"))).hide();
+   // jq(".spread-nav").not(jq(jq(this).attr("data-target"))).hide();
+    jq(jq(this).attr("data-target")).toggle();
+       if ( jq(jq(this).attr("data-target")).is(':hidden')) {
+
+               jq(this).removeClass("menu-on");
+
+        } else {
+             jq(this).addClass("menu-on");
+        }
+});
+jq(".more_menu_pane,.spread-nav").on("click toucheend",function(event){
+     event.stopPropagation();
+});
+jq("body").on("click toucheend",function(){
+    jq(".more_menu_pane").hide();
+    jq(".more_menu_btn").removeClass("menu-on");
+    jq(".spread-nav").hide();
+});
+jq(window).resize(function() {
+  jq(".more_menu_pane").hide();
+    jq(".spread-nav").hide();
+    jq(".carousel-item").css("width","100%");
+});
+var loading=false;
+jq(".dropUpButton").on("click toucheend",function(){
+      if(loading)
+      {
+          return;
+      }
+      else
+      {
+          loading=true;
+      }
+       var that = jq(this);
+       jq(this).attr("data-page",parseInt(jq(this).attr("data-page"))+1);
+       jq(that).html("加载中...");
+       var tdata=[];
+       tdata["p"] = jq(this).attr("data-page");
+        if (jq(this).attr("data-kw"))
+        {
+            tdata["kw"] = jq(this).attr("data-kw");
+            jq.get(newsListJsonUrl,{p:tdata["p"],kw:tdata["kw"]}, function (data, status, xhr) {
+                jq("[data-news-pane-kw='" + jq(that).attr("data-kw") + "']").append(data);
+                jq(".ajaximg").lazyload({effect: "fadeIn", threshold: 300});
+                jq(".ajaximg").removeClass("ajaximg");
+                jq(that).html("加载更多");
+                loading = false;
+            });
+        }
+        else if (jq(this).attr("data-tid"))
+        {
+            tdata["t"] = jq(this).attr("data-tid");
+            jq.get(newsListJsonUrl, {p:tdata["p"],t:tdata["t"]}, function (data, status, xhr) {
+                $html = jq(data);
+                $html.find(".lazy").lazyload({effect: "fadeIn", threshold: 300});
+                jq("[data-news-pane-id='" + jq(that).attr("data-tid") + "']").append($html)
+                jq(that).html("加载更多");
+                loading = false;
+            });
+        }
+
+   
+});
+jq("#search").on("submit",function(){
+       location.href = location.href+"/".jq("#search-keyword").val();
+});
+jq("#build-qrcode-btn,#article-qrcode-btn").on("click toucheend",function(){
+   
+    layui.use('layer', function(){
+  var layer = layui.layer;
+   layer.ready(function(){
+  layer.open({
+        type: 1,
+        title: false,
+        closeBtn: 0,
+        shadeClose: true,
+        skin: 'yourclass',
+        content: jq('#url-qrcode')
+      });
+});
+
+});
+    
+});
+layui.use('element', function(){
+  var element = layui.element;
+  element.on('tab(major_tabs)', function(data){
+    jq("body").scroll();
+  
+});
+});
+
+ jq('.lazy,img').lazyload({
+                    effect: "fadeIn",
+                    threshold: 300,
+                    failure_limit : 100
+                });
+
+    
+    
+});
