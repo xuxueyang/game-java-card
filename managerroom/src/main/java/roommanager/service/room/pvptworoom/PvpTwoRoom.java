@@ -1,7 +1,8 @@
-package roommanager.service.room;
+package roommanager.service.room.pvptworoom;
 
 import core.core.RequestDTO;
 import core.protocol.Protocol;
+import core.protocol.PvpTwoRoomProtocol;
 import core.rpc.dto.CardRpcDTO;
 import core.rpc.dto.DeckRpcDTO;
 import core.rpc.dto.EnvoyRpcDTO;
@@ -10,18 +11,20 @@ import roommanager.service.effect.SysGetCardEffect;
 import roommanager.service.effect.SysIncrStarForceEffect;
 import roommanager.service.map.GameMap;
 import roommanager.service.map.GameMapFactory;
-import dist.ItemConstants;
 import dist.RoomConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import roommanager.service.room.AbstractRoom;
+import roommanager.service.room.RoomEventOverInterface;
+import roommanager.service.room.RoomEventSendInterface;
+import roommanager.service.room.RoomRabbitDTO;
 
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
+public class PvpTwoRoom extends AbstractRoom<RoomRabbitDTO> {
     public static final Logger log = LoggerFactory.getLogger(PvpTwoRoom.class);
     private static final int CONFIG_MAX_STAR_FORCE = 10;
     private static final Long MAX_ROUNT_TIME = 15*1000L;
@@ -38,13 +41,13 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
     }
 
 
-    private String _roomId;
     private Long _startTime;
-    private Integer _mapId;
+
+    protected Integer _mapId;
+
     private ResourceManager _oneManager;
     private ResourceManager _twoManager;
     private GameMap _gameMap;
-    private Byte area;
     private Boolean isOver = false;
     private Timer timer = new Timer();
     private _MsgFactory _MsgFactory = new _MsgFactory();
@@ -52,7 +55,6 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
     private  RoundType _roundType = RoundType.pre_init;
 
     private ResourceManager currentManager;
-    private LinkedBlockingQueue<RequestDTO> blockingQueue = new LinkedBlockingQueue(20);
 
     /**
      * 队列处理效果
@@ -69,11 +71,7 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
     }
 
 
-    /**
-     * 消息队列
-     */
-    private RoomEventOverInterface<RoomEventOverInterface.DefaultOverDTO> _RoomEventOverInterface = null;
-    private RoomEventSendInterface<RoomRabbitDTO> _RoomEventSendInterface = null;
+
 
     public PvpTwoRoom(Byte area, String roomId, Long oneUserId, DeckRpcDTO oneUserDeck, Long twoUserId, DeckRpcDTO twoUserDeck,
                       RoomEventOverInterface<RoomEventOverInterface.DefaultOverDTO> roomEventOverInterface,
@@ -194,11 +192,27 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
                     if(System.currentTimeMillis() - currentManager.startRoundTimestamp > MAX_ROUNT_TIME){
                         log.debug("TODO回合结束，切换");
                         //添加一个结束回合的消息即可
-                        RequestDTO dto = new RequestDTO();
-                        dto.setProtocol(Protocol.PvpTwoRoomProtocol.CLINET_PLAYER_OVER);
-                        dto.setUserId(currentManager.userId);
-                        dto.setRoomOperatorLong(getByUserId(currentManager.userId).operatorLong.longValue());
-                        receiveMessage(dto);
+                        {
+                            //改为发送回合结束信息，而不是发送成功
+//                            RequestDTO dto = new RequestDTO();
+//                            dto.setProtocol(Protocol.PvpTwoRoomProtocol.CLINET_PLAYER_OVER);
+//                            dto.setUserId(currentManager.userId);
+//                            dto.setRoomOperatorLong(getByUserId(currentManager.userId).operatorLong.longValue());
+//                            receiveMessage(dto);
+                        }
+                        {
+                            canReceiveMessage = false;
+                            blockingQueue.clear();
+                            sendMessage(_MsgFactory.getEndRoundMsg());
+                            currentManager.startRoundTimestamp = null;
+                            currentManager =
+                                    currentManager == _oneManager?
+                                            _twoManager: _oneManager;
+                            currentManager.startRoundTimestamp = null;
+                            _round++;
+                            _roundType = RoundType.pre_init;
+                        }
+
 
                     }else if(System.currentTimeMillis()-currentManager.startRoundTimestamp > MAX_ROUNT_TIME -  REMAINING_ROUNT_TIME){
                         log.debug("剩余时间:" + (System.currentTimeMillis()-currentManager.startRoundTimestamp)/1000);
@@ -233,9 +247,26 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
                     while (_roundType==RoundType.start){
                         try {
                             RequestDTO take = blockingQueue.take();
-                            sendMessage(_reslove(take));
-                            //TODO 對這個協議發送回調，表明處理成功了（同時對另一個玩家通知動畫顯示）
-
+                            switch (take.getProtocol()){
+                                case Protocol.ConstatnProtocol.Head:{
+                                    long userId = Long.parseLong(take.getData().toString());
+                                    getByUserId(userId).timestamp = System.currentTimeMillis();
+                                } break;
+                                default:{
+                                    if(_checkRequestDTO(take)){
+                                        try {
+                                            //TODO 對這個協議發送回調，表明處理成功了（同時對另一個玩家通知動畫顯示）
+                                            sendMessage(_reslove(take));
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                            //發送使用失敗的回調
+                                            sendMessage(_MsgFactory.getErrorMsg(take));
+                                        }
+                                    }else{
+                                        sendMessage(_MsgFactory.getErrorMsg(take));
+                                    }
+                                }
+                            }
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -262,55 +293,35 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
     private List<RoomRabbitDTO> _reslove(RequestDTO dto){
         //這裏做2份，給2個玩家，但是data應該相同，保存整個機制的序列。什麽的觸發，銷毀，生命周期等
         switch (dto.getProtocol()){
-            case Protocol.PvpTwoRoomProtocol.CLINET_CARD_USE:{
+            case PvpTwoRoomProtocol.CLINET_CARD_USE:{
 
             } break;
-            case Protocol.PvpTwoRoomProtocol.CLINET_ENVOY_ATTACK:{
+            case PvpTwoRoomProtocol.CLINET_ENVOY_ATTACK:{
 
             } break;
-            case Protocol.PvpTwoRoomProtocol.CLINET_ENVOY_MOVE:{
+            case PvpTwoRoomProtocol.CLINET_ENVOY_MOVE:{
 
             } break;
-            case Protocol.PvpTwoRoomProtocol.CLINET_ENVOY_USE_SKILL:{
+            case PvpTwoRoomProtocol.CLINET_ENVOY_USE_SKILL:{
 
             }
-            case Protocol.PvpTwoRoomProtocol.CLINET_PLAYER_OVER:{
+            case PvpTwoRoomProtocol.CLINET_PLAYER_OVER:{
 
             } break;
-            case Protocol.PvpTwoRoomProtocol.CLINET_PLAYER_SURRENDER:{
+            case PvpTwoRoomProtocol.CLINET_PLAYER_SURRENDER:{
 
             }break;
         }
         return _MsgFactory.getSuccessMsg(dto);
     }
-    @Override
-    public void receiveMessage(RequestDTO dto) {
-        switch (dto.getProtocol()){
-            case Protocol.ConstatnProtocol.Head:{
-                long userId = Long.parseLong(dto.getData().toString());
-                getByUserId(userId).timestamp = System.currentTimeMillis();
-            } break;
-            default:{
-                if(_checkRequestDTO(dto)){
-                    try {
-                        blockingQueue.put(dto);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        //發送使用失敗的回調
-                        sendMessage(_MsgFactory.getErrorMsg(dto));
-                    }
-                }else{
-                    sendMessage(_MsgFactory.getErrorMsg(dto));
-                }
-            }
-        }
-    }
+
+
     private boolean _checkRequestDTO(RequestDTO dto) {
         boolean check = this._roundType == RoundType.start
                 &&dto.getRoomOperatorLong()!=null
                 &&dto.getUserId() == this.currentManager.userId
-                &&dto.getProtocol()>= Protocol.PvpTwoRoomProtocol.CLINET_CARD_USE
-                && dto.getProtocol()<=Protocol.PvpTwoRoomProtocol.CLINET_PLAYER_SURRENDER;
+                &&dto.getProtocol()>= PvpTwoRoomProtocol.CLINET_CARD_USE
+                && dto.getProtocol()<=PvpTwoRoomProtocol.CLINET_PLAYER_SURRENDER;
         if(!check)
             return false;
         //判斷dto操作數要和自己一直
@@ -336,12 +347,6 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
 
 
 
-    @Override
-    public void sendMessage(List<RoomRabbitDTO> msgList) {
-        if(msgList!=null){
-            this._RoomEventSendInterface.sendMsg(msgList);
-        }
-    }
 
     @Override
     public void overTime(Long winnerUserId,Long failureUserId) {
@@ -409,7 +414,7 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
             oneDto.setData(currentManager.userId);
             oneDto.setArea(area);
             oneDto.setType(Protocol.Type.ROOM);
-            oneDto.setProtocol(Protocol.PvpTwoRoomProtocol.SERVER_PLAYER_START);
+            oneDto.setProtocol(PvpTwoRoomProtocol.SERVER_PLAYER_START);
             dtos.add(oneDto);
             // 發送給2個人
             RoomRabbitDTO twoDto = new RoomRabbitDTO();
@@ -417,14 +422,14 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
             twoDto.setData(currentManager.userId);
             twoDto.setArea(area);
             twoDto.setType(Protocol.Type.ROOM);
-            twoDto.setProtocol(Protocol.PvpTwoRoomProtocol.SERVER_PLAYER_START);
+            twoDto.setProtocol(PvpTwoRoomProtocol.SERVER_PLAYER_START);
             dtos.add(twoDto);
             return dtos;
         }
         public List<RoomRabbitDTO> getEndRoundMsg() {
             List<RoomRabbitDTO> startRoundMsg = getStartRoundMsg();
             for(int i=0;i<startRoundMsg.size();i++){
-                startRoundMsg.get(i).setProtocol(Protocol.PvpTwoRoomProtocol.SERVER_PLAYER_OVER);
+                startRoundMsg.get(i).setProtocol(PvpTwoRoomProtocol.SERVER_PLAYER_OVER);
             }
             return startRoundMsg;
         }
@@ -447,7 +452,7 @@ public class PvpTwoRoom implements RoomInterface<RoomRabbitDTO> {
                 oneDto.setData(map);
                 oneDto.setArea(area);
                 oneDto.setType(Protocol.Type.ROOM);
-                oneDto.setProtocol(Protocol.PvpTwoRoomProtocol.SERVER_ROOM_INIT);
+                oneDto.setProtocol(PvpTwoRoomProtocol.SERVER_ROOM_INIT);
             }
             return dtos;
         }

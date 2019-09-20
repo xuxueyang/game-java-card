@@ -55,6 +55,10 @@ public  interface Protocol {
         int ConstatnProtocolIndex = 100;
         int PvpTwoRoomIndex_CLIENT = 10000;
         int PvpTwoRoomIndex_SERVER = 12000;
+
+        int AutoChessRoomIndex_CLIENT = 14000;
+        int AutoChessRoomIndex_SERVER = 16000;
+
         int ChatIndex = 20000;
     }
     interface ConstatnProtocol{
@@ -62,39 +66,7 @@ public  interface Protocol {
         int SUCCESS = _Index.ConstatnProtocolIndex + 2;
 
     }
-    interface PvpTwoRoomProtocol{
-        //玩家能做的事情：使用卡牌、棋子移動、棋子攻擊、棋子使用技能，結束回合、逃跑投降
-        int CLINET_CARD_USE = _Index.PvpTwoRoomIndex_CLIENT + 1;
-        int CLINET_ENVOY_MOVE= _Index.PvpTwoRoomIndex_CLIENT + 2;
-        int CLINET_ENVOY_ATTACK= _Index.PvpTwoRoomIndex_CLIENT + 3;
-        int CLINET_ENVOY_USE_SKILL= _Index.PvpTwoRoomIndex_CLIENT + 4;
-        int CLINET_PLAYER_OVER= _Index.PvpTwoRoomIndex_CLIENT + 5;
-        int CLINET_PLAYER_SURRENDER= _Index.PvpTwoRoomIndex_CLIENT + 6;
 
-
-        //服務器能做的：棋子移動、棋子攻擊、棋子使用技能、棋子死亡、卡牌觸發、卡使用、玩家抽卡、玩家回合結束、增長水晶
-        //初始化
-        int SERVER_ERROR= _Index.PvpTwoRoomIndex_SERVER + 0;
-        int SERVER_ROOM_INIT = _Index.PvpTwoRoomIndex_SERVER + 1;
-        int SERVER_ENVOY_MOVE= _Index.PvpTwoRoomIndex_SERVER + 2;
-        int SERVER_ENVOY_ATTACK = _Index.PvpTwoRoomIndex_SERVER + 3;
-        int SERVER_ENVOY_USE_SKILL = _Index.PvpTwoRoomIndex_SERVER + 4;
-        int SERVER_ENVOY_DEAD = _Index.PvpTwoRoomIndex_SERVER + 5;
-        int SERVER_CARD_TYPE_YINMOU_EFFECT = _Index.PvpTwoRoomIndex_SERVER + 6;
-        int SERVER_CARD_USE= _Index.PvpTwoRoomIndex_SERVER + 7;
-        int SERVER_CARD_GET_SUCCESS= _Index.PvpTwoRoomIndex_SERVER + 8;
-        int SERVER_PLAYER_OVER= _Index.PvpTwoRoomIndex_SERVER + 9;
-        int SERVER_STAR_STAR_FORCE_INCR= _Index.PvpTwoRoomIndex_SERVER + 10;
-        int SERVER_PLAYER_SURRENDER= _Index.PvpTwoRoomIndex_SERVER + 11;
-
-        int SERVER_CARD_GET_DESTROY_CARD= _Index.PvpTwoRoomIndex_SERVER + 12;
-        int SERVER_CARD_GET_NO_CARD= _Index.PvpTwoRoomIndex_SERVER + 13;
-
-        int SERVER_PLAYER_START= _Index.PvpTwoRoomIndex_SERVER + 14;
-
-
-
-    }
     interface ChatIndex{
         int WORLD = _Index.ChatIndex + 1;
         int ONE = _Index.ChatIndex + 1;

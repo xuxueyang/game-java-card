@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import netty.rabbitmq.RabbitMQConsumer;
 import netty.rabbitmq.RabbitMQProducer;
 import roommanager.rpc.DeckRpcClient;
+import roommanager.service.room.autochessroom.AutoChessRoom;
+import roommanager.service.room.pvptworoom.PvpTwoRoom;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -109,7 +111,19 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
     }
     //todo 注入rabbit，并且接受消息
 //    Executor executor = Executors.newFixedThreadPool(10);
-    private ConcurrentHashMap<String,RoomInterface> _roomMap = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String,AbstractRoom> _roomMap = new ConcurrentHashMap<>();
+    public void CREATE_AUTO_CHESS_ROOM(Long oneUserId, Long twoUserId,Byte area) throws Exception {
+
+        //init初始化房間,根據xmind
+        //創建一個綫程執行附件
+        String roomId = UUIDGenerator.getUUID();
+        //發送請求，讓玩家得知匹配成功
+
+        AutoChessRoom pvpTwoRoom = new AutoChessRoom(area,roomId, oneUserId,twoUserId,this,this);
+        _roomMap.put(roomId,pvpTwoRoom);
+//        executor.execute(pvpTwoRoom);
+        startRoom(pvpTwoRoom);
+    }
     public void CREATE_TWO_ROOM(Long oneUserId, Long twoUserId,Byte area) throws Exception {
 
         //init初始化房間,根據xmind
@@ -149,7 +163,7 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
             log.debug(JSON.toJSONString(dto));
         }
     }
-    public void startRoom(RoomInterface room){
+    public void startRoom(AbstractRoom room){
         //初始化完畢。發送請求給玩家，同時開始
 
         List<RoomRabbitDTO> roomRabbitDTOS = room.sendStartMsg();
