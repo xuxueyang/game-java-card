@@ -10,6 +10,7 @@ import roommanager.service.room.RoomEventSendInterface;
 import roommanager.service.room.RoomRabbitDTO;
 
 import java.util.List;
+import java.util.Timer;
 import java.util.TimerTask;
 
 public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
@@ -19,6 +20,8 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
     public static final int minPlayerNum = 2;
 
     private Player[] players = new Player[8];
+    private Timer timer = new Timer();
+
 
     @Override
     public List sendStartMsg() {
@@ -60,6 +63,10 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
         }
         //開始
         _startGame();
+    }
+
+    private void _startGame() {
+
     }
 
     public AutoChessRoom(Byte area, String roomId, Long oneUserId, Long twoUserId,

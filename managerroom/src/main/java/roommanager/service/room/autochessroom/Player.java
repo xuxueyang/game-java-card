@@ -28,9 +28,9 @@ class Player {
     private Chess[] tmpChess = new Chess[maxTmpChess];
 
     //方法
-    public void buy(String metaChessId){
+    public void buy(String chessId){
         //构造出这样一个棋子
-        Chess chessByMetaId = ChessFactory.getChessByMetaId(metaChessId);
+        Chess chessByMetaId = ChessManager.getById(chessId);
         //TODO 判断场上有没有一星的，依次，合成
 
         //更新所有棋子的状态,位置。掉下的装备需要放到装备池中

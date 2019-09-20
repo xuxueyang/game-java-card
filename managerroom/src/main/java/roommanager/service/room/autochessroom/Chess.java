@@ -16,12 +16,12 @@ class Chess {
 
     private NodeManager.Node node = null;
     private int mp;
-    private int maxMp;
     private int hp;
-    private int maxHp;
     private int level;
     private String id;
-    private String metaChessId;
+    private String name;
+    private int maxMp;
+    private int maxHp;
     private Skill skill;
     private Equip[] equips = new Equip[maxEquipNum];
     private PositionType positionType;
