@@ -20,6 +20,7 @@ public class ChessManager {
         }
     }
     private HashMap<String,Chess> chessAll= new HashMap<>();
+
     //初始化卡池
     public void init(){
         for (String metaChessId : metaChessIds) {
@@ -39,17 +40,7 @@ public class ChessManager {
         }
 
     }
-    @Data
-    public static class MetaChess{
-        private String id;
-        private String name;
-        private int initLevel;
-        private int maxMp;
-        private int maxHp;
-        private int mp;
-        private int hp;
-        private AutoChessRoomProtocol.SkillType skillType;//自带的技能
-    }
+
     public static MetaChessName getByName(String metaChessId){
         for (MetaChessName metaChessName : MetaChessName.values()) {
             if(metaChessName.name().equals(metaChessId)){

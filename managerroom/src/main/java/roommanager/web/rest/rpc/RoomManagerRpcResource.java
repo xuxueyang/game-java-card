@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import roommanager.service.room.RoomManagerService;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -61,9 +62,8 @@ public class RoomManagerRpcResource extends BaseResource {
         try {
             if(dto.getData() instanceof Map){
                 Byte area = Byte.parseByte(((Map) dto.getData()).get(RoomRPCConstant.Key.area.name()).toString());
-                Long oneUserId = Long.parseLong(((Map) dto.getData()).get(RoomRPCConstant.Key.oneUser.name()).toString());
-                Long twoUserId = Long.parseLong(((Map) dto.getData()).get(RoomRPCConstant.Key.twoUser.name()).toString());
-                roomManagerService.CREATE_AUTO_CHESS_ROOM(oneUserId,twoUserId,area);
+                List userIds = (List)(((Map) dto.getData()).get(RoomRPCConstant.Key.userIds.name()));
+                roomManagerService.CREATE_AUTO_CHESS_ROOM(userIds,area);
                 return prepareReturnResultDTO(ReturnCode.CREATE_SUCCESS,true);
 
             }

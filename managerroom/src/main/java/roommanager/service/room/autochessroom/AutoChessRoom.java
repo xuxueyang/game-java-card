@@ -1,5 +1,6 @@
 package roommanager.service.room.autochessroom;
 
+import com.alibaba.fastjson.JSON;
 import core.protocol.Protocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,18 +10,82 @@ import roommanager.service.room.RoomEventOverInterface;
 import roommanager.service.room.RoomEventSendInterface;
 import roommanager.service.room.RoomRabbitDTO;
 
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
     public static final Logger log = LoggerFactory.getLogger(AutoChessRoom.class);
 
     public static final int maxPlayerNum = 8;
     public static final int minPlayerNum = 2;
+    TimerTask roundListen = new TimerTask() {
+        @Override
+        public void run() {
+            //每过45s，设置回合结束
+            for (Player player : players) {
+                player.setCanPlayer(false);
+            }
+        }
+    };
+    enum RoundType{
+        PRE_INIT,//预备阶段——结算利息
+        COMMON,//一般玩家回合——买旗子、卖棋子、将棋子上阵、添加和合成装备__自动的：合成棋子，羁绊buff添加，出现利息动画等
+        BATTLE,//玩家对抗回合
+        PRE_END,//结算胜负
+    }
 
-    private Player[] players = new Player[8];
+    private Player[] players = null;
     private Timer timer = new Timer();
+    private long _startTime;
+
+    @Override
+    public void run() {
+        //等待一會，然後發送主玩傢回合開始
+        //開始心跳檢討
+        for (Player player : this.players) {
+            player.setTimestamp(System.currentTimeMillis());
+        }
+        TimerTask headListen = new TimerTask() {
+            @Override
+            public void run() {
+                long timestamp = System.currentTimeMillis();
+                for (Player player : players) {
+                    player.setTimestamp(System.currentTimeMillis());
+                    if(timestamp-player.getTimestamp()< Protocol.Head_TIME){
+                        //説明失去聯係了
+//                        TODO 不考虑超时 overTime(player.userId,_oneManager.userId);
+                        timer.cancel();
+                        return;
+                    }
+                }
+            }
+        };
+        timer.scheduleAtFixedRate(headListen, 0,30);
+        boolean notReady = true;
+        while (notReady){
+            for (Player player : players) {
+                if(player.isReady())
+                {
+                    notReady = true;
+                    break;
+                }
+            }
+        }
+        //開始
+        _startGame();
+    }
+    private void _startGame() {
+        _startTime = System.currentTimeMillis();
+        for (Player player : this.players) {
+            player.setCanPlayer(true);
+        }
+        timer.scheduleAtFixedRate(roundListen, 0,45);
+        //階段處理
+    }
+
 
 
     @Override
@@ -33,48 +98,16 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
 
     }
 
-    @Override
-    public void run() {
-        //等待一會，然後發送主玩傢回合開始
-        //開始心跳檢討
-        this._oneManager.timestamp = System.currentTimeMillis();
-        this._twoManager.timestamp = this._oneManager.timestamp;
-        TimerTask headListen = new TimerTask() {
-            @Override
-            public void run() {
-                long timestamp = System.currentTimeMillis();
-                if(timestamp-_oneManager.timestamp< Protocol.Head_TIME){
-                    //説明失去聯係了
-                    overTime(_twoManager.userId,_oneManager.userId);
-                    timer.cancel();
-                    return;
-                }
-                if(timestamp-_twoManager.timestamp<Protocol.Head_TIME){
-                    overTime(_oneManager.userId, _twoManager.userId);
-                    timer.cancel();
-                    return;
-                }
-            }
-        };
-        timer.scheduleAtFixedRate(headListen, 0,30);
-        while (true){
-            if(this._oneManager.isReady&&this._twoManager.isReady)
-                break;
-        }
-        //開始
-        _startGame();
-    }
 
-    private void _startGame() {
 
-    }
 
-    public AutoChessRoom(Byte area, String roomId, Long oneUserId, Long twoUserId,
+    public AutoChessRoom(Byte area, String roomId, List<Long> userIds,
                       RoomEventOverInterface<RoomEventOverInterface.DefaultOverDTO> roomEventOverInterface,
                       RoomEventSendInterface sendInterface)
             throws Exception
     {
-        log.debug("init:戰鬥房間"+ oneUserId + "  " + twoUserId);
+        log.debug("init:戰鬥房間"+ JSON.toJSON(userIds));
+        this.players  = new Player[userIds.size()];
         this._RoomEventOverInterface = roomEventOverInterface;
         this._RoomEventSendInterface = sendInterface;
         this._roomId = roomId;

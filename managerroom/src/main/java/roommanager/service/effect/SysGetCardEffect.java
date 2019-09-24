@@ -1,6 +1,7 @@
 package roommanager.service.effect;
 
 import core.protocol.Protocol;
+import core.protocol.PvpTwoRoomProtocol;
 import core.rpc.dto.CardRpcDTO;
 import dist.RoomConstants;
 import org.slf4j.Logger;
@@ -57,7 +58,7 @@ public class SysGetCardEffect extends AbstractBaseEffect {
                         //TODO 造成旗子伤害(第一版pass，仅做打印)
                         //TODO 添加和调用群伤伤害effect
                         EffectEvent effectEvent = getDefaultEvent();
-                        effectEvent.effectResult =  Protocol.PvpTwoRoomProtocol.SERVER_CARD_GET_NO_CARD;
+                        effectEvent.effectResult =  PvpTwoRoomProtocol.SERVER_CARD_GET_NO_CARD;
                         effectEvent.data = noCardDamage;
                         Field field_userId = this.belongObject.getClass().getField(RoomConstants.Key_Effect.userId.name());
                         effectEvent.userId = field_userId.getLong(this.belongObject);
@@ -72,7 +73,7 @@ public class SysGetCardEffect extends AbstractBaseEffect {
                             //抽取，但是销毁卡
                             CardRpcDTO poll = deckManager.poll();
                             EffectEvent effectEvent = getDefaultEvent();
-                            effectEvent.effectResult = Protocol.PvpTwoRoomProtocol.SERVER_CARD_GET_DESTROY_CARD;
+                            effectEvent.effectResult = PvpTwoRoomProtocol.SERVER_CARD_GET_DESTROY_CARD;
                             effectEvent.data = poll.getId();
                             Field field_userId = this.belongObject.getClass().getField(RoomConstants.Key_Effect.userId.name());
                             effectEvent.userId = field_userId.getLong(this.belongObject);
@@ -84,7 +85,7 @@ public class SysGetCardEffect extends AbstractBaseEffect {
                             handCardsManager.add(poll);
 
                             EffectEvent effectEvent = getDefaultEvent();
-                            effectEvent.effectResult = Protocol.PvpTwoRoomProtocol.SERVER_CARD_GET_SUCCESS;
+                            effectEvent.effectResult = PvpTwoRoomProtocol.SERVER_CARD_GET_SUCCESS;
                             effectEvent.data = poll.getId();
                             Field field_userId = this.belongObject.getClass().getField(RoomConstants.Key_Effect.userId.name());
                             effectEvent.userId = field_userId.getLong(this.belongObject);

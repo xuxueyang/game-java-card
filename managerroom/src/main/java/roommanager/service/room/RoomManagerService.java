@@ -112,14 +112,14 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
     //todo 注入rabbit，并且接受消息
 //    Executor executor = Executors.newFixedThreadPool(10);
     private ConcurrentHashMap<String,AbstractRoom> _roomMap = new ConcurrentHashMap<>();
-    public void CREATE_AUTO_CHESS_ROOM(Long oneUserId, Long twoUserId,Byte area) throws Exception {
+    public void CREATE_AUTO_CHESS_ROOM(List userIds,Byte area) throws Exception {
 
         //init初始化房間,根據xmind
         //創建一個綫程執行附件
         String roomId = UUIDGenerator.getUUID();
         //發送請求，讓玩家得知匹配成功
 
-        AutoChessRoom pvpTwoRoom = new AutoChessRoom(area,roomId, oneUserId,twoUserId,this,this);
+        AutoChessRoom pvpTwoRoom = new AutoChessRoom(area,roomId, userIds,this,this);
         _roomMap.put(roomId,pvpTwoRoom);
 //        executor.execute(pvpTwoRoom);
         startRoom(pvpTwoRoom);

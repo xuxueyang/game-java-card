@@ -16,6 +16,7 @@ public interface RoomRPCConstant {
         accountId,
         userId,
         oneUser,
-        twoUser
+        twoUser,
+        userIds
     }
 }

@@ -1,6 +1,7 @@
 package roommanager.service.room.autochessroom;
 
 import lombok.Data;
+import roommanager.service.room.autochessroom.entity.MetaChess;
 
 import java.util.List;
 
