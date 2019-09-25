@@ -135,7 +135,7 @@ public class AcctLoginService {
         userInfo.setName(user.getNickName());
         userInfo.setAccountId(account.getId());
         userInfo.setId(user.getId());
-        user.setArea(area);
+        userInfo.setArea(area);
         return userInfo;
     }
     public Token getUserByToken(String token){
