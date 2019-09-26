@@ -165,6 +165,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
         }else  if(DefaultChannelInitializer.useProtobuf){
             try {
                 if(msg instanceof String){
+                    //TODO 转不成，bug
                     dto = JSON.parseObject(
                             JSON.parseObject(
                                     (String) msg
@@ -180,6 +181,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
             dto = (RequestDTO) msg;
         }
         log.info(dto);
+        if(dto==null)
+            return;
         if(!manager.containsValue(channel.getId())){
             // 説明第一次接入，需要驗證token
             if(!TEST){
