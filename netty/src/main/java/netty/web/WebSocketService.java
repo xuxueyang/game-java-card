@@ -27,8 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class WebSocketService {
 
-    @Autowired
-    ServerHandler serverHandler;
+    ServerHandler serverHandler = ServerHandler.serverHandler;
 
 
     private HttpSession httpSession;
@@ -50,39 +49,44 @@ public class WebSocketService {
     @OnOpen
     public void onOpen(Session session, EndpointConfig config) {
         //这里作为websocket的接口，不做修改
-        if(this.serverHandler==null){
-            this.httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
-            if(httpSession != null){
-                ApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(httpSession.getServletContext());
-                if(this.serverHandler==null){
-                    this.serverHandler = (ServerHandler) ctx.getBean(ServerHandler.class);
-                }
-            }
-        }
+//        if(this.serverHandler==null){
+//            this.serverHandler
+//        }
 
 //        原文：https://blog.csdn.net/qq_38162143/article/details/78275018
-        Map<String, List<String>> requestParameterMap = session.getRequestParameterMap();
-
-        if(!requestParameterMap.containsKey("token")||!requestParameterMap.containsKey("userId")){
-            // 参数不够
-//            _sendMsg(session,DataProtocol.getCheckData("参数错误",Protocol.CloseSession));
-            return;
+//        Map<String, List<String>> requestParameterMap = session.getRequestParameterMap();
+        try {
+            this.serverHandler.handlerAdded(session);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+//        if(!requestParameterMap.containsKey("token")||!requestParameterMap.containsKey("userId")){
+//            // 参数不够
+////            _sendMsg(session,DataProtocol.getCheckData("参数错误",Protocol.CloseSession));
+//            return;
+//        }
 
     }
 
     //关闭
     @OnClose
     public void onClose(Session session) {
-
+        try {
+            this.serverHandler.handlerRemoved(session);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
     //接收消息   客户端发送过来的消息
     @OnMessage
     public void onMessage(String message, Session session) {
-
-
+        try {
+            this.serverHandler.channelRead(session,message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //异常

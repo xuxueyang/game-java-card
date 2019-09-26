@@ -117,6 +117,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
 
         }
     }
+    @Override
     public void handlerRemoved(Session session) throws Exception {
         log.info(session.getId() + "离开了");
         if(manager.containsValue(session.getId())){
@@ -161,10 +162,17 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
             }else{
                 dto = (RequestDTO)JSON.parseObject(string,RequestDTO.class);
             }
-        }
-        if(DefaultChannelInitializer.useProtobuf){
+        }else  if(DefaultChannelInitializer.useProtobuf){
             try {
-                dto = JSON.parseObject(((netty.proto.dto.RequestDTO.RequestDTOProto) msg).getMessage(),RequestDTO.class);
+                if(msg instanceof String){
+                    dto = JSON.parseObject(
+                            JSON.parseObject(
+                                    (String) msg
+                                    , netty.proto.dto.RequestDTO.RequestDTOProto.class).getMessage()
+                            ,RequestDTO.class);
+                }else{
+                    dto = JSON.parseObject(((netty.proto.dto.RequestDTO.RequestDTOProto) msg).getMessage(),RequestDTO.class);
+                }
             }catch (Exception e){
                 return;
             }
