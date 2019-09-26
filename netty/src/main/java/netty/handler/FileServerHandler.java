@@ -22,7 +22,7 @@ public class FileServerHandler extends AbstactSelfServerHandler<RequestDTO, Requ
 
     private core.dto.file.CacheUtil cacheUtil = new core.dto.file.CacheUtil();
     @Override
-    public void channelRead(ChannelHandlerContext ctx, RequestDTO dto) throws Exception {
+    public void channelRead(Channel ctx, RequestDTO dto) throws Exception {
         Object data = dto.getData();
         //数据格式验证
         FileTransferProtocol fileTransferProtocol = null;
@@ -49,13 +49,13 @@ public class FileServerHandler extends AbstactSelfServerHandler<RequestDTO, Requ
                     }
                     //传输完成删除断点信息
                     System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " 服务端，接收客户端传输文件请求[断点续传]。" + JSON.toJSONString(fileBurstInstructOld));
-                    ctx.channel().writeAndFlush(MsgUtil.buildObj(FileUtil.buildTransferInstruct(fileBurstInstructOld), Protocol.Type.FILE));
+                    ctx.sendMsg(MsgUtil.buildObj(FileUtil.buildTransferInstruct(fileBurstInstructOld), Protocol.Type.FILE));
                     return;
                 }
 
                 //发送信息
                 FileTransferProtocol sendFileTransferProtocol = FileUtil.buildTransferInstruct(FileConstants.FileStatus.BEGIN, fileDescInfo.getFileUrl(), 0);
-                ctx.channel().writeAndFlush(MsgUtil.buildObj(sendFileTransferProtocol,Protocol.Type.FILE));
+                ctx.sendMsg(MsgUtil.buildObj(sendFileTransferProtocol,Protocol.Type.FILE));
                 System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " 服务端，接收客户端传输文件请求。" + JSON.toJSONString(fileDescInfo));
                 break;
             case 2:
@@ -66,7 +66,7 @@ public class FileServerHandler extends AbstactSelfServerHandler<RequestDTO, Requ
                 //保存断点续传信息
                 cacheUtil.burstDataMap.put(fileBurstData.getFileName(), fileBurstInstruct);
 
-                ctx.channel().writeAndFlush(MsgUtil.buildObj(FileUtil.buildTransferInstruct(fileBurstInstruct),Protocol.Type.FILE));
+                ctx.sendMsg(MsgUtil.buildObj(FileUtil.buildTransferInstruct(fileBurstInstruct),Protocol.Type.FILE));
                 System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " 栈服务端，接收客户端传输文件数据。" + JSON.toJSONString(fileBurstData));
 
                 //传输完成删除断点信息

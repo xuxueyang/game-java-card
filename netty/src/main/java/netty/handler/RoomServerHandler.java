@@ -29,7 +29,7 @@ public class RoomServerHandler extends AbstactSelfServerHandler<RequestDTO,Reque
 
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, RequestDTO dto) throws Exception {
+    public void channelRead(Channel ctx, RequestDTO dto) throws Exception {
         String json = encode(dto);
         log.info(json);
         try {

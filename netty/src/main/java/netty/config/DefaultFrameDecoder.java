@@ -1,5 +1,6 @@
 package netty.config;
 
+import com.alibaba.fastjson.JSON;
 import netty.constants.Constants;
 import core.core.RequestDTO;
 import io.netty.buffer.ByteBuf;
@@ -20,6 +21,7 @@ public class DefaultFrameDecoder<T extends RequestDTO> extends ByteToMessageDeco
         //...
         logger.info("解码DTOing");
         // 读取传送过来的消息的长度。
+//        logger.info(DefaultChannelInitializer.test(byteBuf));
         short version = byteBuf.readShort();
         if(version != Constants.PROTOCOL_VERSION){
             return;
@@ -39,4 +41,5 @@ public class DefaultFrameDecoder<T extends RequestDTO> extends ByteToMessageDeco
         list.add(requestDTO);
         logger.info("success decode");
     }
+
 }

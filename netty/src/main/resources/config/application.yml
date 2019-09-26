@@ -15,6 +15,9 @@ netty.rabbitmq:
 netty:
   host: 127.0.0.1
   port: 7397
+web-netty:
+  host: 127.0.0.1
+  port: 7396
 
 spring:
   application:

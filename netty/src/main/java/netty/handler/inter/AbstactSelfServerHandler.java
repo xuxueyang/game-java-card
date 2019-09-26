@@ -1,21 +1,55 @@
 package netty.handler.inter;
 
 import com.alibaba.fastjson.JSON;
+import core.core.RequestDTO;
 import core.manager.UserObjectManager;
 import io.netty.channel.ChannelHandlerContext;
 
-public abstract class AbstactSelfServerHandler<T,A> {
-    protected   UserObjectManager userObjectManager = new UserObjectManager(1);
+import javax.websocket.Session;
 
-    public  void channelRead(ChannelHandlerContext ctx, T dto) throws Exception{
+public abstract class AbstactSelfServerHandler<T,A> {
+    public static class Channel{
+        private Object object;
+        private String id;
+        public  Channel(Object channel) throws Exception{
+            this.object = channel;
+            if(object instanceof ChannelHandlerContext){
+                this.id =  ((ChannelHandlerContext)object).channel().id().asLongText();
+            }else if(object instanceof Session){
+                this.id = ((Session)object).getId();
+            }else{
+                throw new Exception("未知的channel");
+            }
+        }
+        public String getId(){
+            return id;
+        }
+        public void sendMsg(Object dto) throws Exception{
+            if(object instanceof ChannelHandlerContext){
+                ((ChannelHandlerContext)object).channel().writeAndFlush(dto);
+            }else if(object instanceof Session){
+                ((Session)object).getBasicRemote().sendObject(dto);
+            }
+        }
+        public void  close() throws Exception{
+            if(object instanceof ChannelHandlerContext){
+                ((ChannelHandlerContext)object).close();
+            }else if(object instanceof Session){
+                ((Session)object).close();
+            }
+        }
+    }
+    protected   UserObjectManager<Channel> userObjectManager = new UserObjectManager<Channel>(1);
+
+    public  void channelRead(Channel ctx, T dto) throws Exception{
 
     }
-    public void channelActive(ChannelHandlerContext ctx,Long userId) throws Exception{
-        userObjectManager.put(userId,ctx.channel().id().asLongText(),ctx);
+    public void channelActive(Channel ctx,Long userId) throws Exception{
+        userObjectManager.put(userId,ctx.getId(),ctx);
     }
 //    void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception;
-    public void cloes(ChannelHandlerContext ctx){
-        userObjectManager.removeByValue(ctx.channel().id().asLongText());
+    public void cloes(Channel ctx){
+        userObjectManager.removeByValue(ctx.getId());
     }
 
 

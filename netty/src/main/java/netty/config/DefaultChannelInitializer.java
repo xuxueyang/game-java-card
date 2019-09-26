@@ -1,5 +1,7 @@
 package netty.config;
 
+import com.alibaba.fastjson.JSON;
+import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.stream.ChunkedWriteHandler;
@@ -14,10 +16,20 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import netty.proto.dto.RequestDTO;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 public class DefaultChannelInitializer extends ChannelInitializer<SocketChannel>{
-
+    public static String test(ByteBuf byteBuf){
+        byte[] body = new byte[byteBuf.readableBytes()];
+        byteBuf.readBytes(body);
+        try {
+            return new String(body,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
     public static final boolean useProtobuf =  true;
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {

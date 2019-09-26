@@ -1,9 +1,12 @@
 package netty.handler;
 
+import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.util.CharsetUtil;
 import io.netty.util.ReferenceCountUtil;
 import netty.config.DefaultChannelInitializer;
 import core.manager.UserObjectManager;
 import netty.handler.inter.AbstactSelfServerHandler;
+import netty.handler.inter.WebServerHandlerAdapter;
 import org.springframework.stereotype.Component;
 import netty.rpc.AcctRpcClient;
 import com.alibaba.fastjson.JSON;
@@ -20,6 +23,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
+import javax.websocket.Session;
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Field;
 import java.util.*;
@@ -27,14 +31,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 @Component
-public class ServerHandler extends ChannelInboundHandlerAdapter {
+public class ServerHandler extends ChannelInboundHandlerAdapter implements WebServerHandlerAdapter {
     public static ServerHandler serverHandler;
 
     public ServerHandler(){}
 
     private static Log log = LogFactory.getLog(ServerHandler.class);
 
-    private static final boolean TEST = true;
+    private static final boolean TEST = false;
 
 //    public ConcurrentHashMap<Byte,AbstactSelfServerHandler> handlers = new ConcurrentHashMap<>();
     public ArrayList<AbstactSelfServerHandler> handlers = new ArrayList<>();
@@ -77,13 +81,17 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 //        serverHandler.handlers.add(this.fileServerHandler);
     }
 
-    private  UserObjectManager<ChannelHandlerContext> manager = new UserObjectManager<ChannelHandlerContext>(1);
+    private  UserObjectManager<AbstactSelfServerHandler.Channel> manager = new UserObjectManager<AbstactSelfServerHandler.Channel>(1);
 
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
         super.handlerAdded(ctx);
         log.info(ctx.channel().id() + "进来了");
+    }
+    @Override
+    public void handlerAdded(Session session) throws Exception {
+        log.info(session.getId() + "进来了");
     }
 
     @Override
@@ -96,13 +104,23 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         o.setMd5(str);
         ctx.channel().writeAndFlush(o);
     }
+    @Override
+    public void channelActive(Session session) throws Exception {
 
+    }
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
         super.handlerRemoved(ctx);
         log.info(ctx.channel().id() + "离开了");
         if(manager.containsValue(ctx.channel().id().asLongText())){
             manager.removeByValue(ctx.channel().id().asLongText());
+
+        }
+    }
+    public void handlerRemoved(Session session) throws Exception {
+        log.info(session.getId() + "离开了");
+        if(manager.containsValue(session.getId())){
+            manager.removeByValue(session.getId());
 
         }
     }
@@ -125,18 +143,36 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 //        };
 //        timer.scheduleAtFixedRate(timerTask, 0,5);
 //    }
-
+    @Override
+    public void channelRead(Session session, Object msg) throws Exception {
+        _channelRead(new AbstactSelfServerHandler.Channel(session),msg);
+    }
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        _channelRead(new AbstactSelfServerHandler.Channel(ctx),msg);
+    }
+    public void _channelRead(AbstactSelfServerHandler.Channel channel, Object msg) throws Exception {
         log.info("ServerHandler ========================= ");
         RequestDTO dto = null;
+        if(msg instanceof FullHttpRequest){
+            String string = ((FullHttpRequest) msg).content().toString(CharsetUtil.UTF_8);
+            if("".equals(string)){
+                return;
+            }else{
+                dto = (RequestDTO)JSON.parseObject(string,RequestDTO.class);
+            }
+        }
         if(DefaultChannelInitializer.useProtobuf){
-            dto = (RequestDTO)JSON.parseObject(((netty.proto.dto.RequestDTO.RequestDTOProto) msg).getMessage(),RequestDTO.class);
+            try {
+                dto = JSON.parseObject(((netty.proto.dto.RequestDTO.RequestDTOProto) msg).getMessage(),RequestDTO.class);
+            }catch (Exception e){
+                return;
+            }
         }else{
             dto = (RequestDTO) msg;
         }
         log.info(dto);
-        if(!manager.containsValue(ctx.channel().id().asLongText())){
+        if(!manager.containsValue(channel.getId())){
             // 説明第一次接入，需要驗證token
             if(!TEST){
                 if(Protocol.Area.Netty - dto.getArea() != 0
@@ -159,17 +195,17 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 }
                 if(returnResultDTO==null||returnResultDTO.getData()==null){
                     log.info("未登录");
-                    _close(ctx);
+                    _close(channel);
                     return;
                 }
                 if(dto.getMd5()
                         .equals(MD5Util.MD5(returnResultDTO.getData().toString() + dto.getTimestamp()))){
-                    manager.put(dto.getUserId(),ctx.channel().id().asLongText(),ctx);
-                    ctx.channel().writeAndFlush(ResDTOFactory.getSuccessConnected());
+                    manager.put(dto.getUserId(),channel.getId(),channel);
+                    channel.sendMsg(ResDTOFactory.getSuccessConnected());
                     final Long userId = dto.getUserId();
                     serverHandler.handlers.forEach(item -> {
                         try {
-                            item.channelActive(ctx, userId);
+                            item.channelActive(channel, userId);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -178,22 +214,22 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
                 }
             }else{
-                manager.put(dto.getUserId(),ctx.channel().id().asLongText(),ctx);
+                manager.put(dto.getUserId(),channel.getId(),channel);
             }
 
         }
 
         //这样就内部以UserId维系连接
-        dto.setUserId(manager.getKeyByValue(ctx.channel().id().asLongText()));
+        dto.setUserId(manager.getKeyByValue(channel.getId()));
         switch (dto.getType()){
             case Protocol.Type.CHAT:{
-                serverHandler.chatServerHandler.channelRead(ctx,dto);
+                serverHandler.chatServerHandler.channelRead(channel,dto);
             }break;
             case Protocol.Type.ROOM:{
-                serverHandler.roomServerHandler.channelRead(ctx,dto);
+                serverHandler.roomServerHandler.channelRead(channel,dto);
             }break;
             case Protocol.Type.FILE:{
-                serverHandler.fileServerHandler.channelRead(ctx,dto);
+                serverHandler.fileServerHandler.channelRead(channel,dto);
             }break;
             default:{
                 log.error("未知协议");
@@ -213,9 +249,9 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         // TODO Auto-generated method stub
         log.info("异常信息：\r\n" + cause.getMessage());
         cause.printStackTrace();
-        _close(ctx);
+        _close(new AbstactSelfServerHandler.Channel(ctx));
     }
-    private void _close(ChannelHandlerContext ctx){
+    private void _close(AbstactSelfServerHandler.Channel ctx) throws Exception{
         serverHandler.handlers.forEach(item -> {
             try {
                 item.cloes(ctx);
