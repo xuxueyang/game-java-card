@@ -44,6 +44,7 @@ public class MatchServerHandler extends AbstactSelfServerHandler<RequestDTO,Requ
             userObjectManager.getObject(dto.getUserId()).sendMsg(
                     ResDTOFactory.getDTO(Protocol.Type.MATCH,CommonProtocol.SERVER_MATCH_ADD));
         }
+        //TODO 触发一下匹配删选方法
     }
     public void SERVER_MATCH_CANCEL(RequestDTO dto) throws Exception{
         String key = dto.getData().toString();
