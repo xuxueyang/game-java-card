@@ -32,7 +32,7 @@ public  interface Protocol {
         public static final byte ITEM = 0x4;
         public static final byte ROOM = 0x5;
         public static final byte FILE = 0x6;
-
+        public static final byte MATCH = 0x7;
     }
 
     public final static class Status{
@@ -60,6 +60,11 @@ public  interface Protocol {
         int AutoChessRoomIndex_SERVER = 16000;
 
         int ChatIndex = 20000;
+
+        int CommonProtocolIndex_CLIENT = 40000;
+        int CommonProtocolIndex_SERVER = 50000;
+        int CommonProtocolIndex_ERROR = 60000;
+
     }
     interface ConstatnProtocol{
         int Head = _Index.ConstatnProtocolIndex + 1;

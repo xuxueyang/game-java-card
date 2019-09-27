@@ -11,7 +11,7 @@ import java.util.concurrent.TimeoutException;
 //import org.springframework.stereotype.Component;
 
 //@Component
-public class RabbitMQConsumer {
+public class RabbitMQConsumer implements IRabbitMQConsumer{
 
 
     private Connection connection;

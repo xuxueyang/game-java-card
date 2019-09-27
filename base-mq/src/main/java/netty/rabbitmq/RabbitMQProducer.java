@@ -7,19 +7,20 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeoutException;
 
 //import org.springframework.stereotype.Component;
 
 //@Component
-public class RabbitMQProducer {
+public class RabbitMQProducer implements IRabbitMQProducer{
 
 
     private Connection connection;
     private Channel channel;
     private String queueName;
     private String replyQueueName;
-    private Map<String,Response> responseMap = new HashMap<String, Response>();
+    private Map<String,Response> responseMap = new ConcurrentHashMap<String, Response>();
     private class Response{
         public String corrId;
         public boolean check = false;

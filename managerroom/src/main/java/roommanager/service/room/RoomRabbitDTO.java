@@ -3,8 +3,8 @@ package roommanager.service.room;
 
 public class RoomRabbitDTO<Data> {
     private Long userId;//發送人
-    private Byte type;//一级协议(区分大区等）
-    private Byte area;//二级协议（区分模块等）
+    private int type;//一级协议(区分大区等）
+    private int area;//二级协议（区分模块等）
     private Integer protocol;//三级具体协议
     private Data data;
     private Long roomOperatorLong;
@@ -17,19 +17,19 @@ public class RoomRabbitDTO<Data> {
         this.userId = userId;
     }
 
-    public Byte getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public void setType(int type) {
         this.type = type;
     }
 
-    public Byte getArea() {
+    public int getArea() {
         return area;
     }
 
-    public void setArea(Byte area) {
+    public void setArea(int area) {
         this.area = area;
     }
 

@@ -1,7 +1,10 @@
 package netty.config;
 
 import core.rpc.ChatRPCConstant;
+import core.rpc.CommonRPCConstant;
 import core.rpc.RoomRPCConstant;
+import netty.rabbitmq.IRabbitMQConsumer;
+import netty.rabbitmq.IRabbitMQProducer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +51,7 @@ public class RabbitMQConfiguration {
 
 //    该方法名默认就是Bean名
     @Bean(name = RoomRPCConstant.MQ_NAME_PRODUCER)
-    public RabbitMQConsumer RoomRabbitMQConsumer(){
+    public IRabbitMQConsumer RoomRabbitMQConsumer(){
         RabbitMQConsumer Consumer = null;
         try {
             Consumer = new RabbitMQConsumer(RoomRPCConstant.MQ_NAME_PRODUCER);
@@ -61,7 +64,7 @@ public class RabbitMQConfiguration {
     }
 
     @Bean(name = RoomRPCConstant.MQ_NAME_CONSUMER)
-    public RabbitMQProducer RoomRabbitMQProducer (){
+    public IRabbitMQProducer RoomRabbitMQProducer (){
         RabbitMQProducer Producer = null;
         try {
             Producer = new RabbitMQProducer(RoomRPCConstant.MQ_NAME_CONSUMER);
@@ -74,7 +77,7 @@ public class RabbitMQConfiguration {
     }
 
     @Bean(name = ChatRPCConstant.MQ_NAME_PRODUCER)
-    public RabbitMQConsumer ChatRabbitMQConsumer(){
+    public IRabbitMQConsumer ChatRabbitMQConsumer(){
         RabbitMQConsumer Consumer = null;
         try {
             Consumer = new RabbitMQConsumer(ChatRPCConstant.MQ_NAME_PRODUCER);
@@ -87,7 +90,7 @@ public class RabbitMQConfiguration {
     }
 
     @Bean(name = ChatRPCConstant.MQ_NAME_CONSUMER)
-    public RabbitMQProducer ChatRabbitMQProducer (){
+    public IRabbitMQProducer ChatRabbitMQProducer (){
         RabbitMQProducer Producer = null;
         try {
             Producer = new RabbitMQProducer(ChatRPCConstant.MQ_NAME_CONSUMER);
@@ -98,5 +101,29 @@ public class RabbitMQConfiguration {
         }
         return Producer;
     }
-
+//    @Bean(name = CommonRPCConstant.MQ_MATCH_NAME_PRODUCER)
+//    public IRabbitMQConsumer MatchRabbitMQConsumer(){
+//        RabbitMQConsumer Consumer = null;
+//        try {
+//            Consumer = new RabbitMQConsumer(CommonRPCConstant.MQ_MATCH_NAME_PRODUCER);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (TimeoutException e) {
+//            e.printStackTrace();
+//        }
+//        return Consumer;
+//    }
+//
+//    @Bean(name = CommonRPCConstant.MQ_MATCH_NAME_CONSUMER)
+//    public IRabbitMQProducer MatchRabbitMQProducer (){
+//        RabbitMQProducer Producer = null;
+//        try {
+//            Producer = new RabbitMQProducer(CommonRPCConstant.MQ_MATCH_NAME_CONSUMER);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (TimeoutException e) {
+//            e.printStackTrace();
+//        }
+//        return Producer;
+//    }
 }

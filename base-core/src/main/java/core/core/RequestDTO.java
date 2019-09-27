@@ -12,9 +12,9 @@ import java.io.Serializable;
 public class RequestDTO<Data> implements Serializable {
     //0级做保留
     @ApiModelProperty(required = true)
-    private byte type;//二级协议（区分模块等）
+    private int type;//二级协议（区分模块等）
     @ApiModelProperty(required = true)
-    private byte area;//一级协议(区分大区等.NEW:顶级协议）
+    private int area;//一级协议(区分大区等.NEW:顶级协议）
     @ApiModelProperty(required = true)
     private long areaL;//大区
     private Integer protocol;//三级具体协议
@@ -27,9 +27,9 @@ public class RequestDTO<Data> implements Serializable {
             required = true
     )
     private String md5;
-    private byte messageType;
-    private Long roomOperatorLong;//包序列
-    private Long userId = null;
+    private int messageType;
+    private int roomOperatorLong;//包序列
+    private long userId;
     private String roomId;
 
 
@@ -69,27 +69,27 @@ public class RequestDTO<Data> implements Serializable {
         this.md5 = md5;
     }
 
-    public Byte getMessageType() {
+    public int getMessageType() {
         return messageType;
     }
 
-    public void setMessageType(Byte messageType) {
+    public void setMessageType(int messageType) {
         this.messageType = messageType;
     }
 
-    public Byte getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public void setType(int type) {
         this.type = type;
     }
 
-    public Byte getArea() {
+    public int getArea() {
         return area;
     }
 
-    public void setArea(Byte area) {
+    public void setArea(int area) {
         this.area = area;
     }
 
@@ -119,11 +119,11 @@ public class RequestDTO<Data> implements Serializable {
         this.roomId = roomId;
     }
 
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -135,11 +135,11 @@ public class RequestDTO<Data> implements Serializable {
         this.areaL = areaL;
     }
 
-    public Long getRoomOperatorLong() {
+    public int getRoomOperatorLong() {
         return roomOperatorLong;
     }
 
-    public void setRoomOperatorLong(Long roomOperatorLong) {
+    public void setRoomOperatorLong(int roomOperatorLong) {
         this.roomOperatorLong = roomOperatorLong;
     }
 }

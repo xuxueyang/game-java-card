@@ -1,5 +1,7 @@
 package netty.handler;
 
+import com.alibaba.fastjson.JSONObject;
+import core.protocol.CommonProtocol;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.util.CharsetUtil;
 import io.netty.util.ReferenceCountUtil;
@@ -7,6 +9,7 @@ import netty.config.DefaultChannelInitializer;
 import core.manager.UserObjectManager;
 import netty.handler.inter.AbstactSelfServerHandler;
 import netty.handler.inter.WebServerHandlerAdapter;
+import netty.proto.MsgUtil;
 import org.springframework.stereotype.Component;
 import netty.rpc.AcctRpcClient;
 import com.alibaba.fastjson.JSON;
@@ -51,6 +54,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
     private RoomServerHandler roomServerHandler;
     @Autowired
     private FileServerHandler fileServerHandler;
+    @Autowired
+    private MatchServerHandler matchServerHandler;
 
     @PostConstruct
     public void init(){
@@ -65,6 +70,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
 //                    AbstactSelfServerHandler handler = (AbstactSelfServerHandler)field.get(serverHandler);
 //                    serverHandler.handlers.put(handler.getType(),handler);
                     AbstactSelfServerHandler handler = (AbstactSelfServerHandler)field.get(serverHandler);
+                    handler.init();
                     serverHandler.handlers.add(handler);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
@@ -152,6 +158,32 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         _channelRead(new AbstactSelfServerHandler.Channel(ctx),msg);
     }
+    private RequestDTO transfer(String dtoStr){
+        RequestDTO dto = new RequestDTO();
+        JSONObject parse = (JSONObject)JSON.parse(dtoStr);
+//        Set<Map.Entry<String, Object>> entries = parse.entrySet();
+        Field[] declaredFields = dto.getClass().getDeclaredFields();
+        for (Field declaredField : declaredFields) {
+            String name = declaredField.getName();
+            if(parse.containsKey(name)){
+                try {
+                    declaredField.setAccessible(true);
+                    declaredField.set(dto,parse.get(name));
+                } catch (Exception e) {
+//                    e.printStackTrace();
+                    log.error(e.getMessage());
+                }
+            }
+        }
+        return dto;
+    }
+    private void sendMsg(AbstactSelfServerHandler.Channel channel,RequestDTO obj){
+        try {
+            channel.sendMsg(MsgUtil.sendObj(obj));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void _channelRead(AbstactSelfServerHandler.Channel channel, Object msg) throws Exception {
         log.info("ServerHandler ========================= ");
         RequestDTO dto = null;
@@ -166,23 +198,28 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
             try {
                 if(msg instanceof String){
                     //TODO 转不成，bug
-                    dto = JSON.parseObject(
-                            JSON.parseObject(
-                                    (String) msg
-                                    , netty.proto.dto.RequestDTO.RequestDTOProto.class).getMessage()
-                            ,RequestDTO.class);
+//                    netty.proto.dto.RequestDTO.RequestDTOProto.Builder builder = netty.proto.dto.RequestDTO.RequestDTOProto.newBuilder();
+//                    builder.setId()
+                    JSONObject parse = (JSONObject)JSON.parse(msg.toString());
+                    String dtoStr = parse.get("message").toString();
+//                    JSON.parseObject(((String) msg).toString()).get("message").toString()
+                    dto = transfer(dtoStr);
                 }else{
                     dto = JSON.parseObject(((netty.proto.dto.RequestDTO.RequestDTOProto) msg).getMessage(),RequestDTO.class);
                 }
             }catch (Exception e){
+                sendMsg(channel,ResDTOFactory.getDTO(Protocol.Type.LOGIN, CommonProtocol.ERROR_DATA_FORMAT));
+                log.error(e.getMessage());
                 return;
             }
         }else{
             dto = (RequestDTO) msg;
         }
         log.info(dto);
-        if(dto==null)
-            return;
+        if(dto==null){
+            sendMsg(channel,ResDTOFactory.getDTO(Protocol.Type.LOGIN, CommonProtocol.ERROR_DATA_FORMAT));
+            return;//格式不正确的直接丢弃
+        }
         if(!manager.containsValue(channel.getId())){
             // 説明第一次接入，需要驗證token
             if(!TEST){
@@ -190,8 +227,10 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
                         ||Protocol.Type.LOGIN  - dto.getType() != 0
                         ||dto.getTimestamp()==null
                         ||dto.getAreaL()== 0
-                        ||dto.getUserId()==null
+                        ||dto.getProtocol() != CommonProtocol.CLINET_AUTH_WEBSOCKET
+                        ||dto.getUserId()==0
                         ||dto.getMd5() == null){
+                    sendMsg(channel,ResDTOFactory.getErrorCheckedConnected());
                     return;
                 }
                 //校驗token
@@ -207,12 +246,13 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
                 if(returnResultDTO==null||returnResultDTO.getData()==null){
                     log.info("未登录");
                     _close(channel);
+                    sendMsg(channel,ResDTOFactory.getErrorCheckedConnected());
                     return;
                 }
-                if(dto.getMd5()
-                        .equals(MD5Util.MD5(returnResultDTO.getData().toString() + dto.getTimestamp()))){
+                if(dto.getMd5().toLowerCase()
+                        .equals(MD5Util.MD5(returnResultDTO.getData().toString() + dto.getTimestamp()).toLowerCase())){
                     manager.put(dto.getUserId(),channel.getId(),channel);
-                    channel.sendMsg(ResDTOFactory.getSuccessConnected());
+                    sendMsg(channel,ResDTOFactory.getSuccessCheckedConnected());
                     final Long userId = dto.getUserId();
                     serverHandler.handlers.forEach(item -> {
                         try {
@@ -241,6 +281,16 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
             }break;
             case Protocol.Type.FILE:{
                 serverHandler.fileServerHandler.channelRead(channel,dto);
+            }break;
+            case Protocol.Type.LOGIN:{
+                //说明没有收到之前的check信息，重新发送
+                if(CommonProtocol.CLINET_AUTH_WEBSOCKET == dto.getProtocol()){
+                    sendMsg(channel,ResDTOFactory.getSuccessCheckedConnected());
+                }
+            }break;
+            case Protocol.Type.MATCH:{
+                //说明没有收到之前的check信息，重新发送
+                serverHandler.matchServerHandler.channelRead(channel,dto);
             }break;
             default:{
                 log.error("未知协议");

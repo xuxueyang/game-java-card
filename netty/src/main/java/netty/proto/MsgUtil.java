@@ -5,6 +5,7 @@ import netty.config.DefaultChannelInitializer;
 import netty.proto.dto.RequestDTO;
 
 public class MsgUtil {
+    public static final String DEFAULT_ID = "-1";
     /**
      * 构建protobuf消息体
      */
@@ -12,6 +13,7 @@ public class MsgUtil {
         if(DefaultChannelInitializer.useProtobuf){
             RequestDTO.RequestDTOProto.Builder builder = RequestDTO.RequestDTOProto.newBuilder();
             builder.setMessage(message);
+            builder.setId(DEFAULT_ID);
             return builder.build();
         }else{
             core.core.RequestDTO dto = new core.core.RequestDTO<>();
@@ -24,6 +26,7 @@ public class MsgUtil {
         if(DefaultChannelInitializer.useProtobuf){
             RequestDTO.RequestDTOProto.Builder builder = RequestDTO.RequestDTOProto.newBuilder();
             builder.setMessage(JSON.toJSONString(object));
+            builder.setId(DEFAULT_ID);
             return builder.build();
         }else{
             return object;
@@ -37,6 +40,7 @@ public class MsgUtil {
             requestDTO.setData(fileDTO);
             requestDTO.setType(type);
             builder.setMessage(JSON.toJSONString(requestDTO));
+            builder.setId(DEFAULT_ID);
             return builder.build();
         }else{
             core.core.RequestDTO dto = new core.core.RequestDTO<>();

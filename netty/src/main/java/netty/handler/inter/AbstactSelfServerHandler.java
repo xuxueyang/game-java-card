@@ -28,7 +28,13 @@ public abstract class AbstactSelfServerHandler<T,A> {
             if(object instanceof ChannelHandlerContext){
                 ((ChannelHandlerContext)object).channel().writeAndFlush(dto);
             }else if(object instanceof Session){
-                ((Session)object).getBasicRemote().sendObject(dto);
+//                ((Session)object).getBasicRemote().sendText(JSON.toJSONString(dto));
+                if(dto instanceof netty.proto.dto.RequestDTO.RequestDTOProto){
+                    ((Session)object).getBasicRemote().sendText(((netty.proto.dto.RequestDTO.RequestDTOProto)dto).getMessage());
+                }else{
+                    ((Session)object).getBasicRemote().sendText(JSON.toJSONString(dto));
+                }
+
             }
         }
         public void  close() throws Exception{
@@ -62,4 +68,7 @@ public abstract class AbstactSelfServerHandler<T,A> {
     }
 
     public abstract byte getType();
+    public void init(){
+
+    }
 }
