@@ -20,6 +20,8 @@ import roommanager.service.room.pvptworoom.PvpTwoRoom;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,17 +114,18 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
     //todo 注入rabbit，并且接受消息
 //    Executor executor = Executors.newFixedThreadPool(10);
     private ConcurrentHashMap<String,AbstractRoom> _roomMap = new ConcurrentHashMap<>();
-    public void CREATE_AUTO_CHESS_ROOM(List userIds,Byte area) throws Exception {
+    public String CREATE_AUTO_CHESS_ROOM(int areaL,List userIds) throws Exception {
 
         //init初始化房間,根據xmind
         //創建一個綫程執行附件
         String roomId = UUIDGenerator.getUUID();
         //發送請求，讓玩家得知匹配成功
 
-        AutoChessRoom pvpTwoRoom = new AutoChessRoom(area,roomId, userIds,this,this);
+        AutoChessRoom pvpTwoRoom = new AutoChessRoom(areaL,roomId, userIds,this,this);
         _roomMap.put(roomId,pvpTwoRoom);
 //        executor.execute(pvpTwoRoom);
         startRoom(pvpTwoRoom);
+        return roomId;
     }
     public void CREATE_TWO_ROOM(Long oneUserId, Long twoUserId,Byte area) throws Exception {
 
@@ -133,7 +136,7 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
         RequestDTO dto = new RequestDTO<>();
         Map<String,Object>  map = new HashMap<>();
         map.put(RoomRPCConstant.Key.userId.name(),oneUserId);
-        map.put(RoomRPCConstant.Key.area.name(),area);
+        map.put(RoomRPCConstant.Key.areaL.name(),area);
         dto.setData(map);
         ReturnResultDTO oneDeck = deckRpcClient.GET_DECK(dto);
         if(!oneDeck.getReturnCode().startsWith(ReturnCode.SUCCESS)){
@@ -197,5 +200,20 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
                 }
             }
         }
+    }
+
+    public String CREATE_ROOM(String roomKey,int areaL, Long[] userIds) {
+        try {
+            switch (RoomRPCConstant.RoomKey.getByStatus(roomKey)){
+                case autochess:{
+                    List<Long> longs = Arrays.asList(userIds);
+                    CREATE_AUTO_CHESS_ROOM(areaL,longs);
+                }break;
+            }
+            return "roomId";
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
     }
 }

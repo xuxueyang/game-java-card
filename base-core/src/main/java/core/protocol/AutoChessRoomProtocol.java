@@ -39,7 +39,7 @@ public class AutoChessRoomProtocol {
     public static final int SERVER_PLAYER_REFRESH_SELF= server_index + 2;
     public static final int SERVER_PLAYER_REFRESH_SELF_ERRPR= server_index + 3;
     public static final int SERVER_PLAYER_REFRESH_AUTO= SERVER_PLAYER_REFRESH_SELF;
-
+//    public static final int SERVER_PLAYER_REFRESH_AUTO= server_index + 5;
 
     public enum SkillType { //技能状态
         BEI_DONG(0,"被动"),

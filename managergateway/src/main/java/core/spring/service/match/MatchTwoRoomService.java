@@ -62,7 +62,7 @@ public class MatchTwoRoomService {
                 Map<String,Long> map = new HashMap<>();
                 map.put(RoomRPCConstant.Key.oneUser.name(),one.userId);
                 map.put(RoomRPCConstant.Key.twoUser.name(),two.userId);
-                map.put(RoomRPCConstant.Key.area.name(),Long.parseLong(one.area.toString()));
+                map.put(RoomRPCConstant.Key.areaL.name(),new Long(one.areaL));
 
                 dto.setData(map);
                 LogUtil.debug(""+oneUserId,""+twoUserId, RoomRPCConstant.SERVICE_NAME,"match-two-room",dto);
@@ -88,7 +88,7 @@ public class MatchTwoRoomService {
 
                 RequestDTO dto = new RequestDTO();
                 Map<String,Long> map = new HashMap<>();
-                map.put(RoomRPCConstant.Key.area.name(),Long.parseLong(matchMeta.area.toString()));
+                map.put(RoomRPCConstant.Key.areaL.name(),new Long(matchMeta.areaL));
                 map.put(RoomRPCConstant.Key.accountId.name(),matchMeta.accountId);
                 map.put(RoomRPCConstant.Key.userId.name(),matchMeta.userId);
                 dto.setData(map);
@@ -102,14 +102,14 @@ public class MatchTwoRoomService {
     private class MatchMeta{
         public Long accountId;
         public Long userId;
-        public Byte area;
+        public int areaL;
         public String roomId;
         public boolean remove = false;
         public int lock = 0;
 
-        public MatchMeta(Long accountId,Long userId, Byte area) {
+        public MatchMeta(Long accountId,Long userId, int areaL) {
             this.accountId = accountId;
-            this.area = area;
+            this.areaL = areaL;
         }
     }
 }

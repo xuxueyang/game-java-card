@@ -11,12 +11,39 @@ public interface RoomRPCConstant {
     String CREATE_TWO_ROOM = _prefix + "/two/CREATE_TWO_ROOM";
     String SURRENDER = _prefix + "/two/SURRENDER";
 
+    String CREATE_ROOM = _prefix +"/CREATE_ROOM";
+
     enum Key{
-        area,
+//        area,
+        areaL,
         accountId,
         userId,
         oneUser,
         twoUser,
-        userIds
+        userIds,
+        roomKey,
+    }
+    enum RoomKey{
+        autochess("auto-chess");
+
+        private String status;
+
+        private RoomKey(String status) {
+            this.status = status;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        // 此方法是关键
+        public static RoomKey getByStatus(String status) {
+            for (RoomKey aparameterStatus : values()) {
+                if (aparameterStatus.getStatus().equals(status)) {
+                    return aparameterStatus;
+                }
+            }
+            return null;
+        }
     }
 }

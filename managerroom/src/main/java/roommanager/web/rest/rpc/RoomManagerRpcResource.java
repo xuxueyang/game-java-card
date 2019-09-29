@@ -24,12 +24,37 @@ import java.util.Map;
 public class RoomManagerRpcResource extends BaseResource {
     public static final Logger log = LoggerFactory.getLogger(RoomManagerRpcResource.class);
 
+    @Autowired
+    private RoomManagerService roomManagerService;
+
+    @PostMapping("/CREATE_ROOM")
+    @ApiOperation(value = "創建房間，根據key", httpMethod = "POST", response = ResponseEntity.class, notes = "創建房間，根據key")
+    public ReturnResultDTO CREATE_ROOM(@RequestBody RequestDTO dto) {
+        try {
+            if(dto.getData() instanceof Map){
+                String roomKey = ((Map) dto.getData()).get(RoomRPCConstant.Key.roomKey.name()).toString();
+                int areaL = Integer.parseInt(((Map) dto.getData()).get(RoomRPCConstant.Key.areaL.name()).toString());
+
+                Long[] userIds = (Long[]) (((Map) dto.getData()).get(RoomRPCConstant.Key.userIds.name()));
+                String roomId = roomManagerService.CREATE_ROOM(roomKey,areaL,userIds);
+                return prepareReturnResultDTO(ReturnCode.CREATE_SUCCESS,roomId);
+
+            }
+            return prepareReturnResultDTO(ReturnCode.ERROR_CREATE,"匹配異常，請稍後再試");
+
+        }catch (Exception e){
+            log.error(e.getMessage());
+            return prepareReturnResultDTO(ReturnCode.ERROR_CREATE,e.getMessage());
+        }
+    }
+
+
     @PostMapping("/two/CREATE_TWO_ROOM")
     @ApiOperation(value = "加入", httpMethod = "POST", response = ResponseEntity.class, notes = "加入")
     public ReturnResultDTO CREATE_TWO_ROOM(@RequestBody RequestDTO dto){
         try {
             if(dto.getData() instanceof Map){
-                Byte area = Byte.parseByte(((Map) dto.getData()).get(RoomRPCConstant.Key.area.name()).toString());
+                Byte area = Byte.parseByte(((Map) dto.getData()).get(RoomRPCConstant.Key.areaL.name()).toString());
                 Long oneUserId = Long.parseLong(((Map) dto.getData()).get(RoomRPCConstant.Key.oneUser.name()).toString());
                 Long twoUserId = Long.parseLong(((Map) dto.getData()).get(RoomRPCConstant.Key.twoUser.name()).toString());
                 roomManagerService.CREATE_TWO_ROOM(oneUserId,twoUserId,area);
@@ -53,17 +78,15 @@ public class RoomManagerRpcResource extends BaseResource {
         }
     }
 
-    @Autowired
-    private RoomManagerService roomManagerService;
 
     @PostMapping("/two/CREATE_AUTO_CHESS_ROOM")
     @ApiOperation(value = "加入", httpMethod = "POST", response = ResponseEntity.class, notes = "加入")
     public ReturnResultDTO CREATE_AUTO_CHESS_ROOM(@RequestBody RequestDTO dto){
         try {
             if(dto.getData() instanceof Map){
-                Byte area = Byte.parseByte(((Map) dto.getData()).get(RoomRPCConstant.Key.area.name()).toString());
+                int areaL = Integer.parseInt(((Map) dto.getData()).get(RoomRPCConstant.Key.areaL.name()).toString());
                 List userIds = (List)(((Map) dto.getData()).get(RoomRPCConstant.Key.userIds.name()));
-                roomManagerService.CREATE_AUTO_CHESS_ROOM(userIds,area);
+                roomManagerService.CREATE_AUTO_CHESS_ROOM(areaL,userIds);
                 return prepareReturnResultDTO(ReturnCode.CREATE_SUCCESS,true);
 
             }

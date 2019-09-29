@@ -18,6 +18,7 @@ public class CommonProtocol {
     public static final int SERVER_MATCH_CANCEL = server_index + 4;//取消
     public static final int SERVER_MATCH_SUCCESS = server_index + 5;//取消
     public static final int SERVER_MATCH_ERROR = server_index + 6;//取消
+    public static final int SERVER_ROOM_SUCCESS_CREATED = server_index + 7;//房間成功創建
 
 
 

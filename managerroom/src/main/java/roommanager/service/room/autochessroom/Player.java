@@ -16,6 +16,7 @@ class Player {
 //    private final static int
 
     private String id = UUIDGenerator.getUUID();
+    private Long userId;
     private int hp;
     private int level = 1;
     private int toNextLevelEXP = 0;//经验

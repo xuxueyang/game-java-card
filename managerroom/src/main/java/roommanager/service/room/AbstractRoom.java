@@ -11,7 +11,7 @@ public abstract class AbstractRoom<T> implements Runnable{
     protected RoomEventSendInterface<T> _RoomEventSendInterface = null;
     protected boolean canReceiveMessage = true;
     protected String _roomId;
-    protected Byte area;
+    protected int areaL;
 
     public abstract List<T> sendStartMsg();
 

@@ -9,7 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class UserObjectManager<T> {
     private int areaL = 0;
-
+    public int  getAreaL(){
+        return areaL;
+    }
     private  ConcurrentHashMap<String,String> valueKey = new ConcurrentHashMap<>();
     private  ConcurrentHashMap<String,String> keyValue = new ConcurrentHashMap<>();
     private  ConcurrentHashMap<String,T> keyObject = new ConcurrentHashMap<>();

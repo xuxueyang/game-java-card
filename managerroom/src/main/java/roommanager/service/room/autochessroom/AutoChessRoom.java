@@ -101,22 +101,21 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
 
 
 
-    public AutoChessRoom(Byte area, String roomId, List<Long> userIds,
+    public AutoChessRoom(int areaL, String roomId, List<Long> userIds,
                       RoomEventOverInterface<RoomEventOverInterface.DefaultOverDTO> roomEventOverInterface,
                       RoomEventSendInterface sendInterface)
             throws Exception
     {
         log.debug("init:戰鬥房間"+ JSON.toJSON(userIds));
         this.players  = new Player[userIds.size()];
+        for (int i = 0; i < this.players.length; i++) {
+            players[i].setUserId(userIds.get(i));
+        }
         this._RoomEventOverInterface = roomEventOverInterface;
         this._RoomEventSendInterface = sendInterface;
         this._roomId = roomId;
-        this.area = area;
+        this.areaL = areaL;
         //todo 随机生成地图
-//        ResourceManager resourceManager = _initResourceManager(oneUserId,oneUserDeck, true);
-//        ResourceManager resourceManager1 = _initResourceManager(twoUserId,twoUserDeck, false);
-//        this._oneManager = resourceManager;
-//        this._twoManager = resourceManager1;
         _checkData();//核查数据合法性，比如棋子3个，棋子数值不能过高，星辰值转为具体数值等等
         _initData();
     }
