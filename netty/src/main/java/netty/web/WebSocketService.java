@@ -93,7 +93,12 @@ public class WebSocketService {
     @OnError
     public void onError(Session session, Throwable throwable) {
         System.out.println("发生异常!");
-        throwable.printStackTrace();
+        try {
+            this.serverHandler.exceptionCaught(session,throwable);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        throwable.printStackTrace();
     }
     //统计在线人数
     private static int onlineCount = 0;

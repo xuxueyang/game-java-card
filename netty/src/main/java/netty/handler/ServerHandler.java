@@ -154,6 +154,8 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
     public void channelRead(Session session, Object msg) throws Exception {
         _channelRead(new AbstactSelfServerHandler.Channel(session),msg);
     }
+
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         _channelRead(new AbstactSelfServerHandler.Channel(ctx),msg);
@@ -309,9 +311,16 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         // TODO Auto-generated method stub
         log.info("异常信息：\r\n" + cause.getMessage());
-        cause.printStackTrace();
+//        cause.printStackTrace();
         _close(new AbstactSelfServerHandler.Channel(ctx));
     }
+    @Override
+    public void exceptionCaught(Session session, Throwable cause) throws Exception {
+        log.info("异常信息：\r\n" + cause.getMessage());
+//        cause.printStackTrace();
+        _close(new AbstactSelfServerHandler.Channel(session));
+    }
+
     private void _close(AbstactSelfServerHandler.Channel ctx) throws Exception{
         serverHandler.handlers.forEach(item -> {
             try {
