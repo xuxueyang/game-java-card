@@ -1,6 +1,7 @@
 package roommanager.service.effect;
 
 import core.protocol.Protocol;
+import core.protocol.PvpTwoRoomProtocol;
 import dist.RoomConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +53,7 @@ public class SysIncrStarForceEffect extends AbstractBaseEffect {
 
                     effectEvent.data = anInt+1;
 
-                    effectEvent.effectResult = Protocol.PvpTwoRoomProtocol.SERVER_STAR_STAR_FORCE_INCR;
+                    effectEvent.effectResult = PvpTwoRoomProtocol.SERVER_STAR_STAR_FORCE_INCR;
 //                    if(object.eventList==null){
 //                        object.eventList = new ArrayList();
 //                    }

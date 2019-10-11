@@ -10,6 +10,9 @@ import java.util.List;
 //玩家的管理类
 @Data
 class Player {
+    private final static int[] needLevel = new int[]{
+      2,4,6,12,24,32,50,70
+    };
     private final static int maxTmpChess = 5;
     private final static int maxLevel = 9;
     private final static int maxWaitArea = 8;//最多8个等待棋子

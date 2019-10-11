@@ -8,17 +8,31 @@ import java.util.List;
 //棋子
 @Data
 class Chess {
+    public Chess(PositionType positionType){
+        this.positionType = positionType;
+    }
     private static final int maxEquipNum =  3;
+
+    public void setByMetaChess(MetaChess metaChess) {
+        this.maxHp = metaChess.getMaxHp();
+        this.maxMp = metaChess.getMaxMp();
+        this.mp = metaChess.getMp();
+        this.hp = metaChess.getHp();
+        metaChess.getSkillType();
+    }
+
     public enum PositionType{
         WAIT,
         BATTLE,
         GLOBAL,//公共卡池
+        OTHER_GLOBAL,//选修卡池，独立算
     }
 
     private NodeManager.Node node = null;
     private int mp;
+    private String metaChessId;
     private int hp;
-    private int level;
+    private int level = 1;
     private String id;
     private String name;
     private int maxMp;

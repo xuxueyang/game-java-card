@@ -82,7 +82,7 @@ public class PvpTwoRoom extends AbstractRoom<RoomRabbitDTO> {
         this._RoomEventOverInterface = roomEventOverInterface;
         this._RoomEventSendInterface = sendInterface;
         this._roomId = roomId;
-        this.area = area;
+        this.areaL = area;
         //todo 随机生成地图
         this._mapId = 0;
         this._gameMap =  GameMapFactory.getGameMapById(this._mapId);
@@ -318,7 +318,7 @@ public class PvpTwoRoom extends AbstractRoom<RoomRabbitDTO> {
 
     private boolean _checkRequestDTO(RequestDTO dto) {
         boolean check = this._roundType == RoundType.start
-                &&dto.getRoomOperatorLong()!=null
+                &&dto.getRoomOperatorLong()!=0
                 &&dto.getUserId() == this.currentManager.userId
                 &&dto.getProtocol()>= PvpTwoRoomProtocol.CLINET_CARD_USE
                 && dto.getProtocol()<=PvpTwoRoomProtocol.CLINET_PLAYER_SURRENDER;
@@ -412,7 +412,7 @@ public class PvpTwoRoom extends AbstractRoom<RoomRabbitDTO> {
             RoomRabbitDTO oneDto = new RoomRabbitDTO();
             oneDto.setUserId(_oneManager.userId);
             oneDto.setData(currentManager.userId);
-            oneDto.setArea(area);
+            oneDto.setArea(areaL);
             oneDto.setType(Protocol.Type.ROOM);
             oneDto.setProtocol(PvpTwoRoomProtocol.SERVER_PLAYER_START);
             dtos.add(oneDto);
@@ -420,7 +420,7 @@ public class PvpTwoRoom extends AbstractRoom<RoomRabbitDTO> {
             RoomRabbitDTO twoDto = new RoomRabbitDTO();
             twoDto.setUserId(_twoManager.userId);
             twoDto.setData(currentManager.userId);
-            twoDto.setArea(area);
+            twoDto.setArea(areaL);
             twoDto.setType(Protocol.Type.ROOM);
             twoDto.setProtocol(PvpTwoRoomProtocol.SERVER_PLAYER_START);
             dtos.add(twoDto);
@@ -450,7 +450,7 @@ public class PvpTwoRoom extends AbstractRoom<RoomRabbitDTO> {
                 map.put(RoomConstants.Key_PvpTwoRoom.isOne.name(),manager.isOne);//表示位置其實
                 map.put(RoomConstants.Key_PvpTwoRoom.handCards.name(),manager.handCardsManager);
                 oneDto.setData(map);
-                oneDto.setArea(area);
+                oneDto.setArea(areaL);
                 oneDto.setType(Protocol.Type.ROOM);
                 oneDto.setProtocol(PvpTwoRoomProtocol.SERVER_ROOM_INIT);
             }

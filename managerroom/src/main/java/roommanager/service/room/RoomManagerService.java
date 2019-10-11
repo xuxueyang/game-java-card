@@ -127,7 +127,7 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
         startRoom(pvpTwoRoom);
         return roomId;
     }
-    public void CREATE_TWO_ROOM(Long oneUserId, Long twoUserId,Byte area) throws Exception {
+    public void CREATE_TWO_ROOM(Long oneUserId, Long twoUserId,Byte areaL) throws Exception {
 
         //init初始化房間,根據xmind
         //創建一個綫程執行附件
@@ -136,7 +136,7 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
         RequestDTO dto = new RequestDTO<>();
         Map<String,Object>  map = new HashMap<>();
         map.put(RoomRPCConstant.Key.userId.name(),oneUserId);
-        map.put(RoomRPCConstant.Key.areaL.name(),area);
+        map.put(RoomRPCConstant.Key.areaL.name(),areaL);
         dto.setData(map);
         ReturnResultDTO oneDeck = deckRpcClient.GET_DECK(dto);
         if(!oneDeck.getReturnCode().startsWith(ReturnCode.SUCCESS)){
@@ -149,7 +149,7 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
         if(!twoDeck.getReturnCode().startsWith(ReturnCode.SUCCESS)){
             throw new Exception("獲取次玩家卡組失敗");
         }
-        PvpTwoRoom pvpTwoRoom = new PvpTwoRoom(area,roomId, oneUserId,(DeckRpcDTO)oneDeck.getData(),twoUserId, (DeckRpcDTO)twoDeck.getData(),this,this);
+        PvpTwoRoom pvpTwoRoom = new PvpTwoRoom(areaL,roomId, oneUserId,(DeckRpcDTO)oneDeck.getData(),twoUserId, (DeckRpcDTO)twoDeck.getData(),this,this);
         _roomMap.put(roomId,pvpTwoRoom);
 //        executor.execute(pvpTwoRoom);
         startRoom(pvpTwoRoom);

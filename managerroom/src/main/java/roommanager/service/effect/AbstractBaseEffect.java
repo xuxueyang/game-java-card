@@ -1,6 +1,7 @@
 package roommanager.service.effect;
 
 import core.protocol.Protocol;
+import core.protocol.PvpTwoRoomProtocol;
 import dist.RoomConstants;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public abstract class AbstractBaseEffect<BelongObject> {
     public EffectData effect(EffectData object){
         //加入一个失败的消息
         List eventList = object.eventList;
-        eventList.add(new EffectEvent().effectResult = Protocol.PvpTwoRoomProtocol.SERVER_ERROR);
+        eventList.add(new EffectEvent().effectResult = PvpTwoRoomProtocol.SERVER_ERROR);
         return object;
     }//效果生效
 

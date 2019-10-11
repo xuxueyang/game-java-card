@@ -7,7 +7,7 @@ public class RoomRabbitDTO<Data> {
     private int area;//二级协议（区分模块等）
     private Integer protocol;//三级具体协议
     private Data data;
-    private Long roomOperatorLong;
+    private int roomOperatorLong;
 
     public Long getUserId() {
         return userId;
@@ -49,11 +49,11 @@ public class RoomRabbitDTO<Data> {
         this.data = data;
     }
 
-    public Long getRoomOperatorLong() {
+    public int getRoomOperatorLong() {
         return roomOperatorLong;
     }
 
-    public void setRoomOperatorLong(Long roomOperatorLong) {
+    public void setRoomOperatorLong(int roomOperatorLong) {
         this.roomOperatorLong = roomOperatorLong;
     }
 }

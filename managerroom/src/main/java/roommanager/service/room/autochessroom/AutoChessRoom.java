@@ -25,6 +25,7 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
         @Override
         public void run() {
             //每过45s，设置回合结束
+            //TODO 或者当所有玩家都操作完毕时（尤其是选池)
             for (Player player : players) {
                 player.setCanPlayer(false);
             }
@@ -40,6 +41,9 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
     private Player[] players = null;
     private Timer timer = new Timer();
     private long _startTime;
+    private int currentTimeNum = 1;//当前回合数(num/5+1)-(num%5+1)回合
+    //公共选池
+    private ChessManager chessManager = null;
 
     @Override
     public void run() {
@@ -82,7 +86,7 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
         for (Player player : this.players) {
             player.setCanPlayer(true);
         }
-        timer.scheduleAtFixedRate(roundListen, 0,45);
+        timer.scheduleAtFixedRate(roundListen, 0,30);
         //階段處理
     }
 
@@ -90,6 +94,9 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
 
     @Override
     public List sendStartMsg() {
+        //TODO 发送开始消息，并且附带第一次卡池的选项
+        List<Chess> chessList = chessManager.getPublicPoolInfo();
+        //todo 封装成RoomRabbitDTO返回
         return null;
     }
 
@@ -107,6 +114,9 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
             throws Exception
     {
         log.debug("init:戰鬥房間"+ JSON.toJSON(userIds));
+        if(userIds.size()<minPlayerNum||userIds.size()>maxPlayerNum){
+            throw new Exception("超出最大人数");
+        }
         this.players  = new Player[userIds.size()];
         for (int i = 0; i < this.players.length; i++) {
             players[i].setUserId(userIds.get(i));
@@ -121,10 +131,66 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
     }
 
     private void _initData() {
+        //初始化公共选池
+        chessManager = new ChessManager();
+        chessManager.init();
+        //开始肯定就一级
+        chessManager.resetPoolByTimeNum(getLevelByTimeNum(this.currentTimeNum));
     }
 
+    //回合类型
+    enum TimeType{
+        VS_PVE,
+        SELECT,//选秀
+        VS_PVP,//玩家战斗
+    }
+    private static int[] __PVE = new int[]
+    {
+        1,2,3,10,15,21,28,36,45,55
+    };
+    private static int[] __SELECT = new int[]
+    {
+        6,13,19,26,34,43,50
+    };
+
+    public static TimeType getTimeTypeByCurrentTimeNum(int currentTimeNum){
+        for (int i : __PVE) {
+            if(i==currentTimeNum){
+                return TimeType.VS_PVE;
+            }
+        }
+        for (int i:__SELECT){
+            if(i==currentTimeNum){
+                return TimeType.SELECT;
+            }
+        }
+        return TimeType.VS_PVP;
+    }
+    public static int getLevelTimeByTimeNum(int currentTimeNum){
+        int level = getLevelByTimeNum(currentTimeNum);
+        return (currentTimeNum-(level-1)*level/2);
+    }
+
+    public static int getLevelByTimeNum(int currentTimeNum){
+        int i = 0;
+        while (i*i-i<2*currentTimeNum){
+            i++;
+        }
+        return i-1;
+    }
     private void _checkData() {
         
+    }
+    private static void _test(){
+        for(int i=1;i<100;i++){
+            int level= getLevelByTimeNum(i);
+            int time = getLevelTimeByTimeNum(i);
+            System.out.println(level + "-" + time +":" + i);
+
+        }
+    }
+    public static void main(String[] args){
+        _test();
     }
 
 }
