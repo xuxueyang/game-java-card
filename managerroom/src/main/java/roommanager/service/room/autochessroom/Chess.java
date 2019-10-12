@@ -17,6 +17,8 @@ class Chess {
         this.maxHp = metaChess.getMaxHp();
         this.maxMp = metaChess.getMaxMp();
         this.mp = metaChess.getMp();
+        this.name = metaChess.getName();
+        this.metaChessId = metaChess.getId();
         this.hp = metaChess.getHp();
         this.level = metaChess.getInitLevel();
         this.skill = Skill.getSkillById(metaChess.getSkillId());

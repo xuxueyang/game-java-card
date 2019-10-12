@@ -107,9 +107,9 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
         Thread threadProducer  = new Thread(runnableProducer);
         Thread _threadConsumer  = new Thread(_runnableConsumer);
 
-        threadConsumer.run();
-        threadProducer.run();
-        _threadConsumer.run();
+        threadConsumer.start();
+        threadProducer.start();
+        _threadConsumer.start();
     }
     //todo 注入rabbit，并且接受消息
 //    Executor executor = Executors.newFixedThreadPool(10);
@@ -172,7 +172,7 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
         List<RoomRabbitDTO> roomRabbitDTOS = room.sendStartMsg();
         //TODO 消息推送到隊列，然後netty取出來消費發送給玩家
         //收到了check請求，然後再開始
-        room.run();
+        room.start();
     }
     @Override
     public void over(DefaultOverDTO defaultOverDTO) {
@@ -202,17 +202,11 @@ public class RoomManagerService implements RoomEventOverInterface<RoomEventOverI
         }
     }
 
-    public String CREATE_ROOM(String roomKey,int areaL, Long[] userIds) {
-        try {
-            switch (RoomRPCConstant.RoomKey.getByStatus(roomKey)){
-                case autochess:{
-                    List<Long> longs = Arrays.asList(userIds);
-                    CREATE_AUTO_CHESS_ROOM(areaL,longs);
-                }break;
+    public String CREATE_ROOM(String roomKey,int areaL, List<Long> userIds) throws Exception {
+        switch (RoomRPCConstant.RoomKey.getByStatus(roomKey)){
+            case autochess:{
+                return CREATE_AUTO_CHESS_ROOM(areaL,userIds);
             }
-            return "roomId";
-        }catch (Exception e){
-            e.printStackTrace();
         }
         return "";
     }

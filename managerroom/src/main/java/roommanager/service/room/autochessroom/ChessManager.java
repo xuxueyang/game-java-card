@@ -16,7 +16,7 @@ public class ChessManager {
     private static final int NUM = 5;
     private static final int[][] chessRandom = {
             {100 , 0 , 0 , 0 , 0},
-            {100 , 30 , 0 , 0 , 0},
+            {100 , 0 , 0 , 0 , 0},
             {70 , 30 , 0 , 0 , 0},
             {55 , 30 , 15 , 0 , 0},
             {40 , 30 , 25 , 5 , 0},//5
@@ -33,9 +33,9 @@ public class ChessManager {
             metaChessIds[i] = values[i].name();
         }
     }
-    private ConcurrentHashMap<String,Chess> chessAll= new ConcurrentHashMap<>();
+    private volatile ConcurrentHashMap<String,Chess> chessAll= new ConcurrentHashMap<>();
 
-    private List<Chess> otherPublicPool = new ArrayList<>(AutoChessRoom.maxPlayerNum);
+    private volatile List<Chess> otherPublicPool = new ArrayList<>(AutoChessRoom.maxPlayerNum);
 
     private List<Equip> getRandomEquip(int num){//根据野怪数目，todo
         return null;

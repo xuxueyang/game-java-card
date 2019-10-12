@@ -44,5 +44,10 @@ public class RoomServerHandler extends AbstactSelfServerHandler<RequestDTO,Reque
         return Protocol.Type.ROOM;
     }
 
+    @Override
+    public void init() {
+
+    }
+
 
 }

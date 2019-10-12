@@ -5,7 +5,7 @@ import core.core.RequestDTO;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public abstract class AbstractRoom<T> implements Runnable{
+public abstract class AbstractRoom<T> extends Thread{
     protected LinkedBlockingQueue<RequestDTO> blockingQueue = new LinkedBlockingQueue(20);
     protected RoomEventOverInterface<RoomEventOverInterface.DefaultOverDTO> _RoomEventOverInterface = null;
     protected RoomEventSendInterface<T> _RoomEventSendInterface = null;

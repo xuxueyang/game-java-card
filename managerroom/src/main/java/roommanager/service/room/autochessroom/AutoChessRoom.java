@@ -33,12 +33,12 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
             }
         }
     };
-    enum RoundType{
-        PRE_INIT,//预备阶段——结算利息
-        COMMON,//一般玩家回合——买旗子、卖棋子、将棋子上阵、添加和合成装备__自动的：合成棋子，羁绊buff添加，出现利息动画等
-        BATTLE,//玩家对抗回合
-        PRE_END,//结算胜负
-    }
+//    enum RoundType{
+//        PRE_INIT,//预备阶段——结算利息
+//        COMMON,//一般玩家回合——买旗子、卖棋子、将棋子上阵、添加和合成装备__自动的：合成棋子，羁绊buff添加，出现利息动画等
+//        BATTLE,//玩家对抗回合
+//        PRE_END,//结算胜负
+//    }
 
     private Player[] players = null;
     private Timer timer = new Timer();
@@ -153,7 +153,8 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
         }
         this.players  = new Player[userIds.size()];
         for (int i = 0; i < this.players.length; i++) {
-            players[i].setUserId(userIds.get(i));
+            players[i] = new Player(userIds.get(i));
+//            players[i].setUserId();
         }
         this._RoomEventOverInterface = roomEventOverInterface;
         this._RoomEventSendInterface = sendInterface;
@@ -169,10 +170,18 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
         chessManager = new ChessManager();
         chessManager.init();
         //开始肯定就一级
-        chessManager.resetPoolByTimeNum(getLevelByTimeNum(this.currentTimeNum));
+        chessManager.resetPoolByTimeNum(3);
     }
 
     private TimeType currentTimeType = TimeType.SELECT;
+    private RoundType roundType = RoundType.PRE;
+    enum  RoundType{
+        PRE,//預備階段，用來時間同步，結算（鎖定玩家操作)
+        PRE_BATTLE,//戰鬥開始
+        BATTLE,//戰鬥
+        BATTLE_END,//戰鬥結束（等待所有人完成)
+        END//結算（鎖定玩家操作)
+    }
     //回合类型
     enum TimeType{
         VS_PVE,

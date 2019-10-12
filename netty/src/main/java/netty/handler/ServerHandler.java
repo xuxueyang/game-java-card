@@ -57,15 +57,24 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
     @Autowired
     private MatchServerHandler matchServerHandler;
 
+//    public static void main(String[] args){
+//        Field[] fields = ServerHandler.class.getDeclaredFields();
+//        for (int i = 0; i < fields.length; i++) {
+//            Field field = fields[i];
+//            if (field.getClass().isAssignableFrom(AbstactSelfServerHandler.class)) {
+//
+//            }
+//        }
+//    }
     @PostConstruct
     public void init(){
         serverHandler = this;
 //        serverHandler.acctRpcClient = this.acctRpcClient;
 
-        Field[] fields = serverHandler.getClass().getFields();
+        Field[] fields = serverHandler.getClass().getDeclaredFields();
         for (int i = 0; i < fields.length; i++) {
             Field field = fields[i];
-            if(field.getClass().isAssignableFrom(AbstactSelfServerHandler.class) ){
+            if(AbstactSelfServerHandler.class.isAssignableFrom(field.getType()) ){
                 try {
 //                    AbstactSelfServerHandler handler = (AbstactSelfServerHandler)field.get(serverHandler);
 //                    serverHandler.handlers.put(handler.getType(),handler);
@@ -77,14 +86,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
                 }
             }
         }
-
-//        serverHandler.chatServerHandler = this.chatServerHandler;
-//        serverHandler.fileServerHandler = this.fileServerHandler;
-//        serverHandler.roomServerHandler = this.roomServerHandler;
-
-//        serverHandler.handlers.add(this.chatServerHandler);
-//        serverHandler.handlers.add(this.roomServerHandler);
-//        serverHandler.handlers.add(this.fileServerHandler);
     }
 
     private  UserObjectManager<AbstactSelfServerHandler.Channel> manager = new UserObjectManager<AbstactSelfServerHandler.Channel>(1);
@@ -120,7 +121,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter implements WebSe
         log.info(ctx.channel().id() + "离开了");
         if(manager.containsValue(ctx.channel().id().asLongText())){
             manager.removeByValue(ctx.channel().id().asLongText());
-
         }
     }
     @Override

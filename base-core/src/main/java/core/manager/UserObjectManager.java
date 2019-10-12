@@ -28,7 +28,7 @@ public class UserObjectManager<T> {
         return keyLongs;
     }
     public T getObject(Long key){
-        return keyObject.get(key);
+        return keyObject.get(key + Protocol.AreaL.split + this.areaL);
     }
     public boolean containsValue(String value){
         return valueKey.containsKey(value);
@@ -46,8 +46,8 @@ public class UserObjectManager<T> {
     public void removeByValue(String value) {
         Long aLong = getKeyByValue(value);
         if(aLong!=null){
-            keyValue.remove(aLong);
-            keyObject.remove(aLong);
+            keyValue.remove(aLong+ Protocol.AreaL.split + this.areaL);
+            keyObject.remove(aLong + Protocol.AreaL.split + this.areaL);
             valueKey.remove(value);
             keyLongs.remove(aLong);
         }

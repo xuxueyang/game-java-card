@@ -37,6 +37,9 @@ class Player {
 
     private Chess[] tmpChess = new Chess[maxTmpChess];
 
+    public Player(Long userId){
+        this.userId = userId;
+    }
     //方法
     public void buy(Chess chess){
         //构造出这样一个棋子

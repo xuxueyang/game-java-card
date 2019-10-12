@@ -68,7 +68,5 @@ public abstract class AbstactSelfServerHandler<T,A> {
     }
 
     public abstract byte getType();
-    public void init(){
-
-    }
+    public abstract void init();
 }

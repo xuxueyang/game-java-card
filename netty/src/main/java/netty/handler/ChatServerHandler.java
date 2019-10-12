@@ -66,6 +66,11 @@ public class ChatServerHandler extends AbstactSelfServerHandler<RequestDTO, Requ
         return Protocol.Type.CHAT;
     }
 
+    @Override
+    public void init() {
+
+    }
+
 
     @Data
     private class Message{

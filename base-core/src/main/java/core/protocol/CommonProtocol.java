@@ -17,9 +17,9 @@ public class CommonProtocol {
     public static final int SERVER_MATCH_ADD = server_index + 3;//加入匹配
     public static final int SERVER_MATCH_CANCEL = server_index + 4;//取消
     public static final int SERVER_MATCH_SUCCESS = server_index + 5;//取消
-    public static final int SERVER_MATCH_ERROR = server_index + 6;//取消
+    public static final int SERVER_MATCH_ERROR = server_index + 6;//取消失敗
     public static final int SERVER_ROOM_SUCCESS_CREATED = server_index + 7;//房間成功創建
-
+    public static final int SERVER_MATCH_CANCEL_ERROR_IS_IN_INIT_ROOM = server_index + 8;//房間成功創建
 
 
 //————————————————————ERROR
