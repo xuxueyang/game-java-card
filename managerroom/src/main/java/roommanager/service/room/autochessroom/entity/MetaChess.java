@@ -13,5 +13,6 @@ public class MetaChess{
     private int maxHp;
     private int mp;
     private int hp;
-    private AutoChessRoomProtocol.SkillType skillType;//自带的技能
+    private int skillId;
+//    private AutoChessRoomProtocol.SkillType skillType;//自带的技能
 }

@@ -1,8 +1,8 @@
 package core.protocol;
 
 public class AutoChessRoomProtocol {
-    private static final int client_index =  Protocol._Index.AutoChessRoomIndex_CLIENT;
-    private static final int server_index =  Protocol._Index.AutoChessRoomIndex_SERVER;
+    private static final int client_index =  Protocol._Index.AutoChessRoomIndex_CLIENT;//14000
+    private static final int server_index =  Protocol._Index.AutoChessRoomIndex_SERVER;//16000
 
     //奇数代表错误
     //客户端+2000代表正确返回
@@ -40,6 +40,7 @@ public class AutoChessRoomProtocol {
     public static final int SERVER_PLAYER_REFRESH_SELF_ERRPR= server_index + 3;
     public static final int SERVER_PLAYER_REFRESH_AUTO= SERVER_PLAYER_REFRESH_SELF;
 //    public static final int SERVER_PLAYER_REFRESH_AUTO= server_index + 5;
+    public static final int SERVER_INIT_SUCCESS= server_index + 6;//初始化成功，进入游戏
 
     public enum SkillType { //技能状态
         BEI_DONG(0,"被动"),

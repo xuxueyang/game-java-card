@@ -9,4 +9,8 @@ public class Skill {
     public Skill(AutoChessRoomProtocol.SkillType type) {
         this.type = type;
     }
+
+    public static Skill getSkillById(int skillId) {
+        return new Skill(AutoChessRoomProtocol.SkillType.BEI_DONG);
+    }
 }

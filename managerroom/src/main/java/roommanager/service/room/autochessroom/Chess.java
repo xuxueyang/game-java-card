@@ -18,14 +18,16 @@ class Chess {
         this.maxMp = metaChess.getMaxMp();
         this.mp = metaChess.getMp();
         this.hp = metaChess.getHp();
-        metaChess.getSkillType();
+        this.level = metaChess.getInitLevel();
+        this.skill = Skill.getSkillById(metaChess.getSkillId());
+
     }
 
     public enum PositionType{
         WAIT,
         BATTLE,
         GLOBAL,//公共卡池
-        OTHER_GLOBAL,//选修卡池，独立算
+        OTHER_GLOBAL,//选秀卡池，独立算
     }
 
     private NodeManager.Node node = null;

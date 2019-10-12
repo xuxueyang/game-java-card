@@ -1,6 +1,7 @@
 package roommanager.service.room.autochessroom;
 
 import com.alibaba.fastjson.JSON;
+import core.protocol.AutoChessRoomProtocol;
 import core.protocol.Protocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import roommanager.service.room.RoomEventSendInterface;
 import roommanager.service.room.RoomRabbitDTO;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -41,7 +43,7 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
     private Player[] players = null;
     private Timer timer = new Timer();
     private long _startTime;
-    private int currentTimeNum = 1;//当前回合数(num/5+1)-(num%5+1)回合
+    private int currentTimeNum = 0 ;//当前回合数(num/5+1)-(num%5+1)回合
     //公共选池
     private ChessManager chessManager = null;
 
@@ -61,14 +63,14 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
                     if(timestamp-player.getTimestamp()< Protocol.Head_TIME){
                         //説明失去聯係了
 //                        TODO 不考虑超时 overTime(player.userId,_oneManager.userId);
-                        timer.cancel();
+//                        timer.cancel();
                         return;
                     }
                 }
             }
         };
         timer.scheduleAtFixedRate(headListen, 0,30);
-        boolean notReady = true;
+        boolean notReady = false;//TODO 默认不需要准备直接开始
         while (notReady){
             for (Player player : players) {
                 if(player.isReady())
@@ -87,17 +89,49 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
             player.setCanPlayer(true);
         }
         timer.scheduleAtFixedRate(roundListen, 0,30);
-        //階段處理
+        //todo 客户端每次动画的时候需要同步一次时间
+
+        //階段處理 和消息处理
+        while (true){
+            //todo 如果都好了或者到时间了，那么就进入下个阶段。
+            // todo 同时结算胜负钱、利息、连胜连败、血量排名
+            switch (currentTimeType){
+                case SELECT:
+                {
+                    //todo 需要等待和判断每个玩家选中棋子，
+                    //todo 需要不断解锁让玩家行动
+                }break;
+                case VS_PVE:
+                {
+                    //和野怪对战，每次回合都需要等待所有玩家战斗结束或者到时间，才能触发下一个回合
+                    //野怪需要掉落装备
+                }break;
+                case VS_PVP:
+                {
+                    //轮盘转法（含有影子生成）来匹配2个玩家战斗，对于每个玩家，对面的都是【生成】的npc
+                }break;
+            }
+        }
     }
 
 
 
     @Override
     public List sendStartMsg() {
-        //TODO 发送开始消息，并且附带第一次卡池的选项
+        //发送开始消息，并且附带第一次卡池的选项
         List<Chess> chessList = chessManager.getPublicPoolInfo();
         //todo 封装成RoomRabbitDTO返回
-        return null;
+        List<RoomRabbitDTO> list = new ArrayList<>();
+        for (Player player : players) {
+            RoomRabbitDTO dto = new RoomRabbitDTO();
+            dto.setUserId(player.getUserId());
+            dto.setData(chessList);
+            dto.setType(Protocol.Type.ROOM);
+            dto.setArea(Protocol.Area.Netty);
+            dto.setProtocol(AutoChessRoomProtocol.SERVER_INIT_SUCCESS);
+            list.add(dto);
+        }
+        return list;
     }
 
     @Override
@@ -138,6 +172,7 @@ public class AutoChessRoom extends AbstractRoom<RoomRabbitDTO> {
         chessManager.resetPoolByTimeNum(getLevelByTimeNum(this.currentTimeNum));
     }
 
+    private TimeType currentTimeType = TimeType.SELECT;
     //回合类型
     enum TimeType{
         VS_PVE,
