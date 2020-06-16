@@ -10,12 +10,12 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 //@ComponentScans(value = {@ComponentScan(value = "acct")})
-@SpringBootApplication
+@SpringBootApplication(scanBasePackageClasses = AcctApplication.class)
 @EnableDiscoveryClient
 @EnableEurekaClient
 @EnableFeignClients
-@ComponentScan(basePackageClasses = AcctApplication.class)
-@EnableAutoConfiguration()
+//@ComponentScan(basePackageClasses = AcctApplication.class)
+//@EnableAutoConfiguration()
 public class AcctApplication {
     public static void main(String[] args){
         SpringApplication.run(AcctApplication.class,args);

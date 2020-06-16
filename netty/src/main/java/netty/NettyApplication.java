@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 import java.net.InetSocketAddress;
 
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
-@ComponentScan
+//@ComponentScan
 @EnableDiscoveryClient
 @EnableEurekaClient
 @EnableFeignClients

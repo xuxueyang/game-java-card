@@ -11,11 +11,11 @@ import org.springframework.context.annotation.ComponentScan;
 //import org.springframework.context.annotation.ComponentScans;
 
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackageClasses = ItemApplication.class)
 @EnableDiscoveryClient
 @EnableEurekaClient
 @EnableFeignClients
-@ComponentScan(basePackageClasses = ItemApplication.class)
+//@ComponentScan(basePackageClasses = ItemApplication.class)
 public class ItemApplication {
     public static void main(String[] args){
         SpringApplication.run(ItemApplication.class,args);

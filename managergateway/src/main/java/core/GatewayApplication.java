@@ -15,7 +15,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
 //@ComponentScans(value = {@ComponentScan(value = "main")})
-@ComponentScan
+//@ComponentScan
 @EnableDiscoveryClient
 @EnableEurekaClient
 @EnableFeignClients

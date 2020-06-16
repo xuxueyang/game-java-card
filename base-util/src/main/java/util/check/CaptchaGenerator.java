@@ -1,7 +1,7 @@
 package util.check;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+//import sun.misc.BASE64Decoder;
+//import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -66,18 +66,16 @@ public final class CaptchaGenerator {
             e.printStackTrace();
         }
 
-        // ���ֽ�����Base64����
-        BASE64Encoder encoder = new BASE64Encoder();
-        return encoder.encode(data);// ����Base64��������ֽ������ַ���
+        return core.util.Base64.encode(data);
     }
 
     public static boolean GenerateImage(String imgStr, String imgFilePath) {// ���ֽ������ַ�������Base64���벢����ͼƬ
         if (imgStr == null) // ͼ������Ϊ��
             return false;
-        BASE64Decoder decoder = new BASE64Decoder();
+//        BASE64Decoder decoder = new BASE64Decoder();
         try {
             // Base64����
-            byte[] bytes = decoder.decodeBuffer(imgStr);
+            byte[] bytes = core.util.Base64.decode(imgStr);
             for (int i = 0; i < bytes.length; ++i) {
                 if (bytes[i] < 0) {// �����쳣����
                     bytes[i] += 256;

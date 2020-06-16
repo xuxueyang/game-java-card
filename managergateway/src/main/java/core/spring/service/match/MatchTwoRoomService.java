@@ -32,7 +32,7 @@ public class MatchTwoRoomService {
             return false;
         }
         //如果已經在隊列中，那麽不能加入，如果已經在隊列中需要
-        MatchMeta matchMeta = new MatchMeta(userInfo.getAccountId(), userInfo.getId(),userInfo.getArea());
+        MatchMeta matchMeta = new MatchMeta(userInfo.getAccountId(), userInfo.getId(),userInfo.getArea().intValue());
         boolean offer = _userIdsQueue.offer(matchMeta.userId);
         if(offer){
             _userMetaMap.put(matchMeta.userId,matchMeta);

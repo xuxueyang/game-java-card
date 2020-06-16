@@ -6,7 +6,7 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScans;
 
-@ComponentScans(value = {@ComponentScan(value = "core")})
+//@ComponentScans(value = {@ComponentScan(value = "core")})
 @SpringBootApplication
 @EnableEurekaServer
 public class RegistryApplication {
