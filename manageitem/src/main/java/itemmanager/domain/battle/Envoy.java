@@ -1,59 +1,80 @@
 package itemmanager.domain.battle;
 
 import core.core.BaseEntity;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+/**
+ * 棋子：
+ * 限制：
+ * 1。技能数目理论上无限，但是目前可以有多个
+ * 2。棋子使用的时候需要消耗星辰值（如果死亡替换，那么不需要消耗）
+ * 3。棋子上场后，会进入休眠，下一回合才会可以移动
+ * 4。上场后需不需要继承buff？
+ *
+ * 属性
+ * 1。名字、2。攻击力 3。血量 4。防御力 5。附加的额外buff 6。技能 7。品级 8。消耗的星辰值 9。介绍 10.移动力
+ *
+ * 以后拓展：
+ * 1。等级
+ * 2。种族
+ * 3。 所属属性
+ *
+ * PS：应该区分平时状态和非战斗状态，以及区分具体玩家类和抽象类
+ *
+ */
 // 棋子类
 @Entity
+@Data
 @Table(name = "it_envoy")
 public class Envoy extends BaseEntity {
 
     @Column(nullable = false,name = "attribute",length = 5)
     private Integer attribute;//属性(netty.code)
 
-    @Transient
-    private String attributeName;//属性(netty.code)
+//    @Transient
+//    private String attributeName;//属性(netty.code)
 
-    @Column(nullable = false,name = "race",length = 5)
-    private Integer race;//种族(netty.code)
-    @Transient
-    private String raceName;//种族名字(netty.code)
+//    @Column(nullable = false,name = "race",length = 5)
+//    private Integer race;//种族(netty.code)
+//    @Transient
+//    private String raceName;//种族名字(netty.code)
 
     @Column(nullable = false,name = "name",length = 5)
     private String name;//名字
 
-    @Column(nullable = false,name = "icon",length = 255)
-    private String icon = "";//头像
+//    @Column(nullable = false,name = "icon",length = 255)
+//    private String icon = "";//头像
 
     @Column(nullable = false,name = "grade",length = 5)
     private Integer grade;//品级
 
-    @Transient
-    private String gradeName;//品级
+//    @Transient
+//    private String gradeName;//品级
 
     @Column(nullable = false,name = "starForce",length = 5)
     private Integer starForce = 0;//星辰值
 
-    @Column(nullable = false,name = "maxPlusStarForce",length = 5)
-    private Integer maxPlusStarForce=20;//最大的星辰值
+//    @Column(nullable = false,name = "maxPlusStarForce",length = 5)
+//    private Integer maxPlusStarForce=20;//最大的星辰值
 
     @Column(nullable = false,name = "attack",length = 10)
     private Integer attack = 0;//攻击力
-    @Column(nullable = false,name = "incrAttack",length = 10)
-    private Integer incrAttack = 0;//成长攻击力
+//    @Column(nullable = false,name = "incrAttack",length = 10)
+//    private Integer incrAttack = 0;//成长攻击力
 
     @Column(nullable = false,name = "defense",length = 10)
     private Integer defense = 0;//防御
-    @Column(nullable = false,name = "incrDefense",length = 10)
-    private Integer incrDefense = 0;//成长防御
+//    @Column(nullable = false,name = "incrDefense",length = 10)
+//    private Integer incrDefense = 0;//成长防御
     @Column(nullable = false,name = "hp",length = 10)
     private Integer hp = 0;//血量
-    @Column(nullable = false,name = "incrHp",length = 10)
-    private Integer incrHp = 0;//成长血量
+//    @Column(nullable = false,name = "incrHp",length = 10)
+//    private Integer incrHp = 0;//成长血量
     @Column(nullable = false,name = "move",length = 10)
     private Integer move = 0;//移动力
     @Column(nullable = false,name = "attackDistance",length = 10)
@@ -62,13 +83,15 @@ public class Envoy extends BaseEntity {
     @Column(nullable = false,name = "criticalRate",length = 10)
     private Integer criticalRate = 10;//暴击率
 
-    @Column(nullable = false,name = "description",length = 255)
-    private String description= "";
+    @Column(nullable = false,name = "desc",length = 255)
+    private String desc= "";
 
-    @Column(nullable = false,name = "designDescription",length = 255)
-    private String designDescription= "";
-    @Column(nullable = false,name = "jsonMap",length = 255)
-    private String jsonMap = "";
+    @Column(nullable = false,name = "link_skill",length = 255)
+    private String linkSkills = "";//逗号分割技能ID
+//    @Column(nullable = false,name = "designDescription",length = 255)
+//    private String designDescription= "";
+//    @Column(nullable = false,name = "jsonMap",length = 255)
+//    private String jsonMap = "";
 //    @Column(nullable = false,name = "level",length = 5)
 //    private Integer level = 1;
 
@@ -79,180 +102,4 @@ public class Envoy extends BaseEntity {
 //    private Integer plusDefense;
 //    private Integer plusBlood;
 
-
-    public Integer getAttribute() {
-        return attribute;
-    }
-
-    public void setAttribute(Integer attribute) {
-        this.attribute = attribute;
-    }
-
-    public String getAttributeName() {
-        return attributeName;
-    }
-
-    public void setAttributeName(String attributeName) {
-        this.attributeName = attributeName;
-    }
-
-    public Integer getRace() {
-        return race;
-    }
-
-    public void setRace(Integer race) {
-        this.race = race;
-    }
-
-    public String getRaceName() {
-        return raceName;
-    }
-
-    public void setRaceName(String raceName) {
-        this.raceName = raceName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public Integer getGrade() {
-        return grade;
-    }
-
-    public void setGrade(Integer grade) {
-        this.grade = grade;
-    }
-
-    public String getGradeName() {
-        return gradeName;
-    }
-
-    public void setGradeName(String gradeName) {
-        this.gradeName = gradeName;
-    }
-
-    public Integer getStarForce() {
-        return starForce;
-    }
-
-    public void setStarForce(Integer starForce) {
-        this.starForce = starForce;
-    }
-
-    public Integer getMaxPlusStarForce() {
-        return maxPlusStarForce;
-    }
-
-    public void setMaxPlusStarForce(Integer maxPlusStarForce) {
-        this.maxPlusStarForce = maxPlusStarForce;
-    }
-
-    public Integer getAttack() {
-        return attack;
-    }
-
-    public void setAttack(Integer attack) {
-        this.attack = attack;
-    }
-
-    public Integer getIncrAttack() {
-        return incrAttack;
-    }
-
-    public void setIncrAttack(Integer incrAttack) {
-        this.incrAttack = incrAttack;
-    }
-
-    public Integer getDefense() {
-        return defense;
-    }
-
-    public void setDefense(Integer defense) {
-        this.defense = defense;
-    }
-
-    public Integer getIncrDefense() {
-        return incrDefense;
-    }
-
-    public void setIncrDefense(Integer incrDefense) {
-        this.incrDefense = incrDefense;
-    }
-
-    public Integer getHp() {
-        return hp;
-    }
-
-    public void setHp(Integer hp) {
-        this.hp = hp;
-    }
-
-    public Integer getIncrHp() {
-        return incrHp;
-    }
-
-    public void setIncrHp(Integer incrHp) {
-        this.incrHp = incrHp;
-    }
-
-    public Integer getMove() {
-        return move;
-    }
-
-    public void setMove(Integer move) {
-        this.move = move;
-    }
-
-    public Integer getAttackDistance() {
-        return attackDistance;
-    }
-
-    public void setAttackDistance(Integer attackDistance) {
-        this.attackDistance = attackDistance;
-    }
-
-    public Integer getCriticalRate() {
-        return criticalRate;
-    }
-
-    public void setCriticalRate(Integer criticalRate) {
-        this.criticalRate = criticalRate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDesignDescription() {
-        return designDescription;
-    }
-
-    public void setDesignDescription(String designDescription) {
-        this.designDescription = designDescription;
-    }
-
-    public String getJsonMap() {
-        return jsonMap;
-    }
-
-    public void setJsonMap(String jsonMap) {
-        this.jsonMap = jsonMap;
-    }
 }

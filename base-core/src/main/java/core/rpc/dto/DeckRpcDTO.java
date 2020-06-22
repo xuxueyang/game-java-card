@@ -2,9 +2,11 @@ package core.rpc.dto;
 
 import core.dto.item.dto.CardDTO;
 import core.dto.item.dto.EnvoyDTO;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 public class DeckRpcDTO {
     private Long userId;
     private String deckId;
@@ -12,30 +14,6 @@ public class DeckRpcDTO {
     private List<EnvoyRpcDTO> envoyDTOs;
     //卡牌，配置
     private List<CardRpcDTO> cardDTOS;
+    private ProfessionRpcDTO professionRpcDTO;
 
-
-    public String getDeckId() {
-        return deckId;
-    }
-
-    public void setDeckId(String deckId) {
-        this.deckId = deckId;
-    }
-
-
-    public List<EnvoyRpcDTO> getEnvoyDTOs() {
-        return envoyDTOs;
-    }
-
-    public void setEnvoyDTOs(List<EnvoyRpcDTO> envoyDTOs) {
-        this.envoyDTOs = envoyDTOs;
-    }
-
-    public List<CardRpcDTO> getCardDTOS() {
-        return cardDTOS;
-    }
-
-    public void setCardDTOS(List<CardRpcDTO> cardDTOS) {
-        this.cardDTOS = cardDTOS;
-    }
 }

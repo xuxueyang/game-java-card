@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -45,29 +46,28 @@ public class EnvoyService {
     }
     private EnvoyDTO transferTo(Envoy envoy){
         EnvoyDTO dto = new EnvoyDTO();
-        //设置种族、品级、属性、
-        envoy.setGradeName(ItemConstants.getGradeByCode(envoy.getGrade()).getName());
-        envoy.setAttributeName(ItemConstants.getAttributeByCode(envoy.getAttribute()).getName());
-        envoy.setRaceName(ItemConstants.getRaceByCode(envoy.getRace()).getName());
-
         BeanUtils.copyProperties(envoy,dto);
+        //设置种族、品级、属性、
+        dto.setGradeName(ItemConstants.getGradeByCode(envoy.getGrade()).getName());
+        dto.setAttributeName(ItemConstants.getAttributeByCode(envoy.getAttribute()).getName());
+//        dto.setRaceName(ItemConstants.getRaceByCode(envoy.getRace()).getName());
+
         return dto;
     }
 
     public EnvoyDTO findOne(Long id) {
         Envoy one = envoyRepository.findOne(id);
-        one.setGradeName(ItemConstants.getGradeByCode(one.getGrade()).getName());
-        one.setStarForce(ItemConstants.getGradeByCode(one.getGrade()).getStarForce());
+//        one.setGradeName(ItemConstants.getGradeByCode(one.getGrade()).getName());
+//        one.setStarForce(ItemConstants.getGradeByCode(one.getGrade()).getStarForce());
         return transferTo(one);
     }
 
-    public List<Envoy> findAllAdmin() {
+    public List<EnvoyDTO> findAllAdmin() {
         List<Envoy> all = envoyRepository.findAll();
+        List<EnvoyDTO> re = new LinkedList<>();
         all.forEach(envoy -> {
-            envoy.setGradeName(ItemConstants.getGradeByCode(envoy.getGrade()).getName());
-            envoy.setAttributeName(ItemConstants.getAttributeByCode(envoy.getAttribute()).getName());
-            envoy.setRaceName(ItemConstants.getRaceByCode(envoy.getRace()).getName());
+            re.add(transferTo(envoy));
         });
-        return all;
+        return re;
     }
 }

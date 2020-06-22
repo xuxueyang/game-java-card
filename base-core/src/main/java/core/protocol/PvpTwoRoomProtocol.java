@@ -12,6 +12,8 @@ public class PvpTwoRoomProtocol{
     public static final int CLINET_ENVOY_USE_SKILL= client_index + 4;
     public static final int CLINET_PLAYER_OVER= client_index + 5;
     public static final int CLINET_PLAYER_SURRENDER= client_index + 6;
+    public static final int CLINET_ENVOY_CHANGE= client_index + 7;//替换棋子上场
+
 
 
     //服務器能做的：棋子移動、棋子攻擊、棋子使用技能、棋子死亡、卡牌觸發、卡使用、玩家抽卡、玩家回合結束、增長水晶
@@ -35,5 +37,10 @@ public class PvpTwoRoomProtocol{
     public static final int SERVER_PLAYER_START= server_index + 14;
 
 
+    public enum DeckType{
+        ENVOY,//棋子
+        CARD,//卡牌
+        PROFESSION,//职业
+    }
 
 }
