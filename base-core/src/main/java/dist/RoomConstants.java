@@ -3,6 +3,7 @@ package dist;
 public class RoomConstants {
     public enum Key_Effect{
         starForce,
+        power,
         userId,
         effectId,
         deckManager,

@@ -13,6 +13,8 @@ public class PvpTwoRoomProtocol{
     public static final int CLINET_PLAYER_OVER= client_index + 5;
     public static final int CLINET_PLAYER_SURRENDER= client_index + 6;
     public static final int CLINET_ENVOY_CHANGE= client_index + 7;//替换棋子上场
+    public static final int CLINET_CARD_REPLACE= client_index + 8;//消耗2星辰，将手牌中的一枚洗切
+    public static final int CLINET_ENVOY_SELECT= client_index + 9;//消耗2星辰，将手牌中的一枚洗切
 
 
 
@@ -35,6 +37,7 @@ public class PvpTwoRoomProtocol{
     public static final int SERVER_CARD_GET_NO_CARD= server_index + 13;
 
     public static final int SERVER_PLAYER_START= server_index + 14;
+    public static final int SERVER_STAR_POWER_INCR= server_index + 15;
 
 
     public enum DeckType{
@@ -42,5 +45,17 @@ public class PvpTwoRoomProtocol{
         CARD,//卡牌
         PROFESSION,//职业
     }
+    public static final int max_card_num = 30;
+    public static final int max_envoy = 10;
+    public static final int max_battle_envoy = 4;
+    public static final int init_hard_card_num = 5;
+    public static final int max_hard_card_num = 10;
+    public static final int move_power = 10;//移动固定消耗10点
+    public static final int attack_power = 20;//攻击固定消耗20点
+    public static final int max_power = 200;
+    public static final int max_star_force = 10;
+    public static final int each_incr_power = 20;
+
+
 
 }
