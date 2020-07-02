@@ -9,11 +9,12 @@ import core.protocol.CommonProtocol;
 import core.protocol.Protocol;
 import core.rpc.CommonRPCConstant;
 import core.rpc.RoomRPCConstant;
+import core.rpc.client.RoomFeignClient;
 import factory.ResDTOFactory;
 import netty.handler.inter.AbstactSelfServerHandler;
 import netty.rabbitmq.RabbitMQConsumer;
 import netty.rabbitmq.RabbitMQProducer;
-import netty.rpc.RoomRpcClient;
+//import netty.rpc.RoomRpcClient;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,8 @@ public class MatchServerHandler extends AbstactSelfServerHandler<RequestDTO,Requ
     private static Log log = LogFactory.getLog(MatchServerHandler.class);
 
     @Autowired
-    private RoomRpcClient roomRpcClient;
+//    private RoomRpcClient roomRpcClient;
+    private RoomFeignClient roomRpcClient;
     @Override
     public byte getType() {
         return Protocol.Type.MATCH;

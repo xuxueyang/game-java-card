@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CardService {
@@ -53,6 +54,9 @@ public class CardService {
     }
 
     public CardDTO findOne(Long id) {
-        return transferTo(cardRepository.findOne(id));
+        Optional<Card> byId = cardRepository.findById(id);
+        if(byId.isPresent())
+            return transferTo(byId.get());
+        return null;
     }
 }

@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import util.MyBeanUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AdminService  {
@@ -64,7 +61,8 @@ public class AdminService  {
     public void adminChangeCard(AdminUpdateCardDTO adminUpdateCard) throws Exception {
         //修改棋子属性（仅测试）
         if(adminUpdateCard.getId()!=null){
-            Card one = cardRepository.findOne(adminUpdateCard.getId());
+            Optional<Card> byId = cardRepository.findById(adminUpdateCard.getId());
+            Card one = byId.isPresent()?byId.get():null;
             if(one!=null){
                 MyBeanUtils.copyPropertiesExcludeNull(adminUpdateCard,one);
                 if(adminUpdateCard.getJsonMap()!=null){
@@ -87,7 +85,8 @@ public class AdminService  {
     public void adminChangeEnvoy(AdminUpdateEnvoyDTO adminUpdateEnvoy)  throws Exception {
         //修改棋子属性（仅测试）
         if(adminUpdateEnvoy.getId()!=null){
-            Envoy one = envoyRepository.findOne(adminUpdateEnvoy.getId());
+            Optional<Envoy> byId = envoyRepository.findById(adminUpdateEnvoy.getId());
+            Envoy one = byId.isPresent()?byId.get():null;
             if(one!=null){
                 MyBeanUtils.copyPropertiesExcludeNull(adminUpdateEnvoy,one);
                 envoyRepository.save(one);

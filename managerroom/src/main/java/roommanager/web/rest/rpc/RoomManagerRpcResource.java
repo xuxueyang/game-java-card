@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/netty.rpc/room")
+@RequestMapping("/api")
 public class RoomManagerRpcResource extends BaseResource {
     public static final Logger log = LoggerFactory.getLogger(RoomManagerRpcResource.class);
 

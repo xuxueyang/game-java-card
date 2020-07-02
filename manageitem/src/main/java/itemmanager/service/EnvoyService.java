@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EnvoyService {
@@ -56,10 +57,12 @@ public class EnvoyService {
     }
 
     public EnvoyDTO findOne(Long id) {
-        Envoy one = envoyRepository.findOne(id);
+        Optional<Envoy> byId = envoyRepository.findById(id);
 //        one.setGradeName(ItemConstants.getGradeByCode(one.getGrade()).getName());
 //        one.setStarForce(ItemConstants.getGradeByCode(one.getGrade()).getStarForce());
-        return transferTo(one);
+        if(byId.isPresent())
+            return transferTo(byId.get());
+        return null;
     }
 
     public List<EnvoyDTO> findAllAdmin() {

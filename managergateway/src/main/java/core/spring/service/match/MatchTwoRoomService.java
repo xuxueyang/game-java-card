@@ -4,8 +4,10 @@ import core.core.RequestDTO;
 import core.core.ReturnCode;
 import core.core.ReturnResultDTO;
 import core.dto.acct.dto.UserInfo;
+import core.rpc.FeignConstants;
 import core.rpc.RoomRPCConstant;
-import core.spring.aop.MatchTwoRoomRpcClient;
+//import core.spring.aop.MatchTwoRoomRpcClient;
+import core.rpc.client.RoomFeignClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,9 @@ public class MatchTwoRoomService {
     public static final Logger log = LoggerFactory.getLogger(LogUtil.class);
 
     @Autowired
-    private MatchTwoRoomRpcClient matchTwoRoomRpcClient;
+//    private MatchTwoRoomRpcClient matchTwoRoomRpcClient;
+    private RoomFeignClient matchTwoRoomRpcClient;
+
     private static ConcurrentHashMap<Long,MatchMeta> _userMetaMap = new ConcurrentHashMap();
     private static LinkedBlockingQueue<Long> _userIdsQueue = new LinkedBlockingQueue(100);
 
@@ -65,7 +69,7 @@ public class MatchTwoRoomService {
                 map.put(RoomRPCConstant.Key.areaL.name(),new Long(one.areaL));
 
                 dto.setData(map);
-                LogUtil.debug(""+oneUserId,""+twoUserId, RoomRPCConstant.SERVICE_NAME,"match-two-room",dto);
+                LogUtil.debug(""+oneUserId,""+twoUserId, FeignConstants.SERVICE_ROOM,"match-two-room",dto);
                 ReturnResultDTO returnResultDTO = matchTwoRoomRpcClient.CREATE_TWO_ROOM(dto);
                 if(!returnResultDTO.getReturnCode().startsWith(ReturnCode.SUCCESS)){
                     //TODO 説明匹配失敗

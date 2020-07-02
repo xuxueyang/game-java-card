@@ -13,6 +13,7 @@ import itemmanager.domain.battle.Envoy;
 import itemmanager.domain.battle.RelatedEnvoy;
 import itemmanager.dto.SaveDeckDTO;
 import itemmanager.respository.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +51,7 @@ public class DeckService {
                         //TODO 校驗合格，存儲
                         Deck deck = new Deck();
                         deck.setDeckId(deckId);
-                        deck.setLikeType(deckDTO.getLikeType());
+//                        deck.setLikeType(deckDTO.getLikeType());
                         deck.setType(deckDTO.getType());
                         deck.setRelatedId(deckDTO.getRelatedId());
                         deck.setUserId(userId);
@@ -64,7 +65,9 @@ public class DeckService {
             return "";
         }
         //校驗穿的卡牌和棋子
-        deckRepository.save(decks);
+        for (Deck deck : decks) {
+            deckRepository.save(deck);
+        }
         return deckId;
     }
     private boolean checkSaveDeckDTO(SaveDeckDTO deckDTO){
@@ -116,14 +119,14 @@ public class DeckService {
         if(deck==null)
             return null;
         if(ItemConstants.Type.CARD.equals(deck.getType())&&ItemConstants.Type.ENVOY.equals(deck.getType())){
-            if(ItemConstants.likeType.ATTACK.equals(deck.getLikeType())
-                    &&ItemConstants.likeType.Defense.equals(deck.getLikeType())
-                    &&ItemConstants.likeType.Blood.equals(deck.getLikeType())){
+//            if(ItemConstants.likeType.ATTACK.equals(deck.getLikeType())
+//                    &&ItemConstants.likeType.Defense.equals(deck.getLikeType())
+//                    &&ItemConstants.likeType.Blood.equals(deck.getLikeType())){
                 SaveDeckDTO deckDTO = new SaveDeckDTO();
-                deckDTO.setLikeType(deck.getLikeType());
+//                deckDTO.setLikeType(deck.getLikeType());
                 deckDTO.setType(deck.getType());
                 deckDTO.setRelatedId(deck.getRelatedId());
-            }
+//            }
         }
         return null;
     }
@@ -140,30 +143,33 @@ public class DeckService {
         List<EnvoyRpcDTO> envoyRpcDTOS = new ArrayList<>(3);
         List<CardRpcDTO> cardRpcDTOS = new ArrayList<>(20);
         for(Deck deck:deckList){
-            String type = deck.getType();
+            String type = deck.getType().name();
             if(ItemConstants.Type.CARD.name().equals(type)){
                 CardRpcDTO cardRpcDTO = new CardRpcDTO();
                 cardRpcDTO.setId(UUIDGenerator.getUUID());
                 cardRpcDTO.setMetaCardId(deck.getRelatedId());
-                Card one = cardRepository.findOne(deck.getRelatedId());
+                Optional<Card> byId = cardRepository.findById(deck.getRelatedId());
+                Card one = byId.isPresent()?byId.get():null;
                 if(one!=null){
-                    cardRpcDTO.setFeiyong(one.getFeiyong());
+                    cardRpcDTO.setStartForce(one.getStarForce());
                     cardRpcDTO.setCardType(ItemConstants.getCardTypeByCode(one.getType()));
-                    cardRpcDTO.setEffectId(effectRepository.findOne(one.getEffectId()).getId());
+//                    cardRpcDTO.setEffectId(effectRepository.findOne(one.getEffectId()).getId());
                     cardRpcDTOS.add(cardRpcDTO);
                 }
 
             }else if(ItemConstants.Type.ENVOY.name().equals(type)){
                 EnvoyRpcDTO envoyRpcDTO = new EnvoyRpcDTO();
                 envoyRpcDTO.setId(UUIDGenerator.getUUID());
-                Envoy one = envoyRepository.findOne(deck.getRelatedId());
+                Optional<Envoy> byId = envoyRepository.findById(deck.getRelatedId());
+                Envoy one = byId.isPresent()?byId.get():null;
+                BeanUtils.copyProperties(one,envoyRpcDTO);
                 RelatedEnvoy relatedEnvoy = relatedEnvoyRepository.findOneByUserIdAndEnvoyId(deck.getUserId(), deck.getRelatedId());
-                envoyRpcDTO.setAttack(one.getAttack()
-                        +relatedEnvoy.getLevel()*one.getIncrAttack()+relatedEnvoy.getPlusAttack());
-                envoyRpcDTO.setDefense(one.getDefense()
-                        +one.getIncrDefense()*relatedEnvoy.getLevel()+relatedEnvoy.getPlusDefense());
-                envoyRpcDTO.setHp(one.getHp()
-                        +one.getIncrHp()*relatedEnvoy.getLevel()+relatedEnvoy.getPlusHp());
+//                envoyRpcDTO.setAttack(one.getAttack()
+//                        +relatedEnvoy.getLevel()*one.getIncrAttack()+relatedEnvoy.getPlusAttack());
+//                envoyRpcDTO.setDefense(one.getDefense()
+//                        +one.getIncrDefense()*relatedEnvoy.getLevel()+relatedEnvoy.getPlusDefense());
+//                envoyRpcDTO.setHp(one.getHp()
+//                        +one.getIncrHp()*relatedEnvoy.getLevel()+relatedEnvoy.getPlusHp());
                 envoyRpcDTO.setAttackDistance(one.getAttackDistance());
                 envoyRpcDTO.setAttribute(ItemConstants.getAttributeByCode(one.getAttribute()));
                 envoyRpcDTO.setCriticalRate(one.getCriticalRate());
@@ -171,7 +177,7 @@ public class DeckService {
                 envoyRpcDTO.setGrade(ItemConstants.getGradeByCode(one.getGrade()));
 
                 envoyRpcDTO.setMove(one.getMove());
-                envoyRpcDTO.setRace(ItemConstants.getRaceByCode(one.getRace()));
+//                envoyRpcDTO.setRace(ItemConstants.getRaceByCode(one.getRace()));
 
                 envoyRpcDTOS.add(envoyRpcDTO);
             }
